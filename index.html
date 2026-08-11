@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="UniPortal - A modern student management portal for tracking attendance, schedules, fees, results, and more.">
+    <title>UniPortal — Student Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="effects.css">
+</head>
+<body>
+
+    <!-- ===== SPLASH LOADER ===== -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <div class="splash-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="splash-ring"></div>
+            </div>
+            <span class="splash-text">Uni<span class="accent">Portal</span></span>
+            <div class="splash-loader">
+                <div class="splash-loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SCROLL PROGRESS BAR ===== -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- ===== ANIMATED PARTICLES ===== -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- ===== FLOATING GRADIENT ORBS ===== -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <span class="logo-text">Uni<span class="accent">Portal</span></span>
+            </div>
+            <button class="sidebar-close" id="sidebarClose"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="#" class="nav-link active" data-page="dashboard">
+                        <i class="fa-solid fa-grid-2"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="attendance">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                        <span>Attendance</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="schedule">
+                        <i class="fa-regular fa-calendar-days"></i>
+                        <span>Schedule</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="classes">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                        <span>My Classes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="fees">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>Fees</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="results">
+                        <i class="fa-solid fa-chart-column"></i>
+                        <span>Results</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="pyq">
+                        <i class="fa-solid fa-box-archive"></i>
+                        <span>PYQ</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="exams">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <span>Exam Timetable</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="quiz">
+                        <i class="fa-solid fa-brain"></i>
+                        <span>Quiz</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="assignments">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>Assignments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="profile">
+                        <i class="fa-regular fa-circle-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <div class="user-avatar" id="sidebarAvatar">IA</div>
+                <div class="user-info">
+                    <span class="user-name">Injmam  Ansari</span>
+                    <span class="user-role">Computer Science</span>
+                </div>
+            </div>
+            <button class="btn-logout" id="logoutBtn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ===== OVERLAY FOR MOBILE ===== -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+
+        <!-- ===== HEADER ===== -->
+        <header class="header">
+            <div class="header-left">
+                <button class="hamburger" id="hamburgerBtn">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Search courses, pages..." autocomplete="off">
+                    <div class="search-suggestions" id="searchSuggestions"></div>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="header-date" id="headerDate"></span>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="fa-regular fa-moon"></i>
+                </button>
+                <div class="notification-wrapper">
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notification-count" id="notificationCount">5</span>
+                    </button>
+                    <div class="notifications-dropdown" id="notificationsDropdown">
+                        <div class="notifications-header">
+                            <h3>Notifications</h3>
+                            <button id="markAllRead">Mark all read</button>
+                        </div>
+                        <div class="notifications-list" id="notificationsList">
+                            <!-- JS populated -->
+                        </div>
+                    </div>
+                </div>
+                <div class="header-user" id="headerUser">
+                    <div class="header-avatar">IA</div>
+                    <span class="header-username">Injmam </span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== PAGES ===== -->
+        <div class="content-area">
+
+            <!-- ======== DASHBOARD PAGE ======== -->
+            <section class="page active" id="page-dashboard">
+                <div class="page-title">
+                    <h1>Dashboard</h1>
+                    <p>Welcome back, Injmam ! Here's your overview.</p>
+                </div>
+
+                <!-- Stat Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card" data-delay="0">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="87">0</span>
+                            <span class="stat-suffix">%</span>
+                            <span class="stat-label">Attendance</span>
+                        </div>
+                        <div class="stat-change positive">
+                            <i class="fa-solid fa-arrow-trend-up"></i> 2.3%
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="100">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #00d2ff, #3a7bd5);">
+                            <i class="fa-solid fa-medal"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="3.72" data-decimals="2">0</span>
+                            <span class="stat-label">CGPA</span>
+                        </div>
+                        <div class="stat-change positive">
+                            <i class="fa-solid fa-arrow-trend-up"></i> 0.15
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="200">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="6">0</span>
+                            <span class="stat-label">Courses Enrolled</span>
+                        </div>
+                        <div class="stat-change neutral">
+                            <i class="fa-solid fa-equals"></i> Same
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="300">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-prefix">$</span>
+                            <span class="stat-number" data-target="2450">0</span>
+                            <span class="stat-label">Pending Fees</span>
+                        </div>
+                        <div class="stat-change negative">
+                            <i class="fa-regular fa-clock"></i> Due Sep 15
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <!-- Upcoming Classes -->
+                    <div class="card upcoming-classes">
+                        <div class="card-header">
+                            <h2><i class="fa-regular fa-clock"></i> Today's Classes</h2>
+                            <a href="#" class="card-link" data-page="schedule">View All</a>
+                        </div>
+                        <div class="card-body" id="upcomingClasses">
+                            <!-- JS populated -->
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="card recent-activity">
+                        <div class="card-header">
+                            <h2><i class="fa-solid fa-clock-rotate-left"></i> Recent Activity</h2>
+                        </div>
+                        <div class="card-body" id="recentActivity">
+                            <!-- JS populated -->
+                        </div>
+                    </div>
+
+                    <!-- Attendance Mini Chart -->
+                    <div class="card attendance-overview">
+                        <div class="card-header">
+                            <h2><i class="fa-solid fa-chart-pie"></i> Attendance Overview</h2>
+                            <a href="#" class="card-link" data-page="attendance">Details</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="mini-attendance-ring">
+                                <svg viewBox="0 0 120 120" class="progress-ring">
+                                    <circle cx="60" cy="60" r="52" class="progress-ring-bg"></circle>
+                                    <circle cx="60" cy="60" r="52" class="progress-ring-fill" data-percent="87"></circle>
+                                    <text x="60" y="55" class="progress-ring-text">87%</text>
+                                    <text x="60" y="72" class="progress-ring-subtext">Overall</text>
+                                </svg>
+                            </div>
+                            <div class="mini-attendance-bars" id="miniAttendanceBars">
+                                <!-- JS populated -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="card quick-links">
+                        <div class="card-header">
+                            <h2><i class="fa-solid fa-arrow-up-right-from-square"></i> Quick Links</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="quick-links-grid">
+                                <a href="#" class="quick-link" data-page="fees">
+                                    <div class="quick-link-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);"><i class="fa-solid fa-wallet"></i></div>
+                                    <span>Pay Fees</span>
+                                </a>
+                                <a href="#" class="quick-link" data-page="results">
+                                    <div class="quick-link-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);"><i class="fa-solid fa-ranking-star"></i></div>
+                                    <span>View Results</span>
+                                </a>
+                                <a href="#" class="quick-link" data-page="schedule">
+                                    <div class="quick-link-icon" style="background: linear-gradient(135deg, #00d2ff, #3a7bd5);"><i class="fa-regular fa-calendar"></i></div>
+                                    <span>Timetable</span>
+                                </a>
+                                <a href="#" class="quick-link" data-page="profile">
+                                    <div class="quick-link-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);"><i class="fa-solid fa-address-card"></i></div>
+                                    <span>My Profile</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ======== ATTENDANCE PAGE ======== -->
+            <section class="page" id="page-attendance">
+                <div class="page-title">
+                    <h1>Attendance</h1>
+                    <p>Track your attendance across all courses.</p>
+                </div>
+
+                <div class="attendance-top">
+                    <!-- Overall Attendance Ring -->
+                    <div class="card attendance-ring-card">
+                        <div class="card-header"><h2>Overall Attendance</h2></div>
+                        <div class="card-body center">
+                            <svg viewBox="0 0 200 200" class="progress-ring large">
+                                <defs>
+                                    <linearGradient id="attendanceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#667eea"/>
+                                        <stop offset="100%" style="stop-color:#764ba2"/>
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="100" cy="100" r="85" class="progress-ring-bg"></circle>
+                                <circle cx="100" cy="100" r="85" class="progress-ring-fill large" data-percent="87" stroke="url(#attendanceGradient)"></circle>
+                                <text x="100" y="92" class="progress-ring-text large">87%</text>
+                                <text x="100" y="118" class="progress-ring-subtext large">Present</text>
+                            </svg>
+                            <div class="attendance-stats-row">
+                                <div class="att-stat"><span class="att-stat-num" style="color: #4ade80;">156</span><span class="att-stat-label">Present</span></div>
+                                <div class="att-stat"><span class="att-stat-num" style="color: #ff6b6b;">23</span><span class="att-stat-label">Absent</span></div>
+                                <div class="att-stat"><span class="att-stat-num" style="color: #fbbf24;">12</span><span class="att-stat-label">Holidays</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subject-wise Attendance -->
+                    <div class="card subject-attendance-card">
+                        <div class="card-header"><h2>Subject-wise Attendance</h2></div>
+                        <div class="card-body" id="subjectAttendance">
+                            <!-- JS populated -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attendance Calendar/Table -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Attendance Log — Last 30 Days</h2>
+                        <div class="legend">
+                            <span class="legend-item"><span class="dot present"></span>Present</span>
+                            <span class="legend-item"><span class="dot absent"></span>Absent</span>
+                            <span class="legend-item"><span class="dot holiday"></span>Holiday</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="attendance-calendar" id="attendanceCalendar">
+                            <!-- JS populated -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ======== SCHEDULE PAGE ======== -->
+            <section class="page" id="page-schedule">
+                <div class="page-title">
+                    <h1>Weekly Schedule</h1>
+                    <p>Your timetable for the current semester.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-calendar-week"></i> Timetable</h2>
+                        <div class="schedule-day-nav" id="scheduleDayNav">
+                            <!-- JS populated day tabs -->
+                        </div>
+                    </div>
+                    <div class="card-body schedule-wrapper">
+                        <div class="schedule-grid" id="scheduleGrid">
+                            <!-- JS populated -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ======== CLASSES PAGE ======== -->
+            <section class="page" id="page-classes">
+                <div class="page-title">
+                    <h1>My Classes</h1>
+                    <p>Courses you are enrolled in this semester.</p>
+                </div>
+
+                <div class="classes-grid" id="classesGrid">
+                    <!-- JS populated -->
+                </div>
+            </section>
+
+            <!-- ======== FEES PAGE ======== -->
+            <section class="page" id="page-fees">
+                <div class="page-title">
+                    <h1>Fees & Payments</h1>
+                    <p>Manage your tuition and fee payments.</p>
+                </div>
+
+                <!-- Fee Summary -->
+                <div class="fee-summary-grid">
+                    <div class="card fee-overview-card">
+                        <div class="card-header"><h2>Fee Overview</h2></div>
+                        <div class="card-body">
+                            <div class="fee-total">
+                                <div class="fee-amount-group">
+                                    <span class="fee-label">Total Fees</span>
+                                    <span class="fee-amount">$12,000</span>
+                                </div>
+                                <div class="fee-progress-wrapper">
+                                    <div class="fee-progress-bar">
+                                        <div class="fee-progress-fill" data-percent="79.6"></div>
+                                    </div>
+                                    <div class="fee-progress-labels">
+                                        <span class="paid-label"><i class="fa-solid fa-circle-check"></i> Paid: $9,550</span>
+                                        <span class="pending-label"><i class="fa-regular fa-clock"></i> Pending: $2,450</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-pay" id="payNowBtn">
+                                <i class="fa-solid fa-wallet"></i> Pay Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Fee Breakdown -->
+                    <div class="card">
+                        <div class="card-header"><h2>Fee Breakdown</h2></div>
+                        <div class="card-body">
+                            <table class="data-table" id="feeBreakdownTable">
+                                <thead>
+                                    <tr>
+                                        <th>Component</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="feeBreakdownBody">
+                                    <!-- JS populated -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment History -->
+                <div class="card">
+                    <div class="card-header"><h2><i class="fa-solid fa-clock-rotate-left"></i> Payment History</h2></div>
+                    <div class="card-body">
+                        <table class="data-table" id="paymentHistoryTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Transaction ID</th>
+                                    <th>Description</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentHistoryBody">
+                                <!-- JS populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ======== RESULTS PAGE ======== -->
+            <section class="page" id="page-results">
+                <div class="page-title">
+                    <h1>Academic Results</h1>
+                    <p>View your grades and performance across semesters.</p>
+                </div>
+
+                <!-- CGPA Overview -->
+                <div class="results-overview">
+                    <div class="card cgpa-card">
+                        <div class="card-body center">
+                            <div class="cgpa-display">
+                                <span class="cgpa-value">3.72</span>
+                                <span class="cgpa-label">Cumulative GPA</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card grade-distribution-card">
+                        <div class="card-header"><h2>Grade Distribution</h2></div>
+                        <div class="card-body" id="gradeDistribution">
+                            <!-- JS populated -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Semester Tabs -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Semester Results</h2>
+                        <div class="semester-tabs" id="semesterTabs">
+                            <button class="sem-tab active" data-sem="1">Sem 1</button>
+                            <button class="sem-tab" data-sem="2">Sem 2</button>
+                            <button class="sem-tab" data-sem="3">Sem 3</button>
+                            <button class="sem-tab" data-sem="4">Sem 4</button>
+                            <button class="sem-tab" data-sem="5">Sem 5</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="semesterResults">
+                            <!-- JS populated -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ======== PYQ PAGE ======== -->
+            <section class="page" id="page-pyq">
+                <div class="page-title">
+                    <h1>Previous Year Questions</h1>
+                    <p>Browse and download question papers from previous semesters.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card" data-delay="0">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                            <i class="fa-solid fa-file-lines"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="42">0</span>
+                            <span class="stat-label">Total Papers</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="100">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #00d2ff, #3a7bd5);">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="6">0</span>
+                            <span class="stat-label">Subjects Covered</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="200">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4ade80, #22c55e);">
+                            <i class="fa-solid fa-download"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="128">0</span>
+                            <span class="stat-label">Total Downloads</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="300">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                            <i class="fa-solid fa-fire"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="5">0</span>
+                            <span class="stat-label">Most Popular</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-filter"></i> Filter Papers</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="filter-controls">
+                            <div class="filter-pills" id="pyqSubjectFilter">
+                                <button class="filter-pill active" data-subject="all">All Subjects</button>
+                            </div>
+                            <div class="filter-select-group">
+                                <select class="filter-select" id="pyqYearFilter">
+                                    <option value="all">All Years</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                </select>
+                                <select class="filter-select" id="pyqExamFilter">
+                                    <option value="all">All Exams</option>
+                                    <option value="Mid-Semester">Mid-Semester</option>
+                                    <option value="End-Semester">End-Semester</option>
+                                    <option value="Supplementary">Supplementary</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pyq-grid" id="pyqGrid">
+                    <!-- JS populated -->
+                </div>
+            </section>
+
+            <!-- ======== EXAM TIMETABLE PAGE ======== -->
+            <section class="page" id="page-exams">
+                <div class="page-title">
+                    <h1>Exam Timetable</h1>
+                    <p>View your upcoming and past examination schedule.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card" data-delay="0">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="8">0</span>
+                            <span class="stat-label">Total Exams</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="100">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="daysUntilNext" data-target="12">0</span>
+                            <span class="stat-label">Days Until Next</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="200">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4ade80, #22c55e);">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="3">0</span>
+                            <span class="stat-label">Completed</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="300">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                            <i class="fa-solid fa-hourglass-half"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="5">0</span>
+                            <span class="stat-label">Upcoming</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-hourglass-half"></i> Upcoming Exams</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="data-table" id="upcomingExamsTable">
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Venue</th>
+                                    <th>Duration</th>
+                                    <th>Countdown</th>
+                                </tr>
+                            </thead>
+                            <tbody id="upcomingExamsBody">
+                                <!-- JS populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-circle-check"></i> Completed Exams</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="data-table" id="completedExamsTable">
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Venue</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="completedExamsBody">
+                                <!-- JS populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ======== QUIZ PAGE ======== -->
+            <section class="page" id="page-quiz">
+                <div class="page-title">
+                    <h1>Quizzes</h1>
+                    <p>Test your knowledge with interactive quizzes.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card" data-delay="0">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="6">0</span>
+                            <span class="stat-label">Available Quizzes</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="100">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4ade80, #22c55e);">
+                            <i class="fa-solid fa-check-double"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="4">0</span>
+                            <span class="stat-label">Completed</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="200">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #00d2ff, #3a7bd5);">
+                            <i class="fa-solid fa-percent"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="78">0</span>
+                            <span class="stat-suffix">%</span>
+                            <span class="stat-label">Avg Score</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="300">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">
+                            <i class="fa-solid fa-ranking-star"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="2">0</span>
+                            <span class="stat-label">Pending</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-play-circle"></i> Available Quizzes</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="quiz-grid" id="quizGrid">
+                            <!-- JS populated -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-clock-rotate-left"></i> Attempt History</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="data-table" id="quizHistoryTable">
+                            <thead>
+                                <tr>
+                                    <th>Quiz</th>
+                                    <th>Subject</th>
+                                    <th>Score</th>
+                                    <th>Date</th>
+                                    <th>Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody id="quizHistoryBody">
+                                <!-- JS populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ======== ASSIGNMENTS PAGE ======== -->
+            <section class="page" id="page-assignments">
+                <div class="page-title">
+                    <h1>Assignments</h1>
+                    <p>Submit assignments and track your submissions.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card" data-delay="0">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                            <i class="fa-solid fa-file-lines"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="8">0</span>
+                            <span class="stat-label">Total Assignments</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="100">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4ade80, #22c55e);">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="5">0</span>
+                            <span class="stat-label">Submitted</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="200">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="2">0</span>
+                            <span class="stat-label">Pending</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-delay="300">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" data-target="1">0</span>
+                            <span class="stat-label">Late</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-cloud-arrow-up"></i> Upload Assignment</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="upload-section">
+                            <select class="filter-select" id="assignmentSelect">
+                                <option value="">Select Assignment...</option>
+                            </select>
+                            <div class="upload-dropzone" id="uploadDropzone">
+                                <div class="upload-dropzone-content">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <h3>Drag & Drop your file here</h3>
+                                    <p>or click to browse</p>
+                                    <span class="upload-formats">Supported: PDF, DOC, DOCX, ZIP, PNG, JPG (Max 10MB)</span>
+                                </div>
+                                <input type="file" id="fileInput" hidden accept=".pdf,.doc,.docx,.zip,.png,.jpg,.jpeg">
+                            </div>
+                            <div class="upload-file-info" id="uploadFileInfo" style="display:none;">
+                                <div class="upload-file-details">
+                                    <i class="fa-solid fa-file"></i>
+                                    <span id="uploadFileName"></span>
+                                    <span id="uploadFileSize"></span>
+                                    <button class="btn-remove-file" id="removeFileBtn"><i class="fa-solid fa-xmark"></i></button>
+                                </div>
+                                <div class="upload-progress" id="uploadProgress" style="display:none;">
+                                    <div class="upload-progress-bar">
+                                        <div class="upload-progress-fill" id="uploadProgressFill"></div>
+                                    </div>
+                                    <span class="upload-progress-text" id="uploadProgressText">0%</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" id="submitAssignmentBtn" disabled>
+                                <i class="fa-solid fa-paper-plane"></i> Submit Assignment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-list-check"></i> Assignment Tracker</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="data-table" id="assignmentsTable">
+                            <thead>
+                                <tr>
+                                    <th>Assignment</th>
+                                    <th>Subject</th>
+                                    <th>Deadline</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="assignmentsBody">
+                                <!-- JS populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ======== PROFILE PAGE ======== -->
+            <section class="page" id="page-profile">
+                <div class="page-title">
+                    <h1>My Profile</h1>
+                    <p>View and manage your personal information.</p>
+                </div>
+
+                <div class="profile-layout">
+                    <!-- Profile Header Card -->
+                    <div class="card profile-header-card">
+                        <div class="profile-banner"></div>
+                        <div class="profile-header-content">
+                            <div class="profile-avatar-large" id="profileAvatar">IA</div>
+                            <h2 class="profile-name">Injmam  Ansari</h2>
+                            <p class="profile-subtitle">Computer Science • 5th Semester</p>
+                            <div class="profile-badges">
+                                <span class="badge badge-primary">STU-2024-0089</span>
+                                <span class="badge badge-success">Active</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Details -->
+                    <div class="profile-details-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Personal Information</h2>
+                                <button class="btn btn-secondary btn-sm" id="editProfileBtn">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                </button>
+                            </div>
+                            <div class="card-body" id="profileInfo">
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <span class="info-label"><i class="fa-regular fa-user"></i> Full Name</span>
+                                        <span class="info-value" data-field="name">Injmam  Ansari</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label"><i class="fa-regular fa-envelope"></i> Email</span>
+                                        <span class="info-value" data-field="email">injmamah@student.ac.in</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label"><i class="fa-solid fa-phone-flip"></i> Phone</span>
+                                        <span class="info-value" data-field="phone">+91 7052959935</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label"><i class="fa-solid fa-cake-candles"></i> Date of Birth</span>
+                                        <span class="info-value" data-field="dob">March 09, 2004</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label"><i class="fa-solid fa-person-half-dress"></i> Gender</span>
+                                        <span class="info-value" data-field="gender">Male</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label"><i class="fa-solid fa-location-dot"></i> Address</span>
+                                        <span class="info-value" data-field="address">42 Elm Street, Springfield, IL 62704</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header"><h2>Academic Information</h2></div>
+                            <div class="card-body">
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <span class="info-label"><i class="fa-regular fa-id-badge"></i> Student ID</span>
+                                        <span class="info-value">STU-2024-0089</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label"><i class="fa-solid fa-graduation-cap"></i> Department</span>
+                                        <span class="info-value">Computer Science & Engineering</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label"><i class="fa-solid fa-layer-group"></i> Current Semester</span>
+                                        <span class="info-value">5th Semester</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label"><i class="fa-regular fa-calendar-check"></i> Enrollment Year</span>
+                                        <span class="info-value">2022</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label"><i class="fa-solid fa-medal"></i> CGPA</span>
+                                        <span class="info-value">3.72 / 4.00</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label"><i class="fa-solid fa-chalkboard-user"></i> Advisor</span>
+                                        <span class="info-value">Dr. Sarah Mitchell</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div><!-- .content-area -->
+    </main>
+
+    <!-- ===== QUIZ MODAL ===== -->
+    <div class="modal-overlay" id="quizModal">
+        <div class="modal modal-quiz">
+            <div class="modal-header">
+                <h2 id="quizModalTitle">Quiz</h2>
+                <div class="quiz-header-info">
+                    <span class="quiz-timer" id="quizTimer"><i class="fa-regular fa-clock"></i> <span id="quizTimeLeft">05:00</span></span>
+                    <span class="quiz-progress-text" id="quizProgressText">1 / 5</span>
+                </div>
+                <button class="modal-close" id="quizModalClose"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="quiz-progress-bar">
+                    <div class="quiz-progress-fill" id="quizProgressFill"></div>
+                </div>
+                <div class="quiz-question-area" id="quizQuestionArea">
+                    <div class="quiz-question" id="quizQuestion"></div>
+                    <div class="quiz-options" id="quizOptions">
+                        <!-- JS populated -->
+                    </div>
+                </div>
+                <div class="quiz-result" id="quizResult" style="display:none;">
+                    <div class="quiz-score-circle">
+                        <span class="quiz-score-value" id="quizScoreValue">0</span>
+                        <span class="quiz-score-total">/ <span id="quizScoreTotal">5</span></span>
+                    </div>
+                    <h3 id="quizResultMessage">Great Job!</h3>
+                    <p id="quizResultDetail">You scored 80%</p>
+                </div>
+                <div class="quiz-actions">
+                    <button class="btn btn-secondary" id="quizPrevBtn"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button class="btn btn-primary" id="quizNextBtn">Next <i class="fa-solid fa-arrow-right"></i></button>
+                    <button class="btn btn-primary" id="quizSubmitBtn" style="display:none;"><i class="fa-solid fa-check"></i> Submit Quiz</button>
+                    <button class="btn btn-primary" id="quizCloseResultBtn" style="display:none;"><i class="fa-solid fa-xmark"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PAYMENT MODAL ===== -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Make Payment</h2>
+                <button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-amount">
+                    <span class="modal-amount-label">Amount Due</span>
+                    <span class="modal-amount-value">$2,450.00</span>
+                </div>
+                <form id="paymentForm">
+                    <div class="form-group">
+                        <label for="cardName">Cardholder Name</label>
+                        <input type="text" id="cardName" placeholder="Injmam  Ansari" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" id="cardNumber" placeholder="•••• •••• •••• ••••" class="form-input" maxlength="19">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cardExpiry">Expiry</label>
+                            <input type="text" id="cardExpiry" placeholder="MM/YY" class="form-input" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="cardCVV">CVV</label>
+                            <input type="text" id="cardCVV" placeholder="•••" class="form-input" maxlength="3">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fa-solid fa-lock"></i> Pay $2,450.00
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="effects.js"></script>
+</body>
+</html>
