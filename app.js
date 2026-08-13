@@ -10,11 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // =============================================
 
     const student = {
-        name: 'Injmam ',
+        name: 'Injmam Ansari',
+        fatherName: 'Mr. Ahsanullah Ansari',
+        motherName: 'Mrs Jamila Khatoon',
         id: 'STU-2400103912',
-        department: 'Computer Application',
-        semester: '5th',
-        cgpa: 3.72,
+        department: 'Bachelor of Computer Application (BCA)',
+        university: 'Integral University, Lucknow',
+        semester: '5th Semester',
+        cgpa: 8.15,
         email: 'injmamah@student.iul.ac.in',
         phone: '+91 7052959935',
         enrollmentYear: 2024,
@@ -25,237 +28,463 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const courses = [
-        { code: 'CS301', name: 'Data Structures & Algorithms', prof: 'Dr. Robert Smith', room: 'Room 301', credits: 4, days: 'Mon, Wed, Fri', time: '9:00 - 10:30 AM', progress: 72, color: '#667eea' },
-        { code: 'CS302', name: 'Database Management Systems', prof: 'Dr. Lisa Jones', room: 'Lab 2', credits: 4, days: 'Mon, Thu', time: '11:00 AM - 12:30 PM', progress: 65, color: '#00d2ff' },
-        { code: 'CS303', name: 'Operating Systems', prof: 'Dr. Michael Lee', room: 'Room 305', credits: 3, days: 'Tue, Thu', time: '9:00 - 10:30 AM', progress: 58, color: '#f093fb' },
-        { code: 'CS304', name: 'Computer Networks', prof: 'Dr. Emily Brown', room: 'Room 201', credits: 3, days: 'Wed, Fri', time: '2:00 - 3:30 PM', progress: 48, color: '#ff6b6b' },
-        { code: 'CS305', name: 'Software Engineering', prof: 'Dr. David Wilson', room: 'Room 102', credits: 3, days: 'Tue, Fri', time: '11:00 AM - 12:30 PM', progress: 80, color: '#4ade80' },
-        { code: 'MA301', name: 'Discrete Mathematics', prof: 'Prof. Amy Chen', room: 'Room 410', credits: 3, days: 'Mon, Wed', time: '2:00 - 3:30 PM', progress: 55, color: '#fbbf24' }
+        { code: 'CA301', name: 'Computer Graphics and Multimedia Application', prof: 'Mohd Adnan', room: 'Room E414 / E211 / B113', credits: 4, days: 'Mon, Tue, Wed, Fri', time: 'Mon 1:30 PM / Tue 10:40 AM / Wed 2:20 PM / Fri 9:50 AM', progress: 72, color: '#667eea', type: 'Theory' },
+        { code: 'CA324', name: 'Algorithm Analysis and Design', prof: 'Arshiya Dilshad', room: 'Room E414 / E109 / E107', credits: 4, days: 'Mon, Wed, Thu, Fri', time: 'Mon 2:20 PM / Wed 3:10 PM / Thu 11:30 AM / Fri 10:40 AM', progress: 68, color: '#00d2ff', type: 'Theory' },
+        { code: 'CA325', name: 'Full Stack Web Development-II', prof: 'M. Muhammad Muzammil', room: 'Room E211 / E219', credits: 4, days: 'Tue, Wed, Thu, Fri', time: 'Tue 1:30 PM / Wed 10:40 AM / Thu 9:50 AM / Fri 9:00 AM', progress: 75, color: '#4ade80', type: 'Theory' },
+        { code: 'CA326', name: 'Introduction to Mobile Application Development', prof: 'Fareen', room: 'Room E414 / E211 / E219 / E103A', credits: 4, days: 'Mon, Tue, Thu, Fri', time: 'Mon 9:50 AM / Tue 12:40 PM / Thu 9:00 AM / Fri 2:20 PM', progress: 62, color: '#f093fb', type: 'Theory' },
+        { code: 'CA327', name: 'Introduction to Internet of Things', prof: 'Kashif Asad', room: 'Room E219', credits: 4, days: 'Mon, Thu, Fri', time: 'Mon 3:10 PM / Thu 1:30 PM / Fri 3:10 PM', progress: 58, color: '#ff6b6b', type: 'Theory' },
+        { code: 'CG301', name: 'Career Development Course', prof: 'Ayaz Mahmood', room: 'Room E302 / E219', credits: 2, days: 'Mon, Tue', time: 'Mon 12:40 PM / Tue 3:10 PM', progress: 85, color: '#fbbf24', type: 'Theory' },
+        { code: 'CA307', name: 'Cyber Security & Forensics', prof: 'Dr. Mohd. Suhaib Kidwai', room: 'Room E219', credits: 3, days: 'Mon, Wed, Thu, Fri', time: 'Mon 11:30 AM / Wed 12:40 PM / Thu 2:20 PM / Fri 1:30 PM', progress: 78, color: '#3a7bd5', type: 'Practical' },
+        { code: 'CA312', name: 'Computer Graphics and Multimedia Application Lab', prof: 'Mohd Talha', room: 'Room B129', credits: 1, days: 'Tue, Wed', time: '09:00 AM–10:40 AM', progress: 80, color: '#667eea', type: 'Practical' },
+        { code: 'CA330', name: 'Mobile Application Development Lab', prof: 'Abdullah Aqeel', room: 'CSE Lab (B126)', credits: 2, days: 'Thu', time: '03:10 PM–04:00 PM', progress: 65, color: '#f093fb', type: 'Practical' }
     ];
 
     const attendanceData = [
-        { subject: 'Data Structures', percent: 92, present: 33, total: 36 },
-        { subject: 'Database Systems', percent: 88, present: 30, total: 34 },
-        { subject: 'Operating Systems', percent: 78, present: 25, total: 32 },
-        { subject: 'Computer Networks', percent: 85, present: 28, total: 33 },
-        { subject: 'Software Engineering', percent: 95, present: 19, total: 20 },
-        { subject: 'Discrete Mathematics', percent: 75, present: 24, total: 32 }
+        { subject: 'Computer Graphics', percent: 92, present: 33, total: 36 },
+        { subject: 'Algorithm Analysis', percent: 88, present: 30, total: 34 },
+        { subject: 'Full Stack Web-II', percent: 95, present: 19, total: 20 },
+        { subject: 'Mobile App Dev', percent: 85, present: 28, total: 33 },
+        { subject: 'Internet of Things', percent: 78, present: 25, total: 32 },
+        { subject: 'Career Development', percent: 90, present: 18, total: 20 },
+        { subject: 'Cyber Security', percent: 88, present: 15, total: 17 },
+        { subject: 'Graphics & Media Lab', percent: 100, present: 12, total: 12 },
+        { subject: 'Mobile App Lab', percent: 80, present: 8, total: 10 }
     ];
 
     const scheduleByDay = {
         'Mon': [
-            { time: '9:00 - 10:30', subject: 'Data Structures', room: 'Room 301', prof: 'Dr. Smith', color: '#667eea' },
-            { time: '11:00 - 12:30', subject: 'Database Systems', room: 'Lab 2', prof: 'Dr. Jones', color: '#00d2ff' },
-            { time: '2:00 - 3:30', subject: 'Discrete Math', room: 'Room 410', prof: 'Prof. Chen', color: '#fbbf24' }
+            { startPeriod: 2, periodName: '2nd Period', time: '09:50 AM – 10:40 AM', duration: 1, subject: 'Introduction to Mobile Application Development', code: 'CA326', prof: 'Fareen', group: 'Group 2', type: 'Theory', room: 'Room E414', color: '#f093fb' },
+            { startPeriod: 4, periodName: '4th Period', time: '11:30 AM – 12:20 PM', duration: 1, subject: 'Cyber Security & Forensics', code: 'CA307', prof: 'Dr. Mohd. Suhaib Kidwai', group: 'Group 1', type: 'Lab', room: 'Room E219', color: '#3a7bd5', isLab: true },
+            { startPeriod: 5, periodName: '5th Period', time: '12:40 PM – 01:30 PM', duration: 1, subject: 'Computer Graphics and Multimedia Application', code: 'CA301', prof: 'Ayaz Mahmood', group: 'Group 2', type: 'Theory', room: 'Room E302', color: '#fbbf24' },
+            { startPeriod: 6, periodName: '6th Period', time: '01:30 PM – 02:20 PM', duration: 1, subject: 'Computer Graphics and Multimedia Application', code: 'CA301', prof: 'Mohd Adnan', group: 'Group 2', type: 'Theory', room: 'Room E414', color: '#667eea' },
+            { startPeriod: 7, periodName: '7th Period', time: '02:20 PM – 03:10 PM', duration: 1, subject: 'Algorithm Analysis and Design', code: 'CA324', prof: 'Arshiya Dilshad', group: 'Group 2', type: 'Theory', room: 'Room E414', color: '#00d2ff' },
+            { startPeriod: 8, periodName: '8th Period', time: '03:10 PM – 04:00 PM', duration: 1, subject: 'Introduction to Internet of Things', code: 'CA327', prof: 'Kashif Asad', group: 'Group 2', type: 'Theory', room: 'Room E219', color: '#ff6b6b' }
         ],
         'Tue': [
-            { time: '9:00 - 10:30', subject: 'Operating Systems', room: 'Room 305', prof: 'Dr. Lee', color: '#f093fb' },
-            { time: '11:00 - 12:30', subject: 'Software Engg.', room: 'Room 102', prof: 'Dr. Wilson', color: '#4ade80' }
+            { startPeriod: 1, periodName: '1st & 2nd Period', time: '09:00 AM – 10:40 AM', duration: 2, subject: 'Computer Graphics and Multimedia Application Lab', code: 'CA312', prof: 'Mohd Talha', group: 'Group 1', type: 'Lab', room: 'Room B129', color: '#667eea', isLab: true },
+            { startPeriod: 3, periodName: '3rd Period', time: '10:40 AM – 11:30 AM', duration: 1, subject: 'Computer Graphics and Multimedia Application', code: 'CA301', prof: 'Mohd Adnan', group: 'Group 2', type: 'Theory', room: 'Room B113', color: '#667eea' },
+            { startPeriod: 5, periodName: '5th Period', time: '12:40 PM – 01:30 PM', duration: 1, subject: 'Introduction to Mobile Application Development', code: 'CA326', prof: 'Fareen', group: 'Group 2', type: 'Theory', room: 'Room E211', color: '#f093fb' },
+            { startPeriod: 6, periodName: '6th Period', time: '01:30 PM – 02:20 PM', duration: 1, subject: 'Full Stack Web Development-II', code: 'CA325', prof: 'M. Muhammad Muzammil', group: 'Group 2', type: 'Theory', room: 'Room E211', color: '#4ade80' },
+            { startPeriod: 8, periodName: '8th Period', time: '03:10 PM – 04:00 PM', duration: 1, subject: 'Computer Graphics and Multimedia Application', code: 'CA301', prof: 'Ayaz Mahmood', group: 'Group 2', type: 'Theory', room: 'Room E219', color: '#fbbf24' }
         ],
         'Wed': [
-            { time: '9:00 - 10:30', subject: 'Data Structures', room: 'Room 301', prof: 'Dr. Smith', color: '#667eea' },
-            { time: '2:00 - 3:30', subject: 'Computer Networks', room: 'Room 201', prof: 'Dr. Brown', color: '#ff6b6b' },
-            { time: '3:45 - 5:00', subject: 'Discrete Math', room: 'Room 410', prof: 'Prof. Chen', color: '#fbbf24' }
+            { startPeriod: 1, periodName: '1st & 2nd Period', time: '09:00 AM – 10:40 AM', duration: 2, subject: 'Computer Graphics and Multimedia Application Lab', code: 'CA312', prof: 'Mohd Talha', group: 'Group 1', type: 'Lab', room: 'Room B129', color: '#667eea', isLab: true },
+            { startPeriod: 3, periodName: '3rd Period', time: '10:40 AM – 11:30 AM', duration: 1, subject: 'Full Stack Web Development-II', code: 'CA325', prof: 'M. Muhammad Muzammil', group: 'Group 2', type: 'Theory', room: 'Room E211', color: '#4ade80' },
+            { startPeriod: 5, periodName: '5th Period', time: '12:40 PM – 01:30 PM', duration: 1, subject: 'Cyber Security & Forensics', code: 'CA307', prof: 'Dr. Mohd. Suhaib Kidwai', group: 'Group 1', type: 'Lab', room: 'Room E219', color: '#3a7bd5', isLab: true },
+            { startPeriod: 7, periodName: '7th Period', time: '02:20 PM – 03:10 PM', duration: 1, subject: 'Computer Graphics and Multimedia Application', code: 'CA301', prof: 'Mohd Adnan', group: 'Group 2', type: 'Theory', room: 'Room E414', color: '#667eea' },
+            { startPeriod: 8, periodName: '8th Period', time: '03:10 PM – 04:00 PM', duration: 1, subject: 'Algorithm Analysis and Design', code: 'CA324', prof: 'Arshiya Dilshad', group: 'Group 2', type: 'Theory', room: 'Room E414', color: '#00d2ff' }
         ],
         'Thu': [
-            { time: '9:00 - 10:30', subject: 'Operating Systems', room: 'Room 305', prof: 'Dr. Lee', color: '#f093fb' },
-            { time: '11:00 - 12:30', subject: 'Database Systems', room: 'Lab 2', prof: 'Dr. Jones', color: '#00d2ff' }
+            { startPeriod: 1, periodName: '1st Period', time: '09:00 AM – 09:50 AM', duration: 1, subject: 'Introduction to Mobile Application Development', code: 'CA326', prof: 'Fareen', group: 'Group 2', type: 'Theory', room: 'Room E219', color: '#f093fb' },
+            { startPeriod: 2, periodName: '2nd Period', time: '09:50 AM – 10:40 AM', duration: 1, subject: 'Full Stack Web Development-II', code: 'CA325', prof: 'M. Muhammad Muzammil', group: 'Group 2', type: 'Theory', room: 'Room E219', color: '#4ade80' },
+            { startPeriod: 4, periodName: '4th Period', time: '11:30 AM – 12:20 PM', duration: 1, subject: 'Algorithm Analysis and Design', code: 'CA324', prof: 'Arshiya Dilshad', group: 'Group 2', type: 'Theory', room: 'Room E109', color: '#00d2ff' },
+            { startPeriod: 6, periodName: '6th Period', time: '01:30 PM – 02:20 PM', duration: 1, subject: 'Introduction to Internet of Things', code: 'CA327', prof: 'Kashif Asad', group: 'Group 2', type: 'Theory', room: 'Room E219', color: '#ff6b6b' },
+            { startPeriod: 7, periodName: '7th Period', time: '02:20 PM – 03:10 PM', duration: 1, subject: 'Cyber Security & Forensics', code: 'CA307', prof: 'Dr. Mohd. Suhaib Kidwai', group: 'Group 1', type: 'Lab', room: 'Room E219', color: '#3a7bd5', isLab: true },
+            { startPeriod: 8, periodName: '8th Period', time: '03:10 PM – 04:00 PM', duration: 1, subject: 'Mobile Application Development Lab', code: 'CA330', prof: 'Abdullah Aqeel', group: 'Group 1', type: 'Lab', room: 'CSE Lab (B126)', color: '#f093fb', isLab: true }
         ],
         'Fri': [
-            { time: '9:00 - 10:30', subject: 'Data Structures', room: 'Room 301', prof: 'Dr. Smith', color: '#667eea' },
-            { time: '11:00 - 12:30', subject: 'Software Engg.', room: 'Room 102', prof: 'Dr. Wilson', color: '#4ade80' },
-            { time: '2:00 - 3:30', subject: 'Computer Networks', room: 'Room 201', prof: 'Dr. Brown', color: '#ff6b6b' }
+            { startPeriod: 1, periodName: '1st Period', time: '09:00 AM – 09:50 AM', duration: 1, subject: 'Full Stack Web Development-II', code: 'CA325', prof: 'M. Muhammad Muzammil', group: 'Group 2', type: 'Theory', room: 'Room E211', color: '#4ade80' },
+            { startPeriod: 2, periodName: '2nd Period', time: '09:50 AM – 10:40 AM', duration: 1, subject: 'Computer Graphics and Multimedia Application', code: 'CA301', prof: 'Mohd Adnan', group: 'Group 2', type: 'Theory', room: 'Room E211', color: '#667eea' },
+            { startPeriod: 3, periodName: '3rd Period', time: '10:40 AM – 11:30 AM', duration: 1, subject: 'Algorithm Analysis and Design', code: 'CA324', prof: 'Arshiya Dilshad', group: 'Group 2', type: 'Theory', room: 'Room E107', color: '#00d2ff' },
+            { startPeriod: 6, periodName: '01:30 PM – 02:20 PM', duration: 1, subject: 'Cyber Security & Forensics', code: 'CA307', prof: 'Dr. Mohd. Suhaib Kidwai', group: 'Group 1', type: 'Lab', room: 'Room E219', color: '#3a7bd5', isLab: true },
+            { startPeriod: 7, periodName: '7th Period', time: '02:20 PM – 03:10 PM', duration: 1, subject: 'Introduction to Mobile Application Development', code: 'CA326', prof: 'Fareen', group: 'Group 2', type: 'Theory', room: 'Room E103A', color: '#f093fb' },
+            { startPeriod: 8, periodName: '8th Period', time: '03:10 PM – 04:00 PM', duration: 1, subject: 'Introduction to Internet of Things', code: 'CA327', prof: 'Kashif Asad', group: 'Group 2', type: 'Theory', room: 'Room E219', color: '#ff6b6b' }
         ],
-        'Sat': [
-            { time: '10:00 - 12:00', subject: 'Lab: Database', room: 'Lab 2', prof: 'Dr. Jones', color: '#00d2ff' }
-        ]
+        'Sat': [],
+        'Sun': []
     };
 
     const feeBreakdown = [
-        { component: 'Tuition Fee', amount: 8000, status: 'Paid' },
-        { component: 'Laboratory Fee', amount: 1500, status: 'Paid' },
-        { component: 'Library Fee', amount: 500, status: 'Pending' },
-        { component: 'Sports & Activities', amount: 600, status: 'Pending' },
-        { component: 'Examination Fee', amount: 800, status: 'Pending' },
-        { component: 'Technology Fee', amount: 600, status: 'Paid' }
+        { component: 'Tuition Fee', amount: 80000, status: 'Paid' },
+        { component: 'Laboratory Fee', amount: 15000, status: 'Paid' },
+        { component: 'Library Fee', amount: 5000, status: 'Pending' },
+        { component: 'Sports & Activities', amount: 6000, status: 'Pending' },
+        { component: 'Examination Fee', amount: 8000, status: 'Pending' },
+        { component: 'Technology Fee', amount: 6000, status: 'Paid' }
     ];
 
     const paymentHistory = [
-        { date: '2024-08-15', txnId: 'TXN-2024-4521', desc: 'Semester 5 Tuition (Partial)', amount: 5000, status: 'Paid' },
-        { date: '2024-07-02', txnId: 'TXN-2024-3876', desc: 'Technology Fee', amount: 600, status: 'Paid' },
-        { date: '2024-06-20', txnId: 'TXN-2024-3654', desc: 'Laboratory Fee', amount: 1500, status: 'Paid' },
-        { date: '2024-06-01', txnId: 'TXN-2024-3210', desc: 'Tuition (Remaining)', amount: 3000, status: 'Paid' },
-        { date: '2024-05-15', txnId: 'TXN-2024-2890', desc: 'Library & Sports Fee', amount: 1100, status: 'Pending' },
-        { date: '2024-05-10', txnId: 'TXN-2024-2765', desc: 'Examination Fee', amount: 800, status: 'Overdue' }
+        { date: '2025-08-15', txnId: 'TXN-2025-4521', desc: 'Semester 5 Tuition (Partial)', amount: 50000, status: 'Paid' },
+        { date: '2025-07-02', txnId: 'TXN-2025-1876', desc: 'Technology Fee', amount: 6000, status: 'Paid' },
+        { date: '2025-06-20', txnId: 'TXN-2025-1654', desc: 'Laboratory Fee', amount: 15000, status: 'Paid' },
+        { date: '2025-06-01', txnId: 'TXN-2025-1210', desc: 'Tuition (Remaining)', amount: 30000, status: 'Paid' },
+        { date: '2025-05-15', txnId: 'TXN-2025-0890', desc: 'Library & Sports Fee', amount: 11000, status: 'Pending' },
+        { date: '2025-05-10', txnId: 'TXN-2025-0765', desc: 'Examination Fee', amount: 8000, status: 'Pending' }
     ];
 
     const resultsData = {
-        1: { gpa: 3.65, subjects: [
-            { name: 'Introduction to Programming', code: 'CS101', credits: 4, grade: 'A', points: 4.0 },
-            { name: 'Calculus I', code: 'MA101', credits: 4, grade: 'B+', points: 3.3 },
-            { name: 'Physics I', code: 'PH101', credits: 3, grade: 'A-', points: 3.7 },
-            { name: 'English Communication', code: 'EN101', credits: 2, grade: 'A', points: 4.0 },
-            { name: 'Engineering Drawing', code: 'ME101', credits: 3, grade: 'B+', points: 3.3 }
-        ]},
-        2: { gpa: 3.58, subjects: [
-            { name: 'Object Oriented Programming', code: 'CS102', credits: 4, grade: 'A-', points: 3.7 },
-            { name: 'Calculus II', code: 'MA102', credits: 4, grade: 'B', points: 3.0 },
-            { name: 'Physics II', code: 'PH102', credits: 3, grade: 'B+', points: 3.3 },
-            { name: 'Digital Logic Design', code: 'CS103', credits: 3, grade: 'A', points: 4.0 },
-            { name: 'Environmental Science', code: 'ES101', credits: 2, grade: 'A', points: 4.0 }
-        ]},
-        3: { gpa: 3.72, subjects: [
-            { name: 'Data Structures', code: 'CS201', credits: 4, grade: 'A', points: 4.0 },
-            { name: 'Linear Algebra', code: 'MA201', credits: 3, grade: 'B+', points: 3.3 },
-            { name: 'Computer Architecture', code: 'CS202', credits: 3, grade: 'A-', points: 3.7 },
-            { name: 'Probability & Statistics', code: 'MA202', credits: 3, grade: 'A-', points: 3.7 },
-            { name: 'Economics', code: 'HS201', credits: 2, grade: 'A', points: 4.0 }
-        ]},
-        4: { gpa: 3.80, subjects: [
-            { name: 'Algorithms', code: 'CS251', credits: 4, grade: 'A', points: 4.0 },
-            { name: 'Theory of Computation', code: 'CS252', credits: 3, grade: 'A-', points: 3.7 },
-            { name: 'Microprocessors', code: 'CS253', credits: 3, grade: 'B+', points: 3.3 },
-            { name: 'Numerical Methods', code: 'MA251', credits: 3, grade: 'A', points: 4.0 },
-            { name: 'Technical Writing', code: 'EN201', credits: 2, grade: 'A', points: 4.0 }
-        ]},
-        5: { gpa: 3.85, subjects: [
-            { name: 'Data Structures & Algorithms', code: 'CS301', credits: 4, grade: 'A', points: 4.0 },
-            { name: 'Database Management Systems', code: 'CS302', credits: 4, grade: 'A-', points: 3.7 },
-            { name: 'Operating Systems', code: 'CS303', credits: 3, grade: 'A', points: 4.0 },
-            { name: 'Computer Networks', code: 'CS304', credits: 3, grade: 'B+', points: 3.3 },
-            { name: 'Software Engineering', code: 'CS305', credits: 3, grade: 'A', points: 4.0 },
-            { name: 'Discrete Mathematics', code: 'MA301', credits: 3, grade: 'B+', points: 3.3 }
-        ]}
+        1: {
+            academicYear: '2024–25',
+            semesterName: 'First Semester',
+            sgpa: 8.12,
+            cgpa: 8.12,
+            totalCredits: 25,
+            eseTotal: '237 / 320',
+            caTotal: '377 / 480',
+            overallTotal: '614 / 800',
+            result: 'PASS',
+            subjects: [
+                { code: 'CA110', name: 'Computer Fundamentals and C Programming', ese: '22 / 40', ca: '39 / 60', total: '61 / 100', credits: 4, grade: 'C' },
+                { code: 'CA114', name: 'Introduction to IT Industry', ese: '36 / 40', ca: '51 / 60', total: '87 / 100', credits: 4, grade: 'O' },
+                { code: 'ES115', name: 'Fundamentals of Environmental Science', ese: '21 / 40', ca: '49 / 60', total: '70 / 100', credits: 4, grade: 'C' },
+                { code: 'LN104', name: 'Essential Professional Communication', ese: '33 / 40', ca: '43 / 60', total: '76 / 100', credits: 4, grade: 'B' },
+                { code: 'MT151', name: 'Computational Mathematics', ese: '34 / 40', ca: '49 / 60', total: '83 / 100', credits: 4, grade: 'A' },
+                { code: 'CA103', name: 'C Programming Lab', ese: '24 / 40', ca: '43 / 60', total: '67 / 100', credits: 2, grade: 'C' },
+                { code: 'CA104', name: 'Computer Application Lab', ese: '34 / 40', ca: '52 / 60', total: '86 / 100', credits: 2, grade: 'O' },
+                { code: 'LN152', name: 'Basic Professional Communication Lab', ese: '33 / 40', ca: '51 / 60', total: '84 / 100', credits: 1, grade: 'A' }
+            ]
+        },
+        2: {
+            academicYear: '2024–25',
+            semesterName: 'Second Semester',
+            sgpa: 8.20,
+            cgpa: 8.16,
+            totalCredits: 25,
+            eseTotal: '238 / 320',
+            caTotal: '388 / 480',
+            overallTotal: '626 / 800',
+            result: 'PASS',
+            subjects: [
+                { code: 'CA107', name: 'Data Structure using C', ese: '26 / 40', ca: '48 / 60', total: '74 / 100', credits: 4, grade: 'C' },
+                { code: 'CA113', name: 'Cyber Crime and Cyber Law', ese: '27 / 40', ca: '42 / 60', total: '69 / 100', credits: 4, grade: 'C' },
+                { code: 'CA115', name: 'Computer Organization & Architecture', ese: '32 / 40', ca: '48 / 60', total: '80 / 100', credits: 4, grade: 'A' },
+                { code: 'LN131', name: 'Effective Communication and Media Studies in English', ese: '29 / 40', ca: '47 / 60', total: '76 / 100', credits: 4, grade: 'B' },
+                { code: 'MT152', name: 'Numerical and Statistical Methods', ese: '31 / 40', ca: '56 / 60', total: '87 / 100', credits: 4, grade: 'O' },
+                { code: 'CA108', name: 'Data Structure Lab', ese: '28 / 40', ca: '46 / 60', total: '74 / 100', credits: 2, grade: 'C' },
+                { code: 'CA116', name: 'Computer Organization & Architecture Lab', ese: '33 / 40', ca: '51 / 60', total: '84 / 100', credits: 2, grade: 'A' },
+                { code: 'LN153', name: 'Advanced Professional Communication Lab II', ese: '32 / 40', ca: '50 / 60', total: '82 / 100', credits: 1, grade: 'A' }
+            ]
+        },
+        3: {
+            academicYear: '2025–26',
+            semesterName: 'Third Semester',
+            sgpa: 8.36,
+            cgpa: 8.23,
+            totalCredits: 25,
+            eseTotal: '245 / 320',
+            caTotal: '386 / 480',
+            overallTotal: '631 / 800',
+            result: 'PASS',
+            subjects: [
+                { code: 'CA203', name: 'Object Oriented Programming Concepts using C++', ese: '29 / 40', ca: '45 / 60', total: '74 / 100', credits: 4, grade: 'C' },
+                { code: 'CA204', name: 'Fundamentals of Database Management System', ese: '31 / 40', ca: '50 / 60', total: '81 / 100', credits: 4, grade: 'A' },
+                { code: 'CA218', name: 'Data Compression and Multimedia System', ese: '36 / 40', ca: '52 / 60', total: '88 / 100', credits: 4, grade: 'O' },
+                { code: 'CA221', name: 'Web Development', ese: '31 / 40', ca: '50 / 60', total: '81 / 100', credits: 4, grade: 'A' },
+                { code: 'CA222', name: 'Discrete Mathematical Structure', ese: '29 / 40', ca: '43 / 60', total: '72 / 100', credits: 4, grade: 'C' },
+                { code: 'CA206', name: 'C++ Lab', ese: '30 / 40', ca: '48 / 60', total: '78 / 100', credits: 2, grade: 'B' },
+                { code: 'CA207', name: 'DBMS Lab', ese: '28 / 40', ca: '49 / 60', total: '77 / 100', credits: 2, grade: 'C' },
+                { code: 'CA223', name: 'Web Development Lab', ese: '31 / 40', ca: '49 / 60', total: '80 / 100', credits: 1, grade: 'A' }
+            ]
+        },
+        4: {
+            academicYear: '2025–26',
+            semesterName: 'Fourth Semester',
+            sgpa: 7.92,
+            cgpa: 8.15,
+            totalCredits: 25,
+            eseTotal: '235 / 320',
+            caTotal: '378 / 480',
+            overallTotal: '613 / 800',
+            result: 'PASS',
+            subjects: [
+                { code: 'CA210', name: 'Software Engineering and Project Management', ese: '30 / 40', ca: '52 / 60', total: '82 / 100', credits: 4, grade: 'A' },
+                { code: 'CA213', name: 'Principles of Operating System', ese: '35 / 40', ca: '48 / 60', total: '83 / 100', credits: 4, grade: 'A' },
+                { code: 'CA214', name: 'JAVA Programming', ese: '34 / 40', ca: '50 / 60', total: '84 / 100', credits: 4, grade: 'A' },
+                { code: 'CA225', name: 'Full Stack Web Development-I', ese: '24 / 40', ca: '46 / 60', total: '70 / 100', credits: 4, grade: 'C' },
+                { code: 'CA226', name: 'Data Communication & Computer Networks', ese: '23 / 40', ca: '41 / 60', total: '64 / 100', credits: 4, grade: 'D' },
+                { code: 'CA216', name: 'JAVA Programming Lab', ese: '27 / 40', ca: '45 / 60', total: '72 / 100', credits: 2, grade: 'C' },
+                { code: 'CA227', name: 'Operating System Lab', ese: '29 / 40', ca: '44 / 60', total: '73 / 100', credits: 2, grade: 'C' },
+                { code: 'CA228', name: 'Full Stack Web Development-II Lab', ese: '33 / 40', ca: '52 / 60', total: '85 / 100', credits: 1, grade: 'O' }
+            ]
+        },
+        5: {
+            academicYear: '2026–27',
+            semesterName: 'Fifth Semester',
+            status: 'Current Semester (In Progress)',
+            totalCredits: 27,
+            enrolledCount: 9
+        }
     };
 
     const notifications = [
-        { icon: 'fa-solid fa-file-lines', bg: 'linear-gradient(135deg, #667eea, #764ba2)', text: 'Assignment "DSA Problem Set 4" is due tomorrow', time: '2 hours ago', unread: true },
-        { icon: 'fa-solid fa-wallet', bg: 'linear-gradient(135deg, #ff6b6b, #ee5a24)', text: 'Fee payment reminder: $2,450 pending before Sep 15', time: '5 hours ago', unread: true },
-        { icon: 'fa-regular fa-calendar', bg: 'linear-gradient(135deg, #fbbf24, #f59e0b)', text: 'Mid-semester exams start from Aug 25', time: '1 day ago', unread: true },
+        { icon: 'fa-solid fa-file-lines', bg: 'linear-gradient(135deg, #667eea, #764ba2)', text: 'Assignment "Web Dev II Project" is due tomorrow', time: '2 hours ago', unread: true },
+        { icon: 'fa-solid fa-wallet', bg: 'linear-gradient(135deg, #ff6b6b, #ee5a24)', text: 'Fee payment reminder: ₹19,000 pending before Sep 15', time: '5 hours ago', unread: true },
+        { icon: 'fa-solid fa-bullhorn', bg: 'linear-gradient(135deg, #fbbf24, #f59e0b)', text: 'Mid-semester exam timetable released for BCA Sem 5', time: '1 day ago', unread: false },
         { icon: 'fa-solid fa-ranking-star', bg: 'linear-gradient(135deg, #4ade80, #22c55e)', text: 'Semester 4 results have been published', time: '2 days ago', unread: false },
         { icon: 'fa-solid fa-tower-broadcast', bg: 'linear-gradient(135deg, #00d2ff, #3a7bd5)', text: 'Annual Tech Fest registrations are open!', time: '3 days ago', unread: false }
     ];
 
-    const recentActivity = [
-        { text: 'Submitted "Database ER Diagram" assignment', time: 'Today, 10:30 AM', color: '#4ade80' },
-        { text: 'Attended Operating Systems lecture', time: 'Today, 9:00 AM', color: '#667eea' },
+    const activities = [
+        { text: 'Submitted Full Stack Web Dev-II Lab Assignment', time: 'Today, 2:30 PM', color: '#4ade80' },
+        { text: 'Completed Algorithm Analysis Quiz (Score: 90%)', time: 'Today, 10:15 AM', color: '#667eea' },
         { text: 'Viewed Semester 4 results', time: 'Yesterday, 4:15 PM', color: '#f093fb' },
-        { text: 'Paid Laboratory Fee — $1,500', time: 'Yesterday, 2:00 PM', color: '#00d2ff' },
-        { text: 'Enrolled in Software Engineering course', time: 'Aug 3, 11:00 AM', color: '#fbbf24' },
+        { text: 'Paid Laboratory Fee — ₹15,000', time: 'Yesterday, 2:00 PM', color: '#00d2ff' },
+        { text: 'Enrolled in Full Stack Web Dev-II course', time: 'Aug 3, 11:00 AM', color: '#fbbf24' },
         { text: 'Updated phone number in profile', time: 'Aug 1, 3:30 PM', color: '#ff6b6b' }
     ];
 
     const todaysClasses = [
-        { time: '9:00 AM', subject: 'Data Structures', room: 'Room 301', prof: 'Dr. Smith' },
-        { time: '11:00 AM', subject: 'Database Systems', room: 'Lab 2', prof: 'Dr. Jones' },
-        { time: '2:00 PM', subject: 'Discrete Math', room: 'Room 410', prof: 'Prof. Chen' }
+        { time: '9:50 AM', subject: 'Mobile App Dev', room: 'Room E414', prof: 'Fareen' },
+        { time: '1:30 PM', subject: 'Computer Graphics', room: 'Room E414', prof: 'Mohd Adnan' },
+        { time: '2:20 PM', subject: 'Algorithm Analysis', room: 'Room E414', prof: 'Arshiya Dilshad' }
     ];
 
     const pyqData = [
-        { subject: 'Data Structures & Algorithms', code: 'CS301', year: 2024, examType: 'End-Semester', difficulty: 'Hard', downloads: 34, color: '#667eea' },
-        { subject: 'Database Management Systems', code: 'CS302', year: 2024, examType: 'Mid-Semester', difficulty: 'Medium', downloads: 28, color: '#00d2ff' },
-        { subject: 'Operating Systems', code: 'CS303', year: 2024, examType: 'End-Semester', difficulty: 'Hard', downloads: 22, color: '#f093fb' },
-        { subject: 'Computer Networks', code: 'CS304', year: 2023, examType: 'End-Semester', difficulty: 'Medium', downloads: 18, color: '#ff6b6b' },
-        { subject: 'Software Engineering', code: 'CS305', year: 2023, examType: 'Mid-Semester', difficulty: 'Easy', downloads: 12, color: '#4ade80' },
-        { subject: 'Discrete Mathematics', code: 'MA301', year: 2023, examType: 'End-Semester', difficulty: 'Hard', downloads: 15, color: '#fbbf24' },
-        { subject: 'Data Structures & Algorithms', code: 'CS301', year: 2023, examType: 'Mid-Semester', difficulty: 'Medium', downloads: 20, color: '#667eea' },
-        { subject: 'Database Management Systems', code: 'CS302', year: 2022, examType: 'End-Semester', difficulty: 'Easy', downloads: 10, color: '#00d2ff' },
-        { subject: 'Operating Systems', code: 'CS303', year: 2022, examType: 'Mid-Semester', difficulty: 'Medium', downloads: 8, color: '#f093fb' },
-        { subject: 'Computer Networks', code: 'CS304', year: 2024, examType: 'Mid-Semester', difficulty: 'Easy', downloads: 14, color: '#ff6b6b' },
-        { subject: 'Discrete Mathematics', code: 'MA301', year: 2022, examType: 'End-Semester', difficulty: 'Hard', downloads: 6, color: '#fbbf24' },
-        { subject: 'Software Engineering', code: 'CS305', year: 2024, examType: 'End-Semester', difficulty: 'Medium', downloads: 16, color: '#4ade80' }
+        // ===== SEMESTER 1 (2024–25) =====
+        { id: 1, sem: 1, subject: 'Computer Fundamentals and C Programming', code: 'CA110', year: '2024–25', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 84, popular: true },
+        { id: 2, sem: 1, subject: 'Computer Fundamentals and C Programming', code: 'CA110', year: '2024–25', type: 'Theory', examType: 'Mid-Semester', hasFile: true, downloads: 62, popular: false },
+        { id: 3, sem: 1, subject: 'Introduction to IT Industry', code: 'CA114', year: '2024–25', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 95, popular: true },
+        { id: 4, sem: 1, subject: 'Fundamentals of Environmental Science', code: 'ES115', year: '2024–25', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 41, popular: false },
+        { id: 5, sem: 1, subject: 'Essential Professional Communication', code: 'LN104', year: '2024–25', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 58, popular: false },
+        { id: 6, sem: 1, subject: 'Computational Mathematics', code: 'MT151', year: '2024–25', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 110, popular: true },
+        { id: 7, sem: 1, subject: 'Computational Mathematics', code: 'MT151', year: '2024–25', type: 'Theory', examType: 'Mid-Semester', hasFile: true, downloads: 72, popular: false },
+        { id: 8, sem: 1, subject: 'C Programming Lab', code: 'CA103', year: '2024–25', type: 'Lab / Practical', examType: 'End-Semester', hasFile: false, downloads: 0, popular: false },
+        { id: 9, sem: 1, subject: 'Computer Application Lab', code: 'CA104', year: '2024–25', type: 'Lab / Practical', examType: 'End-Semester', hasFile: false, downloads: 0, popular: false },
+        { id: 10, sem: 1, subject: 'Basic Professional Communication Lab', code: 'LN152', year: '2024–25', type: 'Lab / Practical', examType: 'End-Semester', hasFile: false, downloads: 0, popular: false },
+
+        // ===== SEMESTER 2 (2024–25) =====
+        { id: 11, sem: 2, subject: 'Data Structure using C', code: 'CA107', year: '2024–25', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 125, popular: true },
+        { id: 12, sem: 2, subject: 'Data Structure using C', code: 'CA107', year: '2024–25', type: 'Theory', examType: 'Mid-Semester', hasFile: true, downloads: 78, popular: false },
+        { id: 13, sem: 2, subject: 'Cyber Crime and Cyber Law', code: 'CA113', year: '2024–25', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 52, popular: false },
+        { id: 14, sem: 2, subject: 'Computer Organization & Architecture', code: 'CA115', year: '2024–25', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 104, popular: true },
+        { id: 15, sem: 2, subject: 'Effective Communication and Media Studies in English', code: 'LN131', year: '2024–25', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 49, popular: false },
+        { id: 16, sem: 2, subject: 'Numerical and Statistical Methods', code: 'MT152', year: '2024–25', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 118, popular: true },
+        { id: 17, sem: 2, subject: 'Data Structure Lab', code: 'CA108', year: '2024–25', type: 'Lab / Practical', examType: 'End-Semester', hasFile: false, downloads: 0, popular: false },
+        { id: 18, sem: 2, subject: 'Computer Organization & Architecture Lab', code: 'CA116', year: '2024–25', type: 'Lab / Practical', examType: 'End-Semester', hasFile: false, downloads: 0, popular: false },
+        { id: 19, sem: 2, subject: 'Advanced Professional Communication Lab II', code: 'LN153', year: '2024–25', type: 'Lab / Practical', examType: 'End-Semester', hasFile: false, downloads: 0, popular: false },
+
+        // ===== SEMESTER 3 (2025–26) =====
+        { id: 20, sem: 3, subject: 'Object Oriented Programming Concepts using C++', code: 'CA203', year: '2025–26', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 138, popular: true },
+        { id: 21, sem: 3, subject: 'Object Oriented Programming Concepts using C++', code: 'CA203', year: '2025–26', type: 'Theory', examType: 'Mid-Semester', hasFile: true, downloads: 86, popular: false },
+        { id: 22, sem: 3, subject: 'Fundamentals of Database Management System', code: 'CA204', year: '2025–26', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 145, popular: true },
+        { id: 23, sem: 3, subject: 'Fundamentals of Database Management System', code: 'CA204', year: '2025–26', type: 'Theory', examType: 'Mid-Semester', hasFile: true, downloads: 92, popular: false },
+        { id: 24, sem: 3, subject: 'Data Compression and Multimedia System', code: 'CA218', year: '2025–26', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 64, popular: false },
+        { id: 25, sem: 3, subject: 'Web Development', code: 'CA221', year: '2025–26', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 128, popular: true },
+        { id: 26, sem: 3, subject: 'Discrete Mathematical Structure', code: 'CA222', year: '2025–26', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 102, popular: false },
+        { id: 27, sem: 3, subject: 'C++ Lab', code: 'CA206', year: '2025–26', type: 'Lab / Practical', examType: 'End-Semester', hasFile: false, downloads: 0, popular: false },
+        { id: 28, sem: 3, subject: 'DBMS Lab', code: 'CA207', year: '2025–26', type: 'Lab / Practical', examType: 'End-Semester', hasFile: false, downloads: 0, popular: false },
+        { id: 29, sem: 3, subject: 'Web Development Lab', code: 'CA223', year: '2025–26', type: 'Lab / Practical', examType: 'End-Semester', hasFile: false, downloads: 0, popular: false },
+
+        // ===== SEMESTER 4 (2025–26) =====
+        { id: 30, sem: 4, subject: 'Software Engineering and Project Management', code: 'CA210', year: '2025–26', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 115, popular: true },
+        { id: 31, sem: 4, subject: 'Principles of Operating System', code: 'CA213', year: '2025–26', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 132, popular: true },
+        { id: 32, sem: 4, subject: 'JAVA Programming', code: 'CA214', year: '2025–26', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 160, popular: true },
+        { id: 33, sem: 4, subject: 'JAVA Programming', code: 'CA214', year: '2025–26', type: 'Theory', examType: 'Mid-Semester', hasFile: true, downloads: 95, popular: false },
+        { id: 34, sem: 4, subject: 'Full Stack Web Development-I', code: 'CA225', year: '2025–26', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 140, popular: true },
+        { id: 35, sem: 4, subject: 'Data Communication & Computer Networks', code: 'CA226', year: '2025–26', type: 'Theory', examType: 'End-Semester', hasFile: true, downloads: 108, popular: false },
+        { id: 36, sem: 4, subject: 'JAVA Programming Lab', code: 'CA216', year: '2025–26', type: 'Lab / Practical', examType: 'End-Semester', hasFile: false, downloads: 0, popular: false },
+        { id: 37, sem: 4, subject: 'Operating System Lab', code: 'CA227', year: '2025–26', type: 'Lab / Practical', examType: 'End-Semester', hasFile: false, downloads: 0, popular: false },
+        { id: 38, sem: 4, subject: 'Full Stack Web Development-II Lab', code: 'CA228', year: '2025–26', type: 'Lab / Practical', examType: 'End-Semester', hasFile: false, downloads: 0, popular: false }
     ];
 
     const examTimetable = [
-        { subject: 'Data Structures & Algorithms', code: 'CS301', date: '2026-08-25', time: '10:00 AM - 1:00 PM', venue: 'Exam Hall A', duration: '3 hrs', status: 'upcoming' },
-        { subject: 'Database Management Systems', code: 'CS302', date: '2026-08-28', time: '10:00 AM - 1:00 PM', venue: 'Exam Hall B', duration: '3 hrs', status: 'upcoming' },
-        { subject: 'Operating Systems', code: 'CS303', date: '2026-09-01', time: '2:00 PM - 5:00 PM', venue: 'Exam Hall A', duration: '3 hrs', status: 'upcoming' },
-        { subject: 'Computer Networks', code: 'CS304', date: '2026-09-04', time: '10:00 AM - 1:00 PM', venue: 'Exam Hall C', duration: '3 hrs', status: 'upcoming' },
-        { subject: 'Software Engineering', code: 'CS305', date: '2026-09-07', time: '2:00 PM - 5:00 PM', venue: 'Exam Hall B', duration: '3 hrs', status: 'upcoming' },
-        { subject: 'Discrete Mathematics', code: 'MA301', date: '2026-07-15', time: '10:00 AM - 12:00 PM', venue: 'Exam Hall A', duration: '2 hrs', status: 'completed' },
-        { subject: 'Calculus II', code: 'MA102', date: '2026-07-12', time: '2:00 PM - 4:00 PM', venue: 'Exam Hall C', duration: '2 hrs', status: 'completed' },
-        { subject: 'Physics II', code: 'PH102', date: '2026-07-10', time: '10:00 AM - 12:30 PM', venue: 'Exam Hall B', duration: '2.5 hrs', status: 'completed' }
+        { subject: 'Computer Graphics and Multimedia Application', code: 'CA301', date: '2026-08-25', time: '10:00 AM - 1:00 PM', venue: 'Exam Hall A', duration: '3 hrs', status: 'upcoming' },
+        { subject: 'Algorithm Analysis and Design', code: 'CA324', date: '2026-08-28', time: '10:00 AM - 1:00 PM', venue: 'Exam Hall B', duration: '3 hrs', status: 'upcoming' },
+        { subject: 'Full Stack Web Development-II', code: 'CA325', date: '2026-09-01', time: '2:00 PM - 5:00 PM', venue: 'Exam Hall A', duration: '3 hrs', status: 'upcoming' },
+        { subject: 'Introduction to Mobile Application Development', code: 'CA326', date: '2026-09-04', time: '10:00 AM - 1:00 PM', venue: 'Exam Hall C', duration: '3 hrs', status: 'upcoming' },
+        { subject: 'Introduction to Internet of Things', code: 'CA327', date: '2026-09-07', time: '2:00 PM - 5:00 PM', venue: 'Exam Hall B', duration: '3 hrs', status: 'upcoming' },
+        { subject: 'Career Development Course', code: 'CG301', date: '2026-07-15', time: '10:00 AM - 12:00 PM', venue: 'Exam Hall A', duration: '2 hrs', status: 'completed' }
     ];
 
     const quizzesData = [
         {
-            id: 1, subject: 'Data Structures', title: 'DSA Fundamentals Quiz', questions: 5, timeLimit: 5, difficulty: 'Medium', color: '#667eea', attempted: true, score: 4,
+            id: 1,
+            subject: 'Computer Graphics and Multimedia Application',
+            code: 'CA301',
+            type: 'Theory',
+            title: 'Computer Graphics Fundamentals',
+            questions: 5,
+            timeLimit: 5,
+            difficulty: 'Medium',
+            color: '#667eea',
+            attempted: true,
+            score: 4,
             questionsList: [
-                { q: 'What is the time complexity of binary search?', options: ['O(n)', 'O(log n)', 'O(n²)', 'O(1)'], correct: 1 },
-                { q: 'Which data structure uses LIFO principle?', options: ['Queue', 'Array', 'Stack', 'Linked List'], correct: 2 },
-                { q: 'What is the worst-case time complexity of QuickSort?', options: ['O(n log n)', 'O(n)', 'O(n²)', 'O(log n)'], correct: 2 },
-                { q: 'Which traversal gives sorted output in BST?', options: ['Preorder', 'Inorder', 'Postorder', 'Level Order'], correct: 1 },
-                { q: 'What is the space complexity of merge sort?', options: ['O(1)', 'O(log n)', 'O(n)', 'O(n²)'], correct: 2 }
+                { q: 'Which algorithm is used for line drawing using integer calculations only?', options: ['DDA Algorithm', "Bresenham's Line Algorithm", 'Midpoint Circle Algorithm', 'Cohen-Sutherland'], correct: 1 },
+                { q: 'What is clipping in computer graphics?', options: ['Enlarging a graphic', 'Removing parts of primitives outside a view window', 'Changing pixel colors', 'Rasterization'], correct: 1 },
+                { q: 'Which transformation moves an object from one position to another?', options: ['Rotation', 'Translation', 'Scaling', 'Reflection'], correct: 1 },
+                { q: 'What is anti-aliasing?', options: ['Sharpening lines', 'Technique to reduce staircase visual distortion (jaggies)', 'Adding 3D shadows', 'Compression'], correct: 1 },
+                { q: 'Which color model is primarily used for computer monitors?', options: ['CMYK', 'HSV', 'RGB', 'YIQ'], correct: 2 }
             ]
         },
         {
-            id: 2, subject: 'Database Systems', title: 'SQL & Normalization', questions: 5, timeLimit: 5, difficulty: 'Easy', color: '#00d2ff', attempted: true, score: 5,
+            id: 2,
+            subject: 'Algorithm Analysis and Design',
+            code: 'CA324',
+            type: 'Theory',
+            title: 'Algorithm Analysis Fundamentals',
+            questions: 5,
+            timeLimit: 5,
+            difficulty: 'Hard',
+            color: '#00d2ff',
+            attempted: true,
+            score: 5,
             questionsList: [
-                { q: 'Which SQL keyword is used to retrieve data?', options: ['GET', 'FETCH', 'SELECT', 'RETRIEVE'], correct: 2 },
-                { q: 'Which normal form removes partial dependency?', options: ['1NF', '2NF', '3NF', 'BCNF'], correct: 1 },
-                { q: 'What does ACID stand for in database transactions?', options: ['Atomicity, Consistency, Isolation, Durability', 'Addition, Consistency, Integrity, Data', 'Atomicity, Concurrency, Isolation, Data', 'All Correct In Database'], correct: 0 },
-                { q: 'Which join returns all rows from both tables?', options: ['INNER JOIN', 'LEFT JOIN', 'RIGHT JOIN', 'FULL OUTER JOIN'], correct: 3 },
-                { q: 'What is a foreign key?', options: ['A primary key in another table', 'A reference to a primary key in another table', 'A unique constraint', 'An index'], correct: 1 }
+                { q: 'What does Big-O notation represent in algorithm analysis?', options: ['Best case time complexity', 'Worst case time complexity upper bound', 'Exact execution time in seconds', 'Average space requirement'], correct: 1 },
+                { q: 'Which paradigm does Merge Sort use?', options: ['Greedy Approach', 'Dynamic Programming', 'Divide and Conquer', 'Backtracking'], correct: 2 },
+                { q: 'What is the time complexity of solving 0/1 Knapsack using Dynamic Programming?', options: ['O(n)', 'O(n log n)', 'O(n * W)', 'O(2^n)'], correct: 2 },
+                { q: 'Which algorithm finds single-source shortest paths with non-negative edge weights?', options: ['Bellman-Ford', "Dijkstra's Algorithm", "Floyd-Warshall", 'Kruskal'], correct: 1 },
+                { q: 'What property is required for Dynamic Programming to apply to a problem?', options: ['Strict Sorting', 'Optimal Substructure & Overlapping Subproblems', 'Greedy Choice', 'Randomization'], correct: 1 }
             ]
         },
         {
-            id: 3, subject: 'Operating Systems', title: 'Process Management', questions: 5, timeLimit: 5, difficulty: 'Hard', color: '#f093fb', attempted: true, score: 3,
+            id: 3,
+            subject: 'Full Stack Web Development-II',
+            code: 'CA325',
+            type: 'Theory',
+            title: 'Full Stack Web Development-II',
+            questions: 5,
+            timeLimit: 5,
+            difficulty: 'Medium',
+            color: '#4ade80',
+            attempted: true,
+            score: 4,
             questionsList: [
-                { q: 'Which scheduling algorithm has the minimum average waiting time?', options: ['FCFS', 'SJF', 'Round Robin', 'Priority'], correct: 1 },
-                { q: 'What is a deadlock?', options: ['A fast process', 'Circular wait among processes', 'A type of scheduling', 'Memory allocation'], correct: 1 },
-                { q: 'Which page replacement algorithm is optimal?', options: ['FIFO', 'LRU', 'Optimal', 'Random'], correct: 2 },
-                { q: 'What is thrashing?', options: ['Fast execution', 'Excessive paging', 'CPU overload', 'Memory leak'], correct: 1 },
-                { q: 'Which of these is NOT a process state?', options: ['Ready', 'Running', 'Compiling', 'Blocked'], correct: 2 }
+                { q: 'What is Node.js?', options: ['A frontend framework', 'An asynchronous event-driven JavaScript runtime environment', 'A relational database engine', 'A CSS preprocessor'], correct: 1 },
+                { q: 'Which Express middleware parses incoming requests with JSON payloads?', options: ['express.static()', 'express.json()', 'express.urlencoded()', 'cors()'], correct: 1 },
+                { q: 'Which HTTP status code represents "Created successfully"?', options: ['200', '201', '404', '500'], correct: 1 },
+                { q: 'What type of database is MongoDB?', options: ['Relational SQL', 'Document-oriented NoSQL', 'Graph database', 'Key-value store'], correct: 1 },
+                { q: 'Which method signs a JSON Web Token (JWT) in Node.js?', options: ['jwt.create()', 'jwt.sign()', 'jwt.encode()', 'jwt.hash()'], correct: 1 }
             ]
         },
         {
-            id: 4, subject: 'Computer Networks', title: 'Network Protocols', questions: 5, timeLimit: 5, difficulty: 'Medium', color: '#ff6b6b', attempted: true, score: 4,
+            id: 4,
+            subject: 'Introduction to Mobile Application Development',
+            code: 'CA326',
+            type: 'Theory',
+            title: 'Mobile Application Development',
+            questions: 5,
+            timeLimit: 5,
+            difficulty: 'Easy',
+            color: '#f093fb',
+            attempted: false,
+            score: 0,
             questionsList: [
-                { q: 'Which layer of OSI model handles routing?', options: ['Data Link', 'Network', 'Transport', 'Session'], correct: 1 },
-                { q: 'What protocol is used for secure web browsing?', options: ['HTTP', 'FTP', 'HTTPS', 'SMTP'], correct: 2 },
-                { q: 'What is the default port for HTTP?', options: ['21', '25', '80', '443'], correct: 2 },
-                { q: 'Which protocol is connectionless?', options: ['TCP', 'UDP', 'FTP', 'HTTP'], correct: 1 },
-                { q: 'What does DNS stand for?', options: ['Data Network Service', 'Domain Name System', 'Digital Network Standard', 'Direct Name Server'], correct: 1 }
+                { q: 'Which file contains essential configuration in an Android app?', options: ['build.gradle', 'AndroidManifest.xml', 'MainActivity.java', 'strings.xml'], correct: 1 },
+                { q: 'Which method is called first when an Android Activity starts?', options: ['onStart()', 'onResume()', 'onCreate()', 'onLaunch()'], correct: 2 },
+                { q: 'What is an Intent in Android?', options: ['A database connection', 'An asynchronous messaging object to request an action', 'A layout widget', 'A network thread'], correct: 1 },
+                { q: 'Which layout aligns UI components linearly in a single direction?', options: ['RelativeLayout', 'ConstraintLayout', 'LinearLayout', 'TableLayout'], correct: 2 },
+                { q: 'Which programming language is officially supported for modern Android dev alongside Java?', options: ['Kotlin', 'Swift', 'C#', 'Python'], correct: 0 }
             ]
         },
         {
-            id: 5, subject: 'Software Engineering', title: 'SDLC Models', questions: 5, timeLimit: 5, difficulty: 'Easy', color: '#4ade80', attempted: false, score: 0,
+            id: 5,
+            subject: 'Introduction to Internet of Things',
+            code: 'CA327',
+            type: 'Theory',
+            title: 'Internet of Things Fundamentals',
+            questions: 5,
+            timeLimit: 5,
+            difficulty: 'Easy',
+            color: '#ff6b6b',
+            attempted: false,
+            score: 0,
             questionsList: [
-                { q: 'Which SDLC model is also known as the linear sequential model?', options: ['Agile', 'Waterfall', 'Spiral', 'V-Model'], correct: 1 },
-                { q: 'What does UML stand for?', options: ['Unified Modeling Language', 'Universal Markup Language', 'Unified Management Logic', 'User Model Language'], correct: 0 },
-                { q: 'Which testing is done without knowing internal code?', options: ['White Box', 'Black Box', 'Grey Box', 'Unit Testing'], correct: 1 },
-                { q: 'What is a use case diagram used for?', options: ['Database design', 'Functional requirements', 'Code structure', 'Network topology'], correct: 1 },
-                { q: 'Which methodology emphasizes iterative development?', options: ['Waterfall', 'Big Bang', 'Agile', 'Prototype'], correct: 2 }
+                { q: 'Which lightweight messaging protocol is widely used in IoT devices?', options: ['HTTP', 'MQTT', 'FTP', 'SMTP'], correct: 1 },
+                { q: 'What is an actuator in an IoT system?', options: ['A sensor that measures temperature', 'A component that converts electrical signals into physical motion', 'A cloud database', 'A gateway router'], correct: 1 },
+                { q: 'What does RFID stand for?', options: ['Radio Frequency Identification', 'Remote Field Information Device', 'Rapid Frequency Data', 'Rotational Field ID'], correct: 0 },
+                { q: 'Which microcontroller board is popular for IoT WiFi/Bluetooth projects?', options: ['ESP32', '8051 Microcontroller', 'Raspberry Pi Pico (non-wireless)', 'Intel Core i7'], correct: 0 },
+                { q: 'What is Edge Computing in IoT?', options: ['Storing all data in public cloud', 'Processing data closer to sensor devices', 'Using edge routers only', 'Backup storage'], correct: 1 }
             ]
         },
         {
-            id: 6, subject: 'Discrete Mathematics', title: 'Logic & Sets', questions: 5, timeLimit: 5, difficulty: 'Hard', color: '#fbbf24', attempted: false, score: 0,
+            id: 6,
+            subject: 'Career Development Course',
+            code: 'CG301',
+            type: 'Theory',
+            title: 'Career Development & Interview Skills',
+            questions: 5,
+            timeLimit: 5,
+            difficulty: 'Medium',
+            color: '#fbbf24',
+            attempted: false,
+            score: 0,
             questionsList: [
-                { q: 'What is the contrapositive of "If P then Q"?', options: ['If Q then P', 'If not P then not Q', 'If not Q then not P', 'If P then not Q'], correct: 2 },
-                { q: 'How many subsets does a set with 4 elements have?', options: ['4', '8', '16', '32'], correct: 2 },
-                { q: 'What is a tautology?', options: ['Always false', 'Always true', 'Sometimes true', 'Undefined'], correct: 1 },
-                { q: 'In graph theory, what is a complete graph?', options: ['Every vertex connected to every other', 'No edges', 'Tree structure', 'Bipartite graph'], correct: 0 },
-                { q: 'What is the principle of mathematical induction based on?', options: ['Contradiction', 'Base case and inductive step', 'Direct proof', 'Counter example'], correct: 1 }
+                { q: 'What is the primary purpose of a professional resume summary?', options: ['List all personal hobbies', 'Highlight key technical skills, experience & career value', 'Provide salary demands', 'List reference phone numbers'], correct: 1 },
+                { q: 'In the STAR interview response method, what does "A" stand for?', options: ['Achievement', 'Action', 'Analysis', 'Ability'], correct: 1 },
+                { q: 'What is professional workplace etiquette?', options: ['Adhering to ethical conduct, punctuality, and mutual respect', 'Casual dress always', 'Ignoring deadlines', 'Only communicating via text'], correct: 0 },
+                { q: 'What is a key practice for effective technical interview answers?', options: ['Memorizing code line by line', 'Structured explanation using examples & problem-solving steps', 'Giving single-word answers', 'Interrupting the interviewer'], correct: 1 },
+                { q: 'Which document accompanies a job application resume?', options: ['Transcript', 'Cover Letter', 'Recommendation Slip', 'Identity Proof'], correct: 1 }
+            ]
+        },
+        {
+            id: 7,
+            subject: 'Computer Graphics and Multimedia Application Lab',
+            code: 'CA312',
+            type: 'LAB / PRACTICAL',
+            title: 'Computer Graphics & Multimedia Practical',
+            questions: 5,
+            timeLimit: 5,
+            difficulty: 'Medium',
+            color: '#667eea',
+            attempted: false,
+            score: 0,
+            questionsList: [
+                { q: 'In OpenGL / C graphics programming, which function initializes the graphics system?', options: ['initgraph()', 'graphicsInit()', 'startGraphics()', 'openWindow()'], correct: 0 },
+                { q: 'Which coordinate system is commonly used in 2D graphics programming?', options: ['Polar Coordinates', 'Cartesian Coordinates (X, Y)', 'Spherical Coordinates', 'Cylindrical Coordinates'], correct: 1 },
+                { q: 'Which function draws a circle using the midpoint algorithm in graphics library?', options: ['drawCircle()', 'circle(x, y, radius)', 'renderCircle()', 'plotCircle()'], correct: 1 },
+                { q: 'What is flood fill algorithm used for in graphics lab experiments?', options: ['Line drawing', 'Filling a connected region with a specific color', 'Clipping lines', 'Text rendering'], correct: 1 },
+                { q: 'Which header file is traditionally included for Turbo C graphics routines?', options: ['<graphics.h>', '<opengl.h>', '<draw.h>', '<canvas.h>'], correct: 0 }
+            ]
+        },
+        {
+            id: 8,
+            subject: 'Full Stack Web Development-II Lab',
+            code: 'CA329',
+            type: 'LAB / PRACTICAL',
+            title: 'Full Stack Web Development-II Practical',
+            questions: 5,
+            timeLimit: 5,
+            difficulty: 'Medium',
+            color: '#4ade80',
+            attempted: false,
+            score: 0,
+            questionsList: [
+                { q: 'Which command initializes a new Node.js project creating package.json?', options: ['npm start', 'npm init -y', 'node init', 'npm create-app'], correct: 1 },
+                { q: 'Which tool is used to test REST APIs during backend development?', options: ['Postman / Hoppscotch', 'VS Code Live Server', 'Git Bash', 'Webpack'], correct: 0 },
+                { q: 'Which Mongoose method saves a document instance to MongoDB?', options: ['doc.save()', 'doc.insert()', 'doc.push()', 'doc.store()'], correct: 0 },
+                { q: 'What does CORS stand for in web API development?', options: ['Cross-Origin Resource Sharing', 'Central Online Relay Service', 'Cross Open Request Standard', 'Client Origin Redirect System'], correct: 0 },
+                { q: 'Which environment variable file is commonly used to store database URIs and JWT secrets securely?', options: ['package.json', '.env', 'config.xml', 'app.config.js'], correct: 1 }
+            ]
+        },
+        {
+            id: 9,
+            subject: 'Mobile Application Development Lab',
+            code: 'CA330',
+            type: 'LAB / PRACTICAL',
+            title: 'Mobile Application Development Practical',
+            questions: 5,
+            timeLimit: 5,
+            difficulty: 'Easy',
+            color: '#f093fb',
+            attempted: false,
+            score: 0,
+            questionsList: [
+                { q: 'Which XML attribute sets the unique identifier for a view widget in Android?', options: ['android:id', 'android:name', 'android:key', 'android:tag'], correct: 0 },
+                { q: 'Which method handles click events on a Button in Android Activity?', options: ['setOnClickListener()', 'setOnTabListener()', 'setButtonAction()', 'onClickHandle()'], correct: 0 },
+                { q: 'What is Toast in Android development?', options: ['A transient small pop-up notification message', 'A database model', 'A layout widget', 'A background service'], correct: 0 },
+                { q: 'Which UI component displays a scrollable list of items efficiently in Android?', options: ['ScrollView', 'RecyclerView', 'TableLayout', 'AbsoluteLayout'], correct: 1 },
+                { q: 'Which function is used to navigate to another Activity via Intent?', options: ['startActivity(intent)', 'openActivity(intent)', 'launchScreen(intent)', 'nextActivity(intent)'], correct: 0 }
             ]
         }
     ];
 
     const quizHistory = [
-        { quiz: 'DSA Fundamentals Quiz', subject: 'Data Structures', score: '4/5', percent: 80, date: 'Aug 5, 2026', grade: 'A' },
-        { quiz: 'SQL & Normalization', subject: 'Database Systems', score: '5/5', percent: 100, date: 'Aug 3, 2026', grade: 'A+' },
-        { quiz: 'Process Management', subject: 'Operating Systems', score: '3/5', percent: 60, date: 'Jul 28, 2026', grade: 'B' },
-        { quiz: 'Network Protocols', subject: 'Computer Networks', score: '4/5', percent: 80, date: 'Jul 25, 2026', grade: 'A' }
+        { quiz: 'Computer Graphics Fundamentals', subject: 'Computer Graphics and Multimedia Application', code: 'CA301', score: '4/5', percent: 80, date: 'Aug 10, 2026', grade: 'A' },
+        { quiz: 'Algorithm Analysis Fundamentals', subject: 'Algorithm Analysis and Design', code: 'CA324', score: '5/5', percent: 100, date: 'Aug 08, 2026', grade: 'O' },
+        { quiz: 'Full Stack Web Development-II', subject: 'Full Stack Web Development-II', code: 'CA325', score: '4/5', percent: 80, date: 'Aug 05, 2026', grade: 'A' }
     ];
 
     const assignmentsData = [
-        { id: 1, title: 'DSA Problem Set 4', subject: 'Data Structures & Algorithms', code: 'CS301', deadline: '2026-08-10', status: 'pending', file: null },
-        { id: 2, title: 'ER Diagram Design', subject: 'Database Management Systems', code: 'CS302', deadline: '2026-08-12', status: 'pending', file: null },
-        { id: 3, title: 'OS Process Scheduling Report', subject: 'Operating Systems', code: 'CS303', deadline: '2026-08-05', status: 'submitted', file: 'OS_Report.pdf' },
-        { id: 4, title: 'Network Topology Analysis', subject: 'Computer Networks', code: 'CS304', deadline: '2026-08-03', status: 'submitted', file: 'Network_Analysis.pdf' },
-        { id: 5, title: 'UML Use Case Diagrams', subject: 'Software Engineering', code: 'CS305', deadline: '2026-08-15', status: 'pending', file: null },
-        { id: 6, title: 'Socket Programming Lab', subject: 'Computer Networks', code: 'CS304', deadline: '2026-07-28', status: 'late', file: 'Socket_Lab.zip' },
-        { id: 7, title: 'SQL Query Optimization', subject: 'Database Management Systems', code: 'CS302', deadline: '2026-07-30', status: 'submitted', file: 'SQL_Optimization.pdf' },
-        { id: 8, title: 'Graph Theory Proofs', subject: 'Discrete Mathematics', code: 'MA301', deadline: '2026-08-01', status: 'submitted', file: 'Graph_Proofs.pdf' }
+        { id: 1, title: 'Computer Graphics Fundamentals', subject: 'Computer Graphics and Multimedia Application', code: 'CA301', deadline: '2026-08-18', status: 'pending', file: null },
+        { id: 2, title: 'Multimedia Image Processing', subject: 'Computer Graphics and Multimedia Application', code: 'CA301', deadline: '2026-08-22', status: 'pending', file: null },
+        { id: 3, title: 'Algorithm Complexity Analysis', subject: 'Algorithm Analysis and Design', code: 'CA324', deadline: '2026-08-16', status: 'pending', file: null },
+        { id: 4, title: 'Sorting Algorithms Implementation', subject: 'Algorithm Analysis and Design', code: 'CA324', deadline: '2026-08-25', status: 'pending', file: null },
+        { id: 5, title: 'React & API Integration', subject: 'Full Stack Web Development-II', code: 'CA325', deadline: '2026-08-20', status: 'pending', file: null },
+        { id: 6, title: 'Responsive Full Stack Web Application', subject: 'Full Stack Web Development-II', code: 'CA325', deadline: '2026-08-28', status: 'pending', file: null },
+        { id: 7, title: 'Mobile UI and Navigation', subject: 'Introduction to Mobile Application Development', code: 'CA326', deadline: '2026-08-19', status: 'pending', file: null },
+        { id: 8, title: 'IoT Architecture and Applications', subject: 'Introduction to Internet of Things', code: 'CA327', deadline: '2026-08-23', status: 'pending', file: null },
+        { id: 9, title: 'Career Planning and Professional Development', subject: 'Career Development Course', code: 'CG301', deadline: '2026-08-26', status: 'pending', file: null }
     ];
 
 
@@ -295,7 +524,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pageId === 'schedule') renderSchedule();
         if (pageId === 'classes') renderClasses();
         if (pageId === 'fees') renderFees();
-        if (pageId === 'results') renderResults(1);
+        if (pageId === 'results') {
+            renderResults(1);
+            renderGradeDistribution();
+        }
         if (pageId === 'pyq') renderPYQ();
         if (pageId === 'exams') renderExamTimetable();
         if (pageId === 'quiz') renderQuiz();
@@ -620,43 +852,103 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderSchedule() {
         const navContainer = document.getElementById('scheduleDayNav');
         const gridContainer = document.getElementById('scheduleGrid');
-        const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        const fullDayLabels = { Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday' };
         const today = new Date().getDay(); // 0=Sun
-        const todayIdx = today === 0 ? 5 : today - 1; // Map to Mon=0
+        const todayIdx = today === 0 ? 6 : today - 1; // Mon=0 ... Sun=6
 
         // Day tabs
         navContainer.innerHTML = dayNames.map((d, i) => 
-            `<button class="day-tab ${i === todayIdx ? 'active' : ''}" data-day="${d}">${d}</button>`
+            `<button class="day-tab ${i === todayIdx ? 'active' : ''}" data-day="${d}">${fullDayLabels[d]}</button>`
         ).join('');
 
-        // Render selected day's schedule
+        const periodDefinitions = [
+            { num: 1, name: '1st Period', time: '9:00 AM – 9:50 AM' },
+            { num: 2, name: '2nd Period', time: '9:50 AM – 10:40 AM' },
+            { num: 3, name: '3rd Period', time: '10:40 AM – 11:30 AM' },
+            { num: 4, name: '4th Period', time: '11:30 AM – 12:20 PM' },
+            { isBreak: true, name: 'RECESS / LUNCH BREAK', time: '12:20 PM – 12:40 PM' },
+            { num: 5, name: '5th Period', time: '12:40 PM – 1:30 PM' },
+            { num: 6, name: '6th Period', time: '1:30 PM – 2:20 PM' },
+            { num: 7, name: '7th Period', time: '2:20 PM – 3:10 PM' },
+            { num: 8, name: '8th Period', time: '3:10 PM – 4:00 PM' }
+        ];
+
         function showDay(day) {
             const slots = scheduleByDay[day] || [];
-            const timeSlots = ['8:00', '9:00', '10:00', '11:00', '12:00', '1:00', '2:00', '3:00', '4:00'];
+            let html = '<div class="schedule-container">';
+            let skipPeriodsRemaining = 0;
 
-            let html = '<div class="schedule-header"></div>';
-            html += '<div class="schedule-header">Schedule</div>';
-
-            timeSlots.forEach(time => {
-                html += `<div class="schedule-time">${time}</div>`;
-                const match = slots.find(s => s.time.startsWith(time.replace(':00', '')));
-                if (match) {
+            periodDefinitions.forEach((pd) => {
+                if (pd.isBreak) {
                     html += `
-                        <div class="schedule-slot filled" style="border-left-color: ${match.color};">
-                            <div class="schedule-slot-subject">${match.subject}</div>
-                            <div class="schedule-slot-info">${match.room} • ${match.prof}</div>
+                        <div class="timetable-break-bar">
+                            <i class="fa-solid fa-mug-hot"></i>
+                            <span>${pd.name} (${pd.time})</span>
+                        </div>
+                    `;
+                    return;
+                }
+
+                if (skipPeriodsRemaining > 0) {
+                    skipPeriodsRemaining--;
+                    return;
+                }
+
+                const match = slots.find(s => s.startPeriod === pd.num);
+
+                if (match) {
+                    const isLab = match.duration >= 2;
+                    if (match.duration > 1) {
+                        skipPeriodsRemaining = match.duration - 1;
+                    }
+
+                    let typeBadgeClass = isLab ? 'badge-practical' : 'badge-theory';
+                    let groupBadgeText = match.code === 'REMEDIAL' ? 'Self Study' : (isLab || match.type === 'Lab' ? 'Lab • Group 1' : 'Theory');
+
+                    html += `
+                        <div class="timetable-row">
+                            <div class="timetable-time-cell">
+                                <span class="timetable-period-tag">${match.periodName}</span>
+                                <span class="timetable-clock-time">${match.time}</span>
+                            </div>
+                            <div class="timetable-card filled ${isLab ? 'lab-block' : ''}" style="border-left-color: ${match.color};">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; flex-wrap: wrap; gap: 6px;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span class="badge ${typeBadgeClass}">${groupBadgeText}</span>
+                                        <span style="font-family: monospace; font-size: 0.82rem; font-weight: 700; color: var(--accent-1);">${match.code}</span>
+                                    </div>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> ${match.time}</span>
+                                </div>
+                                <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-primary); margin: 0 0 8px;">${match.subject}</h3>
+                                <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.8rem; color: var(--text-secondary);">
+                                    <div><i class="fa-solid fa-chalkboard-user" style="color: var(--accent-1);"></i> <strong>${match.prof}</strong></div>
+                                    <div><i class="fa-solid fa-location-dot" style="color: var(--accent-2);"></i> <strong>${match.room}</strong></div>
+                                </div>
+                            </div>
                         </div>
                     `;
                 } else {
-                    html += '<div class="schedule-slot"></div>';
+                    html += `
+                        <div class="timetable-row">
+                            <div class="timetable-time-cell">
+                                <span class="timetable-period-tag">${pd.name}</span>
+                                <span class="timetable-clock-time">${pd.time}</span>
+                            </div>
+                            <div class="timetable-card empty">
+                                <i class="fa-regular fa-circle-pause" style="margin-right: 8px;"></i> No Class Scheduled
+                            </div>
+                        </div>
+                    `;
                 }
             });
 
+            html += '</div>';
             gridContainer.innerHTML = html;
-            gridContainer.style.gridTemplateColumns = '80px 1fr';
         }
 
         showDay(dayNames[todayIdx]);
+        updateLiveTracker();
 
         navContainer.addEventListener('click', e => {
             const tab = e.target.closest('.day-tab');
@@ -667,6 +959,102 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    function updateLiveTracker() {
+        const liveBody = document.getElementById('liveClassBody');
+        const nextBody = document.getElementById('nextClassBody');
+        const liveCountdown = document.getElementById('liveCountdown');
+        const nextCountdown = document.getElementById('nextCountdown');
+
+        if (!liveBody || !nextBody) return;
+
+        const now = new Date();
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const dayCode = days[now.getDay()];
+        const todaySlots = scheduleByDay[dayCode] || [];
+
+        const curMinutes = now.getHours() * 60 + now.getMinutes();
+
+        function parseMinutes(timeStr) {
+            const parts = timeStr.trim().split(' ');
+            const [h, m] = parts[0].split(':').map(Number);
+            let mins = (h % 12) * 60 + m;
+            if (parts[1] && parts[1].toUpperCase() === 'PM') mins += 12 * 60;
+            return mins;
+        }
+
+        let activeSlot = null;
+        let nextSlot = null;
+
+        for (const slot of todaySlots) {
+            const timeParts = slot.time.split('–');
+            if (timeParts.length === 2) {
+                const startMins = parseMinutes(timeParts[0]);
+                const endMins = parseMinutes(timeParts[1]);
+
+                if (curMinutes >= startMins && curMinutes < endMins) {
+                    activeSlot = { ...slot, endMins };
+                } else if (curMinutes < startMins && !nextSlot) {
+                    nextSlot = { ...slot, startMins };
+                }
+            }
+        }
+
+        if (activeSlot) {
+            const minsLeft = activeSlot.endMins - curMinutes;
+            if (liveCountdown) liveCountdown.textContent = `Ends in ${minsLeft} min`;
+            liveBody.innerHTML = `
+                <h4>${activeSlot.subject} (${activeSlot.code})</h4>
+                <div class="status-meta">
+                    <span><i class="fa-solid fa-chalkboard-user" style="color: var(--accent-1);"></i> ${activeSlot.prof}</span>
+                    <span><i class="fa-solid fa-location-dot" style="color: var(--accent-2);"></i> ${activeSlot.room}</span>
+                    <span><i class="fa-regular fa-clock" style="color: var(--text-muted);"></i> ${activeSlot.time}</span>
+                </div>
+            `;
+        } else {
+            if (liveCountdown) liveCountdown.textContent = 'No active session';
+            liveBody.innerHTML = `
+                <h4>No class currently in session</h4>
+                <div class="status-meta">
+                    <span><i class="fa-regular fa-calendar-check" style="color: var(--accent-1);"></i> Relax or review notes for your upcoming class</span>
+                </div>
+            `;
+        }
+
+        if (nextSlot) {
+            const minsUntil = nextSlot.startMins - curMinutes;
+            if (nextCountdown) nextCountdown.textContent = `Starts in ${minsUntil} min`;
+            nextBody.innerHTML = `
+                <h4>${nextSlot.subject} (${nextSlot.code})</h4>
+                <div class="status-meta">
+                    <span><i class="fa-solid fa-chalkboard-user" style="color: var(--accent-1);"></i> ${nextSlot.prof}</span>
+                    <span><i class="fa-solid fa-location-dot" style="color: var(--accent-2);"></i> ${nextSlot.room}</span>
+                    <span><i class="fa-regular fa-clock" style="color: var(--text-muted);"></i> ${nextSlot.time}</span>
+                </div>
+            `;
+        } else if (todaySlots.length > 0) {
+            const firstSlot = todaySlots[0];
+            if (nextCountdown) nextCountdown.textContent = `Scheduled today`;
+            nextBody.innerHTML = `
+                <h4>${firstSlot.subject} (${firstSlot.code})</h4>
+                <div class="status-meta">
+                    <span><i class="fa-solid fa-chalkboard-user" style="color: var(--accent-1);"></i> ${firstSlot.prof}</span>
+                    <span><i class="fa-solid fa-location-dot" style="color: var(--accent-2);"></i> ${firstSlot.room}</span>
+                    <span><i class="fa-regular fa-clock" style="color: var(--text-muted);"></i> ${firstSlot.time}</span>
+                </div>
+            `;
+        } else {
+            if (nextCountdown) nextCountdown.textContent = 'No more classes today';
+            nextBody.innerHTML = `
+                <h4>All classes completed for today!</h4>
+                <div class="status-meta">
+                    <span><i class="fa-solid fa-check-double" style="color: #4ade80;"></i> Check tomorrow's schedule in the timetable grid above</span>
+                </div>
+            `;
+        }
+    }
+
+    setInterval(updateLiveTracker, 30000);
 
     // =============================================
     // CLASSES PAGE
@@ -681,7 +1069,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <!-- View Mode -->
                     <div class="class-card-view" data-idx="${i}">
                         <div class="class-card-top-row">
-                            <div class="class-card-code">${c.code}</div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div class="class-card-code">${c.code}</div>
+                                <span class="subject-type-badge ${c.type === 'Practical' ? 'badge-practical' : 'badge-theory'}">${c.type === 'Practical' ? 'Lab • Group 1' : 'Theory'}</span>
+                            </div>
                             <button class="btn-edit-class" data-idx="${i}" title="Edit Course">
                                 <i class="fa-solid fa-pen-nib"></i>
                             </button>
@@ -690,7 +1081,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="class-card-meta">
                             <div class="class-card-meta-item"><i class="fa-solid fa-chalkboard-user"></i> ${c.prof}</div>
                             <div class="class-card-meta-item"><i class="fa-solid fa-location-dot"></i> ${c.room}</div>
-                            <div class="class-card-meta-item"><i class="fa-regular fa-clock"></i> ${c.days} | ${c.time}</div>
+                            <div class="class-card-meta-item"><i class="fa-regular fa-calendar-days"></i> ${c.days}</div>
+                            <div class="class-card-meta-item"><i class="fa-regular fa-clock"></i> ${c.time}</div>
                             <div class="class-card-meta-item"><i class="fa-solid fa-star-half-stroke"></i> ${c.credits} Credits</div>
                         </div>
                     </div>
@@ -825,43 +1217,61 @@ document.addEventListener('DOMContentLoaded', () => {
     // =============================================
 
     function renderFees() {
-        // Fee breakdown
+        // Calculate summary metrics dynamically from feeBreakdown source of truth
+        const total = feeBreakdown.reduce((sum, f) => sum + f.amount, 0);
+        const paid = feeBreakdown.filter(f => f.status === 'Paid').reduce((sum, f) => sum + f.amount, 0);
+        const pending = total - paid;
+        const percent = Math.round((paid / total) * 1000) / 10;
+
+        // Update fee overview UI elements
+        const totalEl = document.querySelector('.fee-amount');
+        const paidEl = document.querySelector('.paid-label');
+        const pendingEl = document.querySelector('.pending-label');
+        const fill = document.querySelector('.fee-progress-fill');
+
+        if (totalEl) totalEl.textContent = `₹${total.toLocaleString()}`;
+        if (paidEl) paidEl.innerHTML = `<i class="fa-solid fa-circle-check"></i> Paid: ₹${paid.toLocaleString()}`;
+        if (pendingEl) pendingEl.innerHTML = `<i class="fa-regular fa-clock"></i> Pending: ₹${pending.toLocaleString()}`;
+        if (fill) {
+            fill.dataset.percent = percent;
+            setTimeout(() => { fill.style.width = percent + '%'; }, 300);
+        }
+
+        // Fee breakdown table
         const fbody = document.getElementById('feeBreakdownBody');
-        fbody.innerHTML = feeBreakdown.map(f => {
-            let badgeClass = 'badge-success';
-            if (f.status === 'Pending') badgeClass = 'badge-warning';
-            if (f.status === 'Overdue') badgeClass = 'badge-danger';
-            return `
-                <tr>
-                    <td>${f.component}</td>
-                    <td>$${f.amount.toLocaleString()}</td>
-                    <td><span class="badge ${badgeClass}">${f.status}</span></td>
-                </tr>
-            `;
-        }).join('');
+        if (fbody) {
+            fbody.innerHTML = feeBreakdown.map(f => {
+                let badgeClass = 'badge-success';
+                if (f.status === 'Pending') badgeClass = 'badge-warning';
+                if (f.status === 'Overdue') badgeClass = 'badge-danger';
+                return `
+                    <tr>
+                        <td>${f.component}</td>
+                        <td>₹${f.amount.toLocaleString()}</td>
+                        <td><span class="badge ${badgeClass}">${f.status}</span></td>
+                    </tr>
+                `;
+            }).join('');
+        }
 
-        // Payment history
+        // Payment history table
         const phbody = document.getElementById('paymentHistoryBody');
-        phbody.innerHTML = paymentHistory.map(p => {
-            let badgeClass = 'badge-success';
-            if (p.status === 'Pending') badgeClass = 'badge-warning';
-            if (p.status === 'Overdue') badgeClass = 'badge-danger';
-            return `
-                <tr>
-                    <td>${new Date(p.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
-                    <td style="font-family: monospace; color: var(--accent-1);">${p.txnId}</td>
-                    <td>${p.desc}</td>
-                    <td>$${p.amount.toLocaleString()}</td>
-                    <td><span class="badge ${badgeClass}">${p.status}</span></td>
-                </tr>
-            `;
-        }).join('');
-
-        // Animate fee progress bar
-        setTimeout(() => {
-            const fill = document.querySelector('.fee-progress-fill');
-            if (fill) fill.style.width = fill.dataset.percent + '%';
-        }, 300);
+        if (phbody) {
+            phbody.innerHTML = paymentHistory.map(p => {
+                let badgeClass = 'badge-success';
+                if (p.status === 'Pending') badgeClass = 'badge-warning';
+                if (p.status === 'Overdue') badgeClass = 'badge-danger';
+                return `
+                    <tr>
+                        <td>${new Date(p.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                        <td style="font-family: monospace; color: var(--accent-1);">${p.txnId}</td>
+                        <td>${p.desc}</td>
+                        <td>₹${p.amount.toLocaleString()}</td>
+                        <td><span class="badge ${badgeClass}">${p.status}</span></td>
+                    </tr>
+                `;
+            }).join('');
+        }
     }
 
     // =============================================
@@ -873,43 +1283,83 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!data) return;
 
         const container = document.getElementById('semesterResults');
+
+        if (sem === 5) {
+            container.innerHTML = `
+                <div style="padding: 30px; text-align: center; background: var(--bg-glass); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent-1); margin-bottom: 8px;">
+                        <i class="fa-solid fa-book-open-reader"></i> Fifth Semester — Current Enrolled Semester
+                    </div>
+                    <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 16px; font-size: 0.9rem;">
+                        Official Semester 5 examination marks are not published yet. 9 courses currently enrolled (27 Total Credits).
+                    </p>
+                    <div style="display: inline-flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: center;">
+                        <span class="badge badge-primary" style="font-size: 0.85rem; padding: 6px 14px;">Academic Status: In Progress</span>
+                        <span class="badge badge-success" style="font-size: 0.85rem; padding: 6px 14px;">Total Enrolled Credits: 27</span>
+                    </div>
+                </div>
+            `;
+            document.querySelectorAll('.sem-tab').forEach(t => {
+                t.classList.toggle('active', parseInt(t.dataset.sem) === sem);
+            });
+            return;
+        }
+
         let html = `
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Subject</th>
-                        <th>Code</th>
-                        <th>Credits</th>
-                        <th>Grade</th>
-                        <th>Points</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+                <div>
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 0;">${data.semesterName} (${data.academicYear})</h3>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Integral University, Lucknow • BCA</span>
+                </div>
+                <div class="badge badge-success" style="font-size: 0.85rem; padding: 4px 12px;"><i class="fa-solid fa-circle-check"></i> ${data.result}</div>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Course Title</th>
+                            <th>ESE</th>
+                            <th>CA</th>
+                            <th>Total</th>
+                            <th>Credit</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
         `;
 
         data.subjects.forEach(s => {
             let gradeClass = 'grade-A';
-            if (s.grade.startsWith('B')) gradeClass = 'grade-B';
+            if (s.grade === 'O') gradeClass = 'grade-O';
+            else if (s.grade.startsWith('B')) gradeClass = 'grade-B';
             else if (s.grade.startsWith('C')) gradeClass = 'grade-C';
             else if (s.grade.startsWith('D')) gradeClass = 'grade-D';
 
             html += `
                 <tr>
+                    <td style="font-family: monospace; color: var(--accent-1); font-weight: 600;">${s.code}</td>
                     <td>${s.name}</td>
-                    <td style="font-family: monospace; color: var(--accent-1);">${s.code}</td>
+                    <td>${s.ese}</td>
+                    <td>${s.ca}</td>
+                    <td><strong>${s.total}</strong></td>
                     <td>${s.credits}</td>
                     <td><span class="grade-badge ${gradeClass}">${s.grade}</span></td>
-                    <td>${s.points.toFixed(1)}</td>
                 </tr>
             `;
         });
 
         html += `
-                </tbody>
-            </table>
-            <div class="semester-gpa">
-                <span class="semester-gpa-label">Semester ${sem} GPA</span>
-                <span class="semester-gpa-value">${data.gpa.toFixed(2)}</span>
+                    </tbody>
+                </table>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 20px; padding: 16px; background: var(--bg-glass); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                <div><span style="font-size: 0.75rem; color: var(--text-muted); display: block;">ESE Total</span><strong style="font-size: 0.95rem; color: var(--text-primary);">${data.eseTotal}</strong></div>
+                <div><span style="font-size: 0.75rem; color: var(--text-muted); display: block;">CA Total</span><strong style="font-size: 0.95rem; color: var(--text-primary);">${data.caTotal}</strong></div>
+                <div><span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Overall Marks</span><strong style="font-size: 0.95rem; color: var(--text-primary);">${data.overallTotal}</strong></div>
+                <div><span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Semester Credits</span><strong style="font-size: 0.95rem; color: var(--text-primary);">${data.totalCredits} Credits</strong></div>
+                <div><span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Semester SGPA</span><strong style="font-size: 1.1rem; color: var(--accent-1);">${data.sgpa.toFixed(2)} / 10.00</strong></div>
+                <div><span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Cumulative CGPA</span><strong style="font-size: 1.1rem; color: var(--accent-5);">${data.cgpa.toFixed(2)} / 10.00</strong></div>
             </div>
         `;
 
@@ -927,35 +1377,45 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tab) renderResults(parseInt(tab.dataset.sem));
     });
 
-    // Grade distribution
+    // SGPA & CGPA progression chart (10.00 scale)
     function renderGradeDistribution() {
-        const allGrades = {};
-        Object.values(resultsData).forEach(sem => {
-            sem.subjects.forEach(s => {
-                const base = s.grade.replace(/[+-]/, '');
-                allGrades[base] = (allGrades[base] || 0) + 1;
-            });
-        });
-
-        const gradeOrder = ['A', 'B', 'C', 'D'];
-        const colors = { A: 'var(--gradient-green)', B: 'var(--gradient-primary)', C: 'linear-gradient(135deg, #fbbf24, #f59e0b)', D: 'var(--gradient-red)' };
-        const maxCount = Math.max(...Object.values(allGrades), 1);
-
         const container = document.getElementById('gradeDistribution');
-        container.innerHTML = `<div class="grade-dist-grid">
-            ${gradeOrder.map(g => {
-                const count = allGrades[g] || 0;
-                const heightPercent = (count / maxCount) * 100;
-                return `
-                    <div class="grade-bar-wrapper">
-                        <div class="grade-bar" style="height: ${heightPercent}%; background: ${colors[g]};">
-                            <span class="grade-bar-count">${count}</span>
+        if (!container) return;
+
+        const semData = [
+            { sem: 'Sem 1', sgpa: 8.12, cgpa: 8.12, color: 'linear-gradient(135deg, #667eea, #764ba2)' },
+            { sem: 'Sem 2', sgpa: 8.20, cgpa: 8.16, color: 'linear-gradient(135deg, #00d2ff, #3a7bd5)' },
+            { sem: 'Sem 3', sgpa: 8.36, cgpa: 8.23, color: 'linear-gradient(135deg, #4ade80, #22c55e)' },
+            { sem: 'Sem 4', sgpa: 7.92, cgpa: 8.15, color: 'linear-gradient(135deg, #f093fb, #f5576c)' }
+        ];
+
+        let html = `
+            <div class="grade-dist-grid" style="height: 180px; display: flex; align-items: flex-end; justify-content: space-around; padding: 25px 10px 10px; gap: 15px;">
+                ${semData.map(d => {
+                    const heightPercent = Math.max(15, (d.sgpa / 10.0) * 100);
+                    return `
+                        <div class="grade-bar-wrapper" style="flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; position: relative;">
+                            <div class="grade-bar" style="width: 100%; max-width: 55px; height: 0%; min-height: 4px; background: ${d.color}; border-radius: 8px 8px 0 0; transition: height 1s cubic-bezier(0.4, 0, 0.2, 1); position: relative; box-shadow: 0 0 15px rgba(102, 126, 234, 0.25);" data-height="${heightPercent}%">
+                                <span class="grade-bar-count" style="position: absolute; top: -24px; left: 50%; transform: translateX(-50%); font-size: 0.78rem; font-weight: 700; color: var(--text-primary); white-space: nowrap;">${d.sgpa.toFixed(2)}</span>
+                            </div>
+                            <span class="grade-bar-label" style="font-size: 0.8rem; font-weight: 700; margin-top: 8px; color: var(--text-primary);">${d.sem}</span>
+                            <span style="font-size: 0.68rem; color: var(--text-muted); font-weight: 500;">CGPA ${d.cgpa.toFixed(2)}</span>
                         </div>
-                        <span class="grade-bar-label">${g}</span>
-                    </div>
-                `;
-            }).join('')}
-        </div>`;
+                    `;
+                }).join('')}
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border-color); font-size: 0.78rem; color: var(--text-secondary);">
+                <span><i class="fa-solid fa-chart-line" style="color:var(--accent-1);"></i> Scale: <strong>10.00 Max CGPA</strong></span>
+                <span>Overall CGPA: <strong style="color:var(--accent-1); font-size:0.9rem;">8.15 / 10.00</strong></span>
+            </div>
+        `;
+        container.innerHTML = html;
+
+        setTimeout(() => {
+            container.querySelectorAll('.grade-bar').forEach(bar => {
+                bar.style.height = bar.dataset.height;
+            });
+        }, 100);
     }
 
     // =============================================
@@ -963,71 +1423,142 @@ document.addEventListener('DOMContentLoaded', () => {
     // =============================================
 
     function renderPYQ() {
-        // Build filter pills from unique subjects
-        const subjects = [...new Set(pyqData.map(p => p.subject))];
-        const filterContainer = document.getElementById('pyqSubjectFilter');
-        if (filterContainer) {
-            filterContainer.innerHTML = `<button class="filter-pill active" data-subject="all">All Subjects</button>` +
-                subjects.map(s => `<button class="filter-pill" data-subject="${s}">${s.length > 20 ? s.substring(0, 18) + '...' : s}</button>`).join('');
+        // Populate subject dropdown with all 32 subjects grouped by semester
+        const subjectSelect = document.getElementById('pyqSubjectSelect');
+        if (subjectSelect) {
+            let options = `<option value="all">All Subjects (32)</option>`;
+            for (let sem = 1; sem <= 4; sem++) {
+                const semSubjects = pyqData.filter(p => p.sem === sem);
+                const uniqueSubjects = [...new Map(semSubjects.map(item => [item.code, item])).values()];
+                options += `<optgroup label="Semester ${sem}">`;
+                uniqueSubjects.forEach(s => {
+                    options += `<option value="${s.subject}">[${s.code}] ${s.subject}</option>`;
+                });
+                options += `</optgroup>`;
+            }
+            subjectSelect.innerHTML = options;
         }
+
+        // Calculate and update dynamic stat counters
+        const totalPapers = pyqData.filter(p => p.hasFile).length;
+        const uniqueSubjectsCovered = new Set(pyqData.filter(p => p.hasFile).map(p => p.code)).size;
+        const totalDownloads = pyqData.reduce((acc, p) => acc + (p.downloads || 0), 0);
+        const popularCount = pyqData.filter(p => p.popular).length;
+
+        const elTotal = document.getElementById('pyqStatTotalPapers');
+        const elSub = document.getElementById('pyqStatSubjects');
+        const elDl = document.getElementById('pyqStatDownloads');
+        const elPop = document.getElementById('pyqStatPopular');
+
+        if (elTotal) { elTotal.dataset.target = totalPapers; elTotal.textContent = totalPapers; }
+        if (elSub) { elSub.dataset.target = uniqueSubjectsCovered; elSub.textContent = uniqueSubjectsCovered; }
+        if (elDl) { elDl.dataset.target = totalDownloads; elDl.textContent = totalDownloads; }
+        if (elPop) { elPop.dataset.target = popularCount; elPop.textContent = popularCount; }
 
         applyPYQFilters();
 
-        // Filter pill clicks
-        if (filterContainer) {
-            filterContainer.addEventListener('click', e => {
+        // Semester pills handler
+        const semPillsContainer = document.getElementById('pyqSemesterPills');
+        if (semPillsContainer) {
+            semPillsContainer.addEventListener('click', e => {
                 const pill = e.target.closest('.filter-pill');
                 if (pill) {
-                    filterContainer.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+                    semPillsContainer.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
                     pill.classList.add('active');
                     applyPYQFilters();
                 }
             });
         }
 
+        // Search & Filter event listeners
+        const searchInput = document.getElementById('pyqSearchInput');
         const yearFilter = document.getElementById('pyqYearFilter');
         const examFilter = document.getElementById('pyqExamFilter');
+
+        if (searchInput) searchInput.addEventListener('input', applyPYQFilters);
+        if (subjectSelect) subjectSelect.addEventListener('change', applyPYQFilters);
         if (yearFilter) yearFilter.addEventListener('change', applyPYQFilters);
         if (examFilter) examFilter.addEventListener('change', applyPYQFilters);
     }
 
     function applyPYQFilters() {
-        const activeSubject = document.querySelector('#pyqSubjectFilter .filter-pill.active')?.dataset.subject || 'all';
+        const activeSem = document.querySelector('#pyqSemesterPills .filter-pill.active')?.dataset.sem || 'all';
+        const searchVal = (document.getElementById('pyqSearchInput')?.value || '').trim().toLowerCase();
+        const subjectVal = document.getElementById('pyqSubjectSelect')?.value || 'all';
         const yearVal = document.getElementById('pyqYearFilter')?.value || 'all';
         const examVal = document.getElementById('pyqExamFilter')?.value || 'all';
 
-        let filtered = pyqData;
-        if (activeSubject !== 'all') filtered = filtered.filter(p => p.subject === activeSubject);
-        if (yearVal !== 'all') filtered = filtered.filter(p => p.year === parseInt(yearVal));
-        if (examVal !== 'all') filtered = filtered.filter(p => p.examType === examVal);
+        let filtered = pyqData.filter(p => {
+            if (activeSem !== 'all' && p.sem !== parseInt(activeSem)) return false;
+            if (yearVal !== 'all' && p.year !== yearVal) return false;
+            if (examVal !== 'all' && p.examType !== examVal) return false;
+            if (subjectVal !== 'all' && p.subject !== subjectVal) return false;
+
+            if (searchVal) {
+                const matchCode = p.code.toLowerCase().includes(searchVal);
+                const matchName = p.subject.toLowerCase().includes(searchVal);
+                const matchSem = `semester ${p.sem}`.includes(searchVal) || `sem ${p.sem}`.includes(searchVal);
+                if (!matchCode && !matchName && !matchSem) return false;
+            }
+            return true;
+        });
 
         const grid = document.getElementById('pyqGrid');
         if (!grid) return;
 
         if (filtered.length === 0) {
-            grid.innerHTML = `<div class="card" style="grid-column: 1/-1; text-align:center; padding: 3rem;"><p style="color: var(--text-muted);"><i class="fa-solid fa-folder-open" style="font-size:2rem; display:block; margin-bottom:1rem;"></i>No papers found matching your filters.</p></div>`;
+            grid.innerHTML = `
+                <div class="card" style="grid-column: 1/-1; text-align:center; padding: 3rem; background: var(--bg-glass);">
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">
+                        <i class="fa-solid fa-folder-open" style="font-size:2.2rem; display:block; margin-bottom:1rem; color: var(--accent-1);"></i>
+                        No question papers found matching your criteria.
+                    </p>
+                </div>
+            `;
             return;
         }
 
-        grid.innerHTML = filtered.map((p, i) => `
-            <div class="pyq-card" style="animation-delay: ${i * 0.08}s;">
-                <div class="pyq-card-header">
-                    <h3>${p.subject}</h3>
-                    <span class="difficulty-badge difficulty-${p.difficulty.toLowerCase()}">${p.difficulty}</span>
+        grid.innerHTML = filtered.map((p, i) => {
+            const isLab = p.type.includes('Lab');
+            const typeBadgeClass = isLab ? 'badge-practical' : 'badge-theory';
+
+            return `
+                <div class="pyq-card" style="animation-delay: ${i * 0.05}s;">
+                    <div class="pyq-card-header">
+                        <div>
+                            <span class="badge ${typeBadgeClass}" style="margin-bottom: 6px;">${p.type}</span>
+                            <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-primary);">${p.subject}</h3>
+                        </div>
+                    </div>
+                    <div class="pyq-card-meta" style="margin-top: 10px; gap: 10px;">
+                        <span><i class="fa-solid fa-hashtag" style="color:var(--accent-1);"></i> <strong>${p.code}</strong></span>
+                        <span><i class="fa-solid fa-layer-group" style="color:var(--accent-2);"></i> Semester ${p.sem} (${p.year})</span>
+                        <span><i class="fa-solid fa-file-lines" style="color:var(--accent-5);"></i> ${p.examType}</span>
+                    </div>
+                    <div class="pyq-card-footer" style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border-color);">
+                        ${p.hasFile ? `
+                            <div style="display: flex; gap: 8px; width: 100%; align-items: center; justify-content: space-between;">
+                                <div style="display: flex; gap: 8px;">
+                                    <button class="pyq-download-btn" onclick="alert('Viewing ${p.code} ${p.examType} Question Paper (Demo)')" style="padding: 0.45rem 0.9rem; font-size: 0.8rem;">
+                                        <i class="fa-solid fa-eye"></i> View
+                                    </button>
+                                    <button class="pyq-download-btn" onclick="alert('Downloading ${p.code}_${p.examType.replace(/\\s/g,'_')}_${p.year.replace('–','_')}.pdf')" style="padding: 0.45rem 0.9rem; font-size: 0.8rem; background: var(--gradient-primary);">
+                                        <i class="fa-solid fa-download"></i> PDF
+                                    </button>
+                                </div>
+                                <span class="pyq-download-count" style="font-size: 0.78rem;"><i class="fa-solid fa-arrow-down"></i> ${p.downloads}</span>
+                            </div>
+                        ` : `
+                            <div style="width: 100%; text-align: center;">
+                                <span class="badge" style="background: rgba(255,255,255,0.05); color: var(--text-muted); padding: 6px 12px; font-size: 0.78rem;">
+                                    <i class="fa-solid fa-clock"></i> PYQ not available yet
+                                </span>
+                            </div>
+                        `}
+                    </div>
                 </div>
-                <div class="pyq-card-meta">
-                    <span><i class="fa-solid fa-hashtag"></i> ${p.code}</span>
-                    <span><i class="fa-regular fa-calendar"></i> ${p.year}</span>
-                    <span><i class="fa-solid fa-file-lines"></i> ${p.examType}</span>
-                </div>
-                <div class="pyq-card-footer">
-                    <button class="pyq-download-btn" onclick="alert('Downloading ${p.code}_${p.examType.replace(/\\s/g,'_')}_${p.year}.pdf (Demo)')">
-                        <i class="fa-solid fa-download"></i> Download PDF
-                    </button>
-                    <span class="pyq-download-count"><i class="fa-solid fa-arrow-down"></i> ${p.downloads}</span>
-                </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 
     // =============================================
@@ -1094,24 +1625,55 @@ document.addEventListener('DOMContentLoaded', () => {
         const quizGrid = document.getElementById('quizGrid');
         const historyBody = document.getElementById('quizHistoryBody');
 
+        // Dynamic statistics calculation
+        const availableCount = quizzesData.length;
+        const completedQuizzes = quizzesData.filter(q => q.attempted);
+        const completedCount = completedQuizzes.length;
+        const pendingCount = availableCount - completedCount;
+
+        let avgScorePercent = 0;
+        if (completedCount > 0) {
+            const totalPercent = completedQuizzes.reduce((sum, q) => sum + Math.round((q.score / q.questionsList.length) * 100), 0);
+            avgScorePercent = Math.round(totalPercent / completedCount);
+        }
+
+        const elAvailable = document.getElementById('quizStatAvailable');
+        const elCompleted = document.getElementById('quizStatCompleted');
+        const elAvgScore = document.getElementById('quizStatAvgScore');
+        const elPending = document.getElementById('quizStatPending');
+
+        if (elAvailable) { elAvailable.dataset.target = availableCount; elAvailable.textContent = availableCount; }
+        if (elCompleted) { elCompleted.dataset.target = completedCount; elCompleted.textContent = completedCount; }
+        if (elAvgScore) { elAvgScore.dataset.target = avgScorePercent; elAvgScore.textContent = avgScorePercent; }
+        if (elPending) { elPending.dataset.target = pendingCount; elPending.textContent = pendingCount; }
+
         if (quizGrid) {
-            quizGrid.innerHTML = quizzesData.map((q, i) => `
-                <div class="quiz-card" style="animation-delay: ${i * 0.08}s;">
-                    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(135deg, ${q.color}, ${q.color}88);"></div>
-                    <div class="quiz-card-subject">${q.subject}</div>
-                    <h3>${q.title}</h3>
-                    <div class="quiz-card-meta">
-                        <span><i class="fa-solid fa-circle-question"></i> ${q.questions} Questions</span>
-                        <span><i class="fa-regular fa-clock"></i> ${q.timeLimit} min</span>
+            quizGrid.innerHTML = quizzesData.map((q, i) => {
+                const isLab = q.type.includes('LAB');
+                const typeBadgeClass = isLab ? 'badge-practical' : 'badge-theory';
+                const codeBadgeText = isLab ? `${q.code} • Sem 5 • Lab` : `${q.code} • Sem 5`;
+
+                return `
+                    <div class="quiz-card" style="animation-delay: ${i * 0.08}s;">
+                        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(135deg, ${q.color}, ${q.color}88);"></div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span class="badge ${typeBadgeClass}">${isLab ? 'Lab' : 'Theory'}</span>
+                            <span class="badge badge-primary" style="font-size: 0.75rem; font-weight: 600;">${codeBadgeText}</span>
+                        </div>
+                        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; line-height: 1.35;">${q.title}</h3>
+                        <div class="quiz-card-meta" style="margin-bottom: 14px;">
+                            <span><i class="fa-solid fa-circle-question" style="color: var(--accent-1);"></i> ${q.questions} Questions</span>
+                            <span><i class="fa-regular fa-clock" style="color: var(--accent-2);"></i> ${q.timeLimit} min</span>
+                        </div>
+                        <div class="quiz-card-footer" style="padding-top: 12px; border-top: 1px solid var(--border-color);">
+                            <span class="difficulty-badge difficulty-${q.difficulty.toLowerCase()}">${q.difficulty}</span>
+                            <button class="quiz-start-btn" data-quiz-id="${q.id}">
+                                ${q.attempted ? '<i class="fa-solid fa-rotate-right"></i> Retake' : '<i class="fa-solid fa-play"></i> Start'}
+                            </button>
+                        </div>
                     </div>
-                    <div class="quiz-card-footer">
-                        <span class="difficulty-badge difficulty-${q.difficulty.toLowerCase()}">${q.difficulty}</span>
-                        <button class="quiz-start-btn" data-quiz-id="${q.id}" ${q.attempted ? '' : ''}>
-                            <i class="fa-solid fa-play"></i> ${q.attempted ? 'Retake' : 'Start'}
-                        </button>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
 
             // Attach start quiz listeners
             quizGrid.querySelectorAll('.quiz-start-btn').forEach(btn => {
@@ -1123,19 +1685,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (historyBody) {
-            historyBody.innerHTML = quizHistory.map(h => {
-                let gradeClass = 'grade-A';
-                if (h.grade.startsWith('B')) gradeClass = 'grade-B';
-                else if (h.grade.startsWith('C')) gradeClass = 'grade-C';
+            if (quizHistory.length === 0) {
+                historyBody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 2rem; color: var(--text-muted);"><i class="fa-solid fa-inbox" style="font-size: 1.5rem; display:block; margin-bottom: 0.5rem;"></i>No quiz attempts yet.</td></tr>`;
+            } else {
+                historyBody.innerHTML = quizHistory.map(h => {
+                    let gradeClass = 'grade-A';
+                    if (h.grade === 'O') gradeClass = 'grade-O';
+                    else if (h.grade.startsWith('B')) gradeClass = 'grade-B';
+                    else if (h.grade.startsWith('C')) gradeClass = 'grade-C';
+                    else if (h.grade.startsWith('D')) gradeClass = 'grade-D';
 
-                return `<tr>
-                    <td><strong style="color: var(--text-primary);">${h.quiz}</strong></td>
-                    <td>${h.subject}</td>
-                    <td>${h.score} (${h.percent}%)</td>
-                    <td>${h.date}</td>
-                    <td><span class="grade-badge ${gradeClass}">${h.grade}</span></td>
-                </tr>`;
-            }).join('');
+                    return `<tr>
+                        <td><strong style="color: var(--text-primary);">${h.quiz}</strong></td>
+                        <td>${h.subject}</td>
+                        <td><span class="badge badge-primary">${h.code}</span></td>
+                        <td>${h.score} (${h.percent}%)</td>
+                        <td>${h.date}</td>
+                        <td><span class="grade-badge ${gradeClass}">${h.grade}</span></td>
+                    </tr>`;
+                }).join('');
+            }
         }
     }
 
@@ -1148,7 +1717,7 @@ document.addEventListener('DOMContentLoaded', () => {
         quizTimeRemaining = currentQuiz.timeLimit * 60;
 
         const modal = document.getElementById('quizModal');
-        document.getElementById('quizModalTitle').textContent = currentQuiz.title;
+        document.getElementById('quizModalTitle').textContent = `[${currentQuiz.code}] ${currentQuiz.title}`;
         document.getElementById('quizResult').style.display = 'none';
         document.getElementById('quizQuestionArea').style.display = 'block';
         document.getElementById('quizSubmitBtn').style.display = 'none';
@@ -1216,13 +1785,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const mins = Math.floor(quizTimeRemaining / 60).toString().padStart(2, '0');
         const secs = (quizTimeRemaining % 60).toString().padStart(2, '0');
         const timerEl = document.getElementById('quizTimeLeft');
-        timerEl.textContent = `${mins}:${secs}`;
+        if (timerEl) timerEl.textContent = `${mins}:${secs}`;
 
         const timerContainer = document.querySelector('.quiz-timer');
-        if (quizTimeRemaining <= 60) {
-            timerContainer.classList.add('warning');
-        } else {
-            timerContainer.classList.remove('warning');
+        if (timerContainer) {
+            if (quizTimeRemaining <= 60) {
+                timerContainer.classList.add('warning');
+            } else {
+                timerContainer.classList.remove('warning');
+            }
         }
     }
 
@@ -1240,7 +1811,35 @@ document.addEventListener('DOMContentLoaded', () => {
         currentQuiz.attempted = true;
         currentQuiz.score = score;
 
-        // Show result
+        // Calculate Grade
+        let grade = 'D';
+        if (percent >= 90) grade = 'O';
+        else if (percent >= 80) grade = 'A';
+        else if (percent >= 70) grade = 'B';
+        else if (percent >= 60) grade = 'C';
+
+        // Add or update attempt history record
+        const existingIdx = quizHistory.findIndex(h => h.code === currentQuiz.code);
+        const newRecord = {
+            quiz: currentQuiz.title,
+            subject: currentQuiz.subject,
+            code: currentQuiz.code,
+            score: `${score}/${total}`,
+            percent: percent,
+            date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+            grade: grade
+        };
+
+        if (existingIdx !== -1) {
+            quizHistory[existingIdx] = newRecord;
+        } else {
+            quizHistory.unshift(newRecord);
+        }
+
+        // Re-render Quiz page stats & cards
+        renderQuiz();
+
+        // Show result modal
         document.getElementById('quizQuestionArea').style.display = 'none';
         document.getElementById('quizPrevBtn').style.display = 'none';
         document.getElementById('quizNextBtn').style.display = 'none';
@@ -1315,6 +1914,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const assignmentSelect = document.getElementById('assignmentSelect');
         const assignmentsBody = document.getElementById('assignmentsBody');
 
+        // Calculate dynamic stats
+        const totalCount = assignmentsData.length;
+        const submittedCount = assignmentsData.filter(a => a.status === 'submitted').length;
+        const pendingCount = assignmentsData.filter(a => a.status === 'pending').length;
+        const lateCount = assignmentsData.filter(a => a.status === 'late').length;
+
+        const elTotal = document.getElementById('assignStatTotal');
+        const elSubmitted = document.getElementById('assignStatSubmitted');
+        const elPending = document.getElementById('assignStatPending');
+        const elLate = document.getElementById('assignStatLate');
+
+        if (elTotal) { elTotal.dataset.target = totalCount; elTotal.textContent = totalCount; }
+        if (elSubmitted) { elSubmitted.dataset.target = submittedCount; elSubmitted.textContent = submittedCount; }
+        if (elPending) { elPending.dataset.target = pendingCount; elPending.textContent = pendingCount; }
+        if (elLate) { elLate.dataset.target = lateCount; elLate.textContent = lateCount; }
+
         if (assignmentSelect) {
             const pendingAssignments = assignmentsData.filter(a => a.status === 'pending');
             assignmentSelect.innerHTML = `<option value="">Select Assignment...</option>` +
@@ -1340,7 +1955,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 return `<tr>
                     <td><strong style="color: var(--text-primary);">${a.title}</strong></td>
-                    <td>${a.subject}<br><span style="font-size: 0.78rem; color: var(--text-muted);">${a.code}</span></td>
+                    <td>${a.subject}<br><span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">${a.code}</span></td>
                     <td>${dateStr}</td>
                     <td>${statusBadge}</td>
                     <td>${actionCol}</td>
@@ -1541,7 +2156,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.style.background = 'var(--gradient-green)';
             setTimeout(() => {
                 paymentModal.classList.remove('show');
-                btn.innerHTML = '<i class="fa-solid fa-lock"></i> Pay $2,450.00';
+                btn.innerHTML = '<i class="fa-solid fa-lock"></i> Pay ₹2,450.00';
                 btn.style.background = '';
                 btn.disabled = false;
             }, 2000);
@@ -1564,6 +2179,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('headerUser').addEventListener('click', () => {
         switchPage('profile');
+    });
+
+    // Global Keyboard Shortcut (Ctrl+K or Cmd+K) for Global Search
+    document.addEventListener('keydown', e => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.focus();
+                searchInput.select();
+            }
+        }
     });
 
     // =============================================

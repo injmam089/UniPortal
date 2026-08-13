@@ -1257,57 +1257,97 @@ a:hover { color: var(--accent-3); }
     overflow-x: auto;
 }
 
-.schedule-grid {
+.schedule-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 600px;
+}
+
+.timetable-row {
     display: grid;
-    grid-template-columns: 80px repeat(9, 1fr);
-    gap: 2px;
-    min-width: 700px;
+    grid-template-columns: 150px 1fr;
+    gap: 16px;
+    align-items: stretch;
 }
 
-.schedule-time {
-    padding: 16px 8px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-align: right;
-    padding-right: 12px;
-}
-
-.schedule-slot {
-    padding: 12px;
-    border-radius: var(--radius-sm);
-    min-height: 70px;
+.timetable-time-cell {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 12px 14px;
     background: var(--bg-glass);
-    border: 1px solid rgba(255,255,255,0.03);
-    transition: all var(--transition-fast);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
 }
 
-.schedule-slot:hover { background: var(--bg-glass-hover); }
-
-.schedule-slot.filled {
-    border-left: 3px solid;
+.timetable-period-tag {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent-1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.schedule-slot-subject {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-}
-
-.schedule-slot-info {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-}
-
-.schedule-header {
-    padding: 12px 8px;
+.timetable-clock-time {
     font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    text-align: center;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 500;
+}
+
+.timetable-card {
     background: var(--bg-glass);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    position: relative;
+    transition: all var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.timetable-card.filled {
+    border-left: 4px solid var(--accent);
+}
+
+.timetable-card.filled:hover {
+    background: var(--bg-glass-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.timetable-card.lab-block {
+    background: rgba(102, 126, 234, 0.08);
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    border-left: 5px solid #667eea;
+    min-height: 120px;
+}
+
+.timetable-card.empty {
+    opacity: 0.4;
+    border: 1px dashed var(--border-color);
+    display: flex;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.timetable-break-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: rgba(251, 191, 36, 0.12);
+    border: 1px dashed rgba(251, 191, 36, 0.4);
+    border-radius: var(--radius-sm);
+    color: #fbbf24;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 4px 0;
+}
     text-transform: uppercase;
 }
 
@@ -1824,6 +1864,7 @@ a:hover { color: var(--accent-3); }
     font-weight: 700;
 }
 
+.grade-O { background: rgba(240, 147, 251, 0.2); color: #f093fb; border: 1px solid rgba(240, 147, 251, 0.4); }
 .grade-A { background: rgba(74, 222, 128, 0.15); color: var(--accent-5); }
 .grade-B { background: rgba(102, 126, 234, 0.15); color: var(--accent-1); }
 .grade-C { background: rgba(251, 191, 36, 0.15); color: var(--accent-7); }
@@ -1838,14 +1879,76 @@ a:hover { color: var(--accent-3); }
 
 .profile-header-card {
     overflow: hidden;
+    position: relative;
 }
 
 .profile-banner {
-    height: 120px;
-    background: var(--gradient-primary);
-    background-size: 200% 200%;
-    animation: gradientShift 8s ease infinite;
+    height: 160px;
+    background: linear-gradient(135deg, #09152b 0%, #0d2347 50%, #061124 100%);
     position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+/* Watermark Crest */
+.banner-watermark-crest {
+    position: absolute;
+    right: 20px;
+    top: -20px;
+    font-size: 11rem;
+    color: rgba(255, 255, 255, 0.035);
+    pointer-events: none;
+    user-select: none;
+}
+
+/* University Identity Block */
+.banner-university-identity {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 2;
+    background: rgba(10, 20, 42, 0.4);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 8px 16px;
+    border-radius: 12px;
+}
+
+.uni-logo-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--gradient-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+}
+
+.uni-text-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.uni-name {
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+}
+
+.uni-location {
+    font-size: 0.68rem;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.5px;
+    font-weight: 500;
 }
 
 .profile-banner::after {
@@ -1854,18 +1957,19 @@ a:hover { color: var(--accent-3); }
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 40px;
+    height: 50px;
     background: linear-gradient(transparent, var(--bg-card));
+    pointer-events: none;
 }
 
 .profile-header-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 24px 28px;
-    margin-top: -50px;
+    padding: 0 24px 24px;
+    margin-top: -45px;
     position: relative;
-    z-index: 1;
+    z-index: 3;
 }
 
 .profile-avatar-large {
@@ -1879,20 +1983,22 @@ a:hover { color: var(--accent-3); }
     font-weight: 800;
     color: white;
     border: 4px solid var(--bg-card);
-    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 15px rgba(102, 126, 234, 0.3);
     margin-bottom: 12px;
 }
 
 .profile-name {
-    font-size: 1.4rem;
+    font-size: 1.45rem;
     font-weight: 700;
     margin-bottom: 4px;
+    color: var(--text-primary);
 }
 
 .profile-subtitle {
-    color: var(--text-muted);
-    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
     margin-bottom: 12px;
+    font-weight: 500;
 }
 
 .profile-badges {
@@ -1905,6 +2011,64 @@ a:hover { color: var(--accent-3); }
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+}
+
+/* Performance Mini Summary */
+.academic-summary-mini-card {
+    margin-top: 4px;
+}
+
+.perf-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+}
+
+.perf-mini-item {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all var(--transition-fast);
+}
+
+.perf-mini-item:hover {
+    background: var(--bg-glass-hover);
+    transform: translateY(-2px);
+}
+
+.perf-mini-item.highlighted {
+    background: rgba(102, 126, 234, 0.12);
+    border-color: rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.15);
+}
+
+.perf-mini-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.perf-mini-value {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.perf-mini-item.highlighted .perf-mini-value {
+    color: var(--accent-1);
+}
+
+.perf-mini-sub {
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
 }
 
 .info-grid {
@@ -2880,3 +3044,238 @@ a:hover { color: var(--accent-3); }
         flex-wrap: wrap;
     }
 }
+
+/* =============================================
+   SUBJECT TYPE BADGES (Theory / Practical)
+   ============================================= */
+.subject-type-badge {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.badge-practical {
+    background: rgba(0, 210, 255, 0.15);
+    color: #00d2ff;
+    border: 1px solid rgba(0, 210, 255, 0.3);
+}
+
+.badge-theory {
+    background: rgba(102, 126, 234, 0.15);
+    color: #667eea;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+/* =============================================
+   FUTURISTIC COMMAND CENTER & TIMETABLE ENHANCEMENTS
+   ============================================= */
+
+/* Live Online User Indicator */
+.user-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    border: 2px solid var(--bg-dark);
+}
+.user-status-dot.online {
+    background: #4ade80;
+    box-shadow: 0 0 8px #4ade80;
+}
+
+/* Schedule Status Row (Live Now & Next Class) */
+.schedule-status-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.status-card {
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.live-status-card {
+    border-left: 3px solid #00d2ff;
+}
+
+.live-status-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #00d2ff, #3b82f6, #8b5cf6);
+}
+
+.next-status-card {
+    border-left: 3px solid #fbbf24;
+}
+
+.status-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(0, 210, 255, 0.15);
+    color: #00d2ff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(0, 210, 255, 0.3);
+}
+
+.pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00d2ff;
+    animation: pulseGlow 1.5s infinite;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(0, 210, 255, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); }
+}
+
+.next-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.countdown-badge {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.status-card-body h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 6px 0;
+}
+
+.status-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.status-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Day Pills Glowing Active Effect */
+.day-tab {
+    position: relative;
+    border-radius: 24px;
+    padding: 6px 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.day-tab.active {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4), 0 0 30px rgba(139, 92, 246, 0.2);
+    border-color: transparent !important;
+}
+
+/* Enhanced Break Bar with Warm Accent */
+.timetable-break-bar {
+    background: linear-gradient(90deg, rgba(251, 191, 36, 0.12), rgba(245, 158, 11, 0.05));
+    border: 1px dashed rgba(251, 191, 36, 0.3);
+    border-radius: 12px;
+    padding: 12px 18px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fbbf24;
+    font-weight: 600;
+    font-size: 0.88rem;
+}
+
+.timetable-break-bar i {
+    font-size: 1.1rem;
+    filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.5));
+}
+
+/* =============================================
+   LIQUID GLASS & SPATIAL COMPUTING SYSTEM
+   ============================================= */
+
+/* Search Shortcut Badge */
+.search-shortcut {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 7px;
+    font-family: inherit;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    pointer-events: none;
+}
+
+/* Print Stylesheet for Transcript Download */
+@media print {
+    .sidebar, .header, .sidebar-overlay, .theme-toggle, .btn-print-result, .semester-tabs {
+        display: none !important;
+    }
+    .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    .card {
+        background: #ffffff !important;
+        border: 1px solid #cccccc !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+    }
+}
+
