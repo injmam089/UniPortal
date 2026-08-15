@@ -852,39 +852,40 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderSchedule() {
         const navContainer = document.getElementById('scheduleDayNav');
         const gridContainer = document.getElementById('scheduleGrid');
-        const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-        const fullDayLabels = { Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday' };
+        const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const today = new Date().getDay(); // 0=Sun
-        const todayIdx = today === 0 ? 6 : today - 1; // Mon=0 ... Sun=6
+        const todayIdx = today === 0 ? 5 : today - 1; // Map to Mon=0...Sat=5
 
         // Day tabs
         navContainer.innerHTML = dayNames.map((d, i) => 
-            `<button class="day-tab ${i === todayIdx ? 'active' : ''}" data-day="${d}">${fullDayLabels[d]}</button>`
+            `<button class="day-tab ${i === todayIdx ? 'active' : ''}" data-day="${d}">${d}</button>`
         ).join('');
 
         const periodDefinitions = [
-            { num: 1, name: '1st Period', time: '9:00 AM – 9:50 AM' },
-            { num: 2, name: '2nd Period', time: '9:50 AM – 10:40 AM' },
-            { num: 3, name: '3rd Period', time: '10:40 AM – 11:30 AM' },
-            { num: 4, name: '4th Period', time: '11:30 AM – 12:20 PM' },
-            { isBreak: true, name: 'RECESS / LUNCH BREAK', time: '12:20 PM – 12:40 PM' },
-            { num: 5, name: '5th Period', time: '12:40 PM – 1:30 PM' },
-            { num: 6, name: '6th Period', time: '1:30 PM – 2:20 PM' },
-            { num: 7, name: '7th Period', time: '2:20 PM – 3:10 PM' },
-            { num: 8, name: '8th Period', time: '3:10 PM – 4:00 PM' }
+            { num: 1, name: '1st Period', time: '09:00 AM – 09:50 AM', timeLabel: '9:00 AM' },
+            { num: 2, name: '2nd Period', time: '09:50 AM – 10:40 AM', timeLabel: '9:50 AM' },
+            { num: 3, name: '3rd Period', time: '10:40 AM – 11:30 AM', timeLabel: '10:40 AM' },
+            { num: 4, name: '4th Period', time: '11:30 AM – 12:20 PM', timeLabel: '11:30 AM' },
+            { isBreak: true, name: 'LUNCH BREAK', time: '12:20 PM – 12:40 PM', timeLabel: '12:20 PM' },
+            { num: 5, name: '5th Period', time: '12:40 PM – 01:30 PM', timeLabel: '12:40 PM' },
+            { num: 6, name: '6th Period', time: '01:30 PM – 02:20 PM', timeLabel: '1:30 PM' },
+            { num: 7, name: '7th Period', time: '02:20 PM – 03:10 PM', timeLabel: '2:20 PM' },
+            { num: 8, name: '8th Period', time: '03:10 PM – 04:00 PM', timeLabel: '3:10 PM' }
         ];
 
         function showDay(day) {
             const slots = scheduleByDay[day] || [];
-            let html = '<div class="schedule-container">';
+            let html = '<div class="schedule-header"></div>';
+            html += '<div class="schedule-header">Schedule</div>';
             let skipPeriodsRemaining = 0;
 
             periodDefinitions.forEach((pd) => {
                 if (pd.isBreak) {
+                    html += `<div class="schedule-time">${pd.timeLabel}</div>`;
                     html += `
-                        <div class="timetable-break-bar">
-                            <i class="fa-solid fa-mug-hot"></i>
-                            <span>${pd.name} (${pd.time})</span>
+                        <div class="schedule-slot filled" style="border-left-color: var(--text-muted); opacity: 0.75;">
+                            <div class="schedule-slot-subject">LUNCH BREAK</div>
+                            <div class="schedule-slot-info">${pd.time}</div>
                         </div>
                     `;
                     return;
@@ -892,63 +893,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (skipPeriodsRemaining > 0) {
                     skipPeriodsRemaining--;
+                    html += `<div class="schedule-time">${pd.timeLabel}</div>`;
+                    html += '<div class="schedule-slot"></div>';
                     return;
                 }
 
                 const match = slots.find(s => s.startPeriod === pd.num);
+
+                html += `<div class="schedule-time">${pd.timeLabel}</div>`;
 
                 if (match) {
                     const isLab = match.duration >= 2;
                     if (match.duration > 1) {
                         skipPeriodsRemaining = match.duration - 1;
                     }
-
-                    let typeBadgeClass = isLab ? 'badge-practical' : 'badge-theory';
-                    let groupBadgeText = match.code === 'REMEDIAL' ? 'Self Study' : (isLab || match.type === 'Lab' ? 'Lab • Group 1' : 'Theory');
+                    const groupText = (isLab || match.type === 'Lab') ? 'Lab • Group 1' : 'Theory';
+                    const subjectDisplay = `${match.code} - ${match.subject}`;
 
                     html += `
-                        <div class="timetable-row">
-                            <div class="timetable-time-cell">
-                                <span class="timetable-period-tag">${match.periodName}</span>
-                                <span class="timetable-clock-time">${match.time}</span>
-                            </div>
-                            <div class="timetable-card filled ${isLab ? 'lab-block' : ''}" style="border-left-color: ${match.color};">
-                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; flex-wrap: wrap; gap: 6px;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span class="badge ${typeBadgeClass}">${groupBadgeText}</span>
-                                        <span style="font-family: monospace; font-size: 0.82rem; font-weight: 700; color: var(--accent-1);">${match.code}</span>
-                                    </div>
-                                    <span style="font-size: 0.75rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> ${match.time}</span>
-                                </div>
-                                <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-primary); margin: 0 0 8px;">${match.subject}</h3>
-                                <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.8rem; color: var(--text-secondary);">
-                                    <div><i class="fa-solid fa-chalkboard-user" style="color: var(--accent-1);"></i> <strong>${match.prof}</strong></div>
-                                    <div><i class="fa-solid fa-location-dot" style="color: var(--accent-2);"></i> <strong>${match.room}</strong></div>
-                                </div>
-                            </div>
+                        <div class="schedule-slot filled" style="border-left-color: ${match.color};">
+                            <div class="schedule-slot-subject">${subjectDisplay}</div>
+                            <div class="schedule-slot-info">${match.room} • ${match.prof} (${groupText})</div>
                         </div>
                     `;
                 } else {
-                    html += `
-                        <div class="timetable-row">
-                            <div class="timetable-time-cell">
-                                <span class="timetable-period-tag">${pd.name}</span>
-                                <span class="timetable-clock-time">${pd.time}</span>
-                            </div>
-                            <div class="timetable-card empty">
-                                <i class="fa-regular fa-circle-pause" style="margin-right: 8px;"></i> No Class Scheduled
-                            </div>
-                        </div>
-                    `;
+                    html += '<div class="schedule-slot"></div>';
                 }
             });
 
-            html += '</div>';
             gridContainer.innerHTML = html;
+            gridContainer.style.gridTemplateColumns = '80px 1fr';
         }
 
         showDay(dayNames[todayIdx]);
-        updateLiveTracker();
 
         navContainer.addEventListener('click', e => {
             const tab = e.target.closest('.day-tab');

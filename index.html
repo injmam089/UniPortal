@@ -53,7 +53,7 @@
             <ul>
                 <li>
                     <a href="#" class="nav-link active" data-page="dashboard">
-                        <i class="fa-solid fa-border-all"></i>
+                        <i class="fa-solid fa-grid-2"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
@@ -174,7 +174,7 @@
                     </div>
                 </div>
                 <div class="header-user" id="headerUser">
-                    <div class="header-avatar">IA<span class="user-status-dot online"></span></div>
+                    <div class="header-avatar">IA</div>
                     <span class="header-username">Injmam </span>
                 </div>
             </div>
@@ -379,49 +379,13 @@
             <!-- ======== SCHEDULE PAGE ======== -->
             <section class="page" id="page-schedule">
                 <div class="page-title">
-                    <div>
-                        <h1>Weekly Schedule</h1>
-                        <p>Your timetable for the current semester.</p>
-                    </div>
+                    <h1>Weekly Schedule</h1>
+                    <p>Your timetable for the current semester.</p>
                 </div>
 
-                <!-- Futuristic Live Class & Next Class Tracker Grid -->
-                <div class="schedule-status-row">
-                    <div class="card status-card live-status-card">
-                        <div class="status-card-header">
-                            <span class="live-badge" id="liveBadge"><span class="pulse-dot"></span> LIVE NOW</span>
-                            <span class="countdown-badge" id="liveCountdown">Checking status...</span>
-                        </div>
-                        <div class="status-card-body" id="liveClassBody">
-                            <!-- JS populated real-time class status -->
-                        </div>
-                    </div>
-                    <div class="card status-card next-status-card">
-                        <div class="status-card-header">
-                            <span class="next-badge"><i class="fa-solid fa-forward"></i> NEXT CLASS</span>
-                            <span class="countdown-badge" id="nextCountdown">--</span>
-                        </div>
-                        <div class="status-card-body" id="nextClassBody">
-                            <!-- JS populated next class status -->
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card schedule-main-card">
-                    <div class="card-header schedule-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-                        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-                            <h2><i class="fa-solid fa-calendar-week"></i> Timetable</h2>
-                            <div class="group-view-filter" style="display: flex; align-items: center; gap: 8px;">
-                                <label for="groupViewSelect" style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">View:</label>
-                                <select id="groupViewSelect" class="filter-select" style="min-width: 140px; padding: 4px 10px; font-size: 0.82rem;">
-                                    <option value="my_group" selected>My Group (Group 1)</option>
-                                    <option value="Group 1">Group 1</option>
-                                    <option value="Group 2">Group 2</option>
-                                    <option value="Group 3">Group 3</option>
-                                    <option value="All Groups">All Groups</option>
-                                </select>
-                            </div>
-                        </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-calendar-week"></i> Timetable</h2>
                         <div class="schedule-day-nav" id="scheduleDayNav">
                             <!-- JS populated day tabs -->
                         </div>
@@ -438,7 +402,7 @@
             <section class="page" id="page-classes">
                 <div class="page-title">
                     <h1>My Classes</h1>
-                    <p>Courses you are enrolled in Semester 5.</p>
+                    <p>Courses you are enrolled in this semester.</p>
                 </div>
 
                 <div class="classes-grid" id="classesGrid">
@@ -523,33 +487,23 @@
 
             <!-- ======== RESULTS PAGE ======== -->
             <section class="page" id="page-results">
-                <div class="page-title" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
-                    <div>
-                        <h1>Academic Results</h1>
-                        <p>View your grades, credits, and GPA performance across semesters.</p>
-                    </div>
-                    <button class="btn btn-secondary btn-print-result" id="printResultBtn" onclick="window.print()" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; backdrop-filter: blur(12px);">
-                        <i class="fa-solid fa-print"></i> Print / Download Transcript
-                    </button>
+                <div class="page-title">
+                    <h1>Academic Results</h1>
+                    <p>View your grades and performance across semesters.</p>
                 </div>
 
-                <!-- CGPA Overview & Summary -->
+                <!-- CGPA Overview -->
                 <div class="results-overview">
                     <div class="card cgpa-card">
-                        <div class="card-body center" style="flex-direction: column; padding: 24px;">
-                            <div class="cgpa-display" style="text-align: center;">
-                                <span class="cgpa-value">8.15</span>
-                                <span class="cgpa-label" style="font-weight: 600; color: var(--accent-1);">Current CGPA / 10.00</span>
-                            </div>
-                            <div class="academic-summary-details" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 16px; width: 100%; font-size: 0.83rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); padding-top: 14px;">
-                                <div><i class="fa-solid fa-graduation-cap" style="color:var(--accent-1);"></i> Completed: <strong style="color:var(--text-primary);">4 Semesters</strong></div>
-                                <div><i class="fa-solid fa-book-bookmark" style="color:var(--accent-2);"></i> Current: <strong style="color:var(--text-primary);">5th Semester</strong></div>
-                                <div><i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> Status: <span class="badge badge-success" style="font-size:0.75rem; padding: 3px 10px;">PASS</span></div>
+                        <div class="card-body center">
+                            <div class="cgpa-display">
+                                <span class="cgpa-value">3.72</span>
+                                <span class="cgpa-label">Cumulative GPA</span>
                             </div>
                         </div>
                     </div>
                     <div class="card grade-distribution-card">
-                        <div class="card-header"><h2><i class="fa-solid fa-chart-line"></i> SGPA & CGPA Progression (10.00 Scale)</h2></div>
+                        <div class="card-header"><h2>Grade Distribution</h2></div>
                         <div class="card-body" id="gradeDistribution">
                             <!-- JS populated -->
                         </div>
@@ -579,8 +533,8 @@
             <!-- ======== PYQ PAGE ======== -->
             <section class="page" id="page-pyq">
                 <div class="page-title">
-                    <h1>Previous Year Questions (PYQ)</h1>
-                    <p>Integral University • Bachelor of Computer Application (BCA) Question Bank</p>
+                    <h1>Previous Year Questions</h1>
+                    <p>Browse and download question papers from previous semesters.</p>
                 </div>
 
                 <div class="stats-grid">
@@ -589,8 +543,8 @@
                             <i class="fa-solid fa-file-lines"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-number" id="pyqStatTotalPapers" data-target="0">0</span>
-                            <span class="stat-label">Total Question Papers</span>
+                            <span class="stat-number" data-target="42">0</span>
+                            <span class="stat-label">Total Papers</span>
                         </div>
                     </div>
                     <div class="stat-card" data-delay="100">
@@ -598,7 +552,7 @@
                             <i class="fa-solid fa-book-open-reader"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-number" id="pyqStatSubjects" data-target="0">0</span>
+                            <span class="stat-number" data-target="6">0</span>
                             <span class="stat-label">Subjects Covered</span>
                         </div>
                     </div>
@@ -607,7 +561,7 @@
                             <i class="fa-solid fa-download"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-number" id="pyqStatDownloads" data-target="0">0</span>
+                            <span class="stat-number" data-target="128">0</span>
                             <span class="stat-label">Total Downloads</span>
                         </div>
                     </div>
@@ -616,43 +570,33 @@
                             <i class="fa-solid fa-fire"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-number" id="pyqStatPopular" data-target="0">0</span>
-                            <span class="stat-label">Most Downloaded</span>
+                            <span class="stat-number" data-target="5">0</span>
+                            <span class="stat-label">Most Popular</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <h2><i class="fa-solid fa-filter"></i> Filter & Search Question Papers</h2>
+                        <h2><i class="fa-solid fa-filter"></i> Filter Papers</h2>
                     </div>
                     <div class="card-body">
-                        <div class="filter-controls" style="display: flex; flex-direction: column; gap: 14px;">
-                            <div class="filter-pills" id="pyqSemesterPills">
-                                <button class="filter-pill active" data-sem="all">All Semesters</button>
-                                <button class="filter-pill" data-sem="1">Semester 1</button>
-                                <button class="filter-pill" data-sem="2">Semester 2</button>
-                                <button class="filter-pill" data-sem="3">Semester 3</button>
-                                <button class="filter-pill" data-sem="4">Semester 4</button>
+                        <div class="filter-controls">
+                            <div class="filter-pills" id="pyqSubjectFilter">
+                                <button class="filter-pill active" data-subject="all">All Subjects</button>
                             </div>
-                            <div class="filter-select-group" style="display: flex; flex-wrap: wrap; gap: 10px;">
-                                <div style="position: relative; flex: 1; min-width: 220px;">
-                                    <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.85rem;"></i>
-                                    <input type="text" id="pyqSearchInput" class="filter-select" placeholder="Search by subject, code (e.g. CA203), or keyword..." style="width: 100%; padding-left: 36px;">
-                                </div>
-                                <select class="filter-select" id="pyqSubjectSelect" style="min-width: 200px;">
-                                    <option value="all">All Subjects (32)</option>
-                                    <!-- JS populated -->
-                                </select>
-                                <select class="filter-select" id="pyqYearFilter" style="min-width: 130px;">
+                            <div class="filter-select-group">
+                                <select class="filter-select" id="pyqYearFilter">
                                     <option value="all">All Years</option>
-                                    <option value="2024–25">2024–25</option>
-                                    <option value="2025–26">2025–26</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
                                 </select>
-                                <select class="filter-select" id="pyqExamFilter" style="min-width: 140px;">
+                                <select class="filter-select" id="pyqExamFilter">
                                     <option value="all">All Exams</option>
                                     <option value="Mid-Semester">Mid-Semester</option>
                                     <option value="End-Semester">End-Semester</option>
+                                    <option value="Supplementary">Supplementary</option>
                                 </select>
                             </div>
                         </div>
@@ -759,8 +703,8 @@
             <!-- ======== QUIZ PAGE ======== -->
             <section class="page" id="page-quiz">
                 <div class="page-title">
-                    <h1>Semester 5 Quizzes</h1>
-                    <p>Integral University • BCA 5th Semester Quiz Portal</p>
+                    <h1>Quizzes</h1>
+                    <p>Test your knowledge with interactive quizzes.</p>
                 </div>
 
                 <div class="stats-grid">
@@ -769,7 +713,7 @@
                             <i class="fa-solid fa-brain"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-number" id="quizStatAvailable" data-target="0">0</span>
+                            <span class="stat-number" data-target="6">0</span>
                             <span class="stat-label">Available Quizzes</span>
                         </div>
                     </div>
@@ -778,7 +722,7 @@
                             <i class="fa-solid fa-check-double"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-number" id="quizStatCompleted" data-target="0">0</span>
+                            <span class="stat-number" data-target="4">0</span>
                             <span class="stat-label">Completed</span>
                         </div>
                     </div>
@@ -787,7 +731,7 @@
                             <i class="fa-solid fa-percent"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-number" id="quizStatAvgScore" data-target="0">0</span>
+                            <span class="stat-number" data-target="78">0</span>
                             <span class="stat-suffix">%</span>
                             <span class="stat-label">Avg Score</span>
                         </div>
@@ -797,7 +741,7 @@
                             <i class="fa-solid fa-ranking-star"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-number" id="quizStatPending" data-target="0">0</span>
+                            <span class="stat-number" data-target="2">0</span>
                             <span class="stat-label">Pending</span>
                         </div>
                     </div>
@@ -824,7 +768,6 @@
                                 <tr>
                                     <th>Quiz</th>
                                     <th>Subject</th>
-                                    <th>Course Code</th>
                                     <th>Score</th>
                                     <th>Date</th>
                                     <th>Grade</th>
@@ -851,7 +794,7 @@
                             <i class="fa-solid fa-file-lines"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-number" id="assignStatTotal" data-target="9">0</span>
+                            <span class="stat-number" data-target="8">0</span>
                             <span class="stat-label">Total Assignments</span>
                         </div>
                     </div>
@@ -860,7 +803,7 @@
                             <i class="fa-solid fa-circle-check"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-number" id="assignStatSubmitted" data-target="0">0</span>
+                            <span class="stat-number" data-target="5">0</span>
                             <span class="stat-label">Submitted</span>
                         </div>
                     </div>
@@ -869,7 +812,7 @@
                             <i class="fa-regular fa-clock"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-number" id="assignStatPending" data-target="9">0</span>
+                            <span class="stat-number" data-target="2">0</span>
                             <span class="stat-label">Pending</span>
                         </div>
                     </div>
@@ -878,7 +821,7 @@
                             <i class="fa-solid fa-triangle-exclamation"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-number" id="assignStatLate" data-target="0">0</span>
+                            <span class="stat-number" data-target="1">0</span>
                             <span class="stat-label">Late</span>
                         </div>
                     </div>
@@ -956,23 +899,14 @@
                 <div class="profile-layout">
                     <!-- Profile Header Card -->
                     <div class="card profile-header-card">
-                        <div class="profile-banner">
-                            <div class="banner-watermark-crest"><i class="fa-solid fa-building-columns"></i></div>
-                            <div class="banner-university-identity">
-                                <div class="uni-logo-icon"><i class="fa-solid fa-building-columns"></i></div>
-                                <div class="uni-text-block">
-                                    <span class="uni-name">INTEGRAL UNIVERSITY</span>
-                                    <span class="uni-location">LUCKNOW, INDIA • ESTD. 1998</span>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="profile-banner"></div>
                         <div class="profile-header-content">
                             <div class="profile-avatar-large" id="profileAvatar">IA</div>
-                            <h2 class="profile-name">Injmam Ansari</h2>
-                            <p class="profile-subtitle">Integral University, Lucknow • BCA • 5th Semester</p>
+                            <h2 class="profile-name">Injmam  Ansari</h2>
+                            <p class="profile-subtitle">Computer Science • 5th Semester</p>
                             <div class="profile-badges">
-                                <span class="badge badge-primary"><i class="fa-regular fa-id-badge"></i> STU-2400103912</span>
-                                <span class="badge badge-success"><i class="fa-solid fa-circle-check"></i> Active Student</span>
+                                <span class="badge badge-primary">STU-2024-0089</span>
+                                <span class="badge badge-success">Active</span>
                             </div>
                         </div>
                     </div>
@@ -990,15 +924,7 @@
                                 <div class="info-grid">
                                     <div class="info-item">
                                         <span class="info-label"><i class="fa-regular fa-user"></i> Full Name</span>
-                                        <span class="info-value" data-field="name">Injmam Ansari</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <span class="info-label"><i class="fa-solid fa-user-group"></i> Father's Name</span>
-                                        <span class="info-value" data-field="fatherName">Mr. Ahsanullah Ansari</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <span class="info-label"><i class="fa-solid fa-user-nurse"></i> Mother's Name</span>
-                                        <span class="info-value" data-field="motherName">Mrs Jamila Khatoon</span>
+                                        <span class="info-value" data-field="name">Injmam  Ansari</span>
                                     </div>
                                     <div class="info-item">
                                         <span class="info-label"><i class="fa-regular fa-envelope"></i> Email</span>
@@ -1045,14 +971,8 @@
                                         <span class="info-value">5th Semester</span>
                                     </div>
                                     <div class="info-item">
-                                        <span class="info-label"><i class="fa-solid fa-users-line"></i> Assigned Group</span>
-                                        <span class="info-value">
-                                            <select id="userProfileGroupSelect" class="filter-select" style="padding: 2px 8px; font-size: 0.82rem;">
-                                                <option value="Group 1" selected>Group 1</option>
-                                                <option value="Group 2">Group 2</option>
-                                                <option value="Group 3">Group 3</option>
-                                            </select>
-                                        </span>
+                                        <span class="info-label"><i class="fa-regular fa-calendar-check"></i> Enrollment Year</span>
+                                        <span class="info-value">2024</span>
                                     </div>
                                     <div class="info-item">
                                         <span class="info-label"><i class="fa-solid fa-medal"></i> Cumulative CGPA</span>
@@ -1062,42 +982,6 @@
                                         <span class="info-label"><i class="fa-solid fa-chalkboard-user"></i> Advisor</span>
                                         <span class="info-value">Arshiya Dilshad</span>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Academic Performance Mini Summary -->
-                    <div class="card academic-summary-mini-card">
-                        <div class="card-header">
-                            <h2><i class="fa-solid fa-chart-simple" style="color:var(--accent-1);"></i> Academic Performance Mini Summary</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="perf-mini-grid">
-                                <div class="perf-mini-item">
-                                    <span class="perf-mini-label">Semester 1</span>
-                                    <span class="perf-mini-value">8.12</span>
-                                    <span class="perf-mini-sub">SGPA</span>
-                                </div>
-                                <div class="perf-mini-item">
-                                    <span class="perf-mini-label">Semester 2</span>
-                                    <span class="perf-mini-value">8.20</span>
-                                    <span class="perf-mini-sub">SGPA</span>
-                                </div>
-                                <div class="perf-mini-item">
-                                    <span class="perf-mini-label">Semester 3</span>
-                                    <span class="perf-mini-value">8.36</span>
-                                    <span class="perf-mini-sub">SGPA</span>
-                                </div>
-                                <div class="perf-mini-item">
-                                    <span class="perf-mini-label">Semester 4</span>
-                                    <span class="perf-mini-value">7.92</span>
-                                    <span class="perf-mini-sub">SGPA</span>
-                                </div>
-                                <div class="perf-mini-item highlighted">
-                                    <span class="perf-mini-label">Current CGPA</span>
-                                    <span class="perf-mini-value">8.15</span>
-                                    <span class="perf-mini-sub">Out of 10.00</span>
                                 </div>
                             </div>
                         </div>
@@ -1161,21 +1045,17 @@
                 </div>
                 <form id="paymentForm">
                     <div class="form-group">
-                        <label for="cardName">Cardholder Name</label>
-                        <input type="text" id="cardName" placeholder="Injmam  Ansari" class="form-input">
-                    </div>
-                    <div class="form-group">
                         <label for="cardNumber">Card Number</label>
-                        <input type="text" id="cardNumber" placeholder="•••• •••• •••• ••••" class="form-input" maxlength="19">
+                        <input type="text" id="cardNumber" placeholder="xxxx xxxx xxxx xxxx" required>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="cardExpiry">Expiry</label>
-                            <input type="text" id="cardExpiry" placeholder="MM/YY" class="form-input" maxlength="5">
+                            <label for="cardExpiry">Expiry Date</label>
+                            <input type="text" id="cardExpiry" placeholder="MM/YY" required>
                         </div>
                         <div class="form-group">
-                            <label for="cardCVV">CVV</label>
-                            <input type="text" id="cardCVV" placeholder="•••" class="form-input" maxlength="3">
+                            <label for="cardCvv">CVV</label>
+                            <input type="text" id="cardCvv" placeholder="xxx" required>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">
