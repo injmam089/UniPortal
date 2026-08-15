@@ -1347,12 +1347,12 @@ a:hover { color: var(--accent-3); }
 .dot.holiday { background: #fbbf24; box-shadow: 0 0 6px rgba(245, 158, 11, 0.6); }
 
 /* ===== SCHEDULE / TIMETABLE PAGE ===== */
-.schedule-nav {
+.schedule-nav, .schedule-day-nav {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     margin-bottom: 20px;
     overflow-x: auto;
-    padding-bottom: 4px;
+    padding: 4px 2px 8px;
 }
 
 .day-tab {
@@ -1364,28 +1364,69 @@ a:hover { color: var(--accent-3); }
     font-size: 0.88rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     font-family: inherit;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(14px);
+    position: relative;
+    overflow: hidden;
 }
 
 .day-tab:hover {
     color: var(--text-primary);
     background: var(--bg-card-hover);
-    border-color: rgba(56, 189, 248, 0.2);
+    border-color: rgba(56, 189, 248, 0.3);
+    transform: translateY(-2px);
+}
+
+.day-tab:active {
+    transform: scale(0.92);
 }
 
 .day-tab.active {
     background: var(--gradient-primary);
     color: white;
     border-color: transparent;
-    box-shadow: 0 4px 16px rgba(2, 132, 199, 0.4);
+    box-shadow: 0 4px 18px rgba(2, 132, 199, 0.5), 0 0 20px rgba(129, 140, 248, 0.3);
+    transform: scale(1.05);
+    animation: dayTabPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes dayTabPop {
+    0% { transform: scale(0.92); }
+    50% { transform: scale(1.12); }
+    100% { transform: scale(1.05); }
 }
 
 .schedule-grid {
     display: grid;
     grid-template-columns: 80px 1fr;
     gap: 12px;
+}
+
+.schedule-header {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 6px 0;
+}
+
+.schedule-time, .schedule-slot {
+    animation: slotCascadeIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes slotCascadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(16px) scale(0.98);
+        filter: blur(4px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
 }
 
 .schedule-time {
@@ -1400,6 +1441,7 @@ a:hover { color: var(--accent-3); }
     border: 1px solid var(--border-subtle);
     padding: 12px 6px;
     text-align: center;
+    transition: all var(--transition-fast);
 }
 
 .schedule-slot {
@@ -1412,7 +1454,9 @@ a:hover { color: var(--accent-3); }
     flex-direction: column;
     justify-content: center;
     transition: all var(--transition-fast);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(14px);
+    position: relative;
+    overflow: hidden;
 }
 
 .schedule-slot.filled {
@@ -1421,9 +1465,9 @@ a:hover { color: var(--accent-3); }
 }
 
 .schedule-slot.filled:hover {
-    transform: translateX(4px);
-    border-color: rgba(56, 189, 248, 0.3);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transform: translateX(6px) scale(1.01);
+    border-color: rgba(56, 189, 248, 0.35);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.14);
 }
 
 .schedule-slot-subject {
@@ -1431,6 +1475,8 @@ a:hover { color: var(--accent-3); }
     font-size: 0.95rem;
     color: var(--text-primary);
     margin-bottom: 4px;
+    display: flex;
+    align-items: center;
 }
 
 .schedule-slot-info {

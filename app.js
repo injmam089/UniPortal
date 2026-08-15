@@ -933,13 +933,17 @@ document.addEventListener('DOMContentLoaded', () => {
             let html = '<div class="schedule-header"></div>';
             html += '<div class="schedule-header">Schedule</div>';
             let skipPeriodsRemaining = 0;
+            let rowIdx = 0;
 
             periodDefinitions.forEach((pd) => {
+                const delay = (rowIdx * 0.035).toFixed(3);
+                rowIdx++;
+
                 if (pd.isBreak) {
-                    html += `<div class="schedule-time">${pd.timeLabel}</div>`;
+                    html += `<div class="schedule-time" style="animation-delay: ${delay}s">${pd.timeLabel}</div>`;
                     html += `
-                        <div class="schedule-slot filled" style="border-left-color: var(--text-muted); opacity: 0.75;">
-                            <div class="schedule-slot-subject">LUNCH BREAK</div>
+                        <div class="schedule-slot filled" style="border-left-color: var(--text-muted); opacity: 0.75; animation-delay: ${delay}s">
+                            <div class="schedule-slot-subject"><i class="fa-solid fa-mug-hot" style="margin-right: 8px; color: #fbbf24;"></i>LUNCH BREAK</div>
                             <div class="schedule-slot-info">${pd.time}</div>
                         </div>
                     `;
@@ -948,14 +952,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (skipPeriodsRemaining > 0) {
                     skipPeriodsRemaining--;
-                    html += `<div class="schedule-time">${pd.timeLabel}</div>`;
-                    html += '<div class="schedule-slot"></div>';
+                    html += `<div class="schedule-time" style="animation-delay: ${delay}s">${pd.timeLabel}</div>`;
+                    html += `<div class="schedule-slot" style="animation-delay: ${delay}s"></div>`;
                     return;
                 }
 
                 const match = slots.find(s => s.startPeriod === pd.num);
 
-                html += `<div class="schedule-time">${pd.timeLabel}</div>`;
+                html += `<div class="schedule-time" style="animation-delay: ${delay}s">${pd.timeLabel}</div>`;
 
                 if (match) {
                     const isLab = match.duration >= 2;
@@ -966,13 +970,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     const subjectDisplay = `${match.code} - ${match.subject}`;
 
                     html += `
-                        <div class="schedule-slot filled" style="border-left-color: ${match.color};">
+                        <div class="schedule-slot filled" style="border-left-color: ${match.color}; animation-delay: ${delay}s">
                             <div class="schedule-slot-subject">${subjectDisplay}</div>
                             <div class="schedule-slot-info">${match.room} • ${match.prof} (${groupText})</div>
                         </div>
                     `;
                 } else {
-                    html += '<div class="schedule-slot"></div>';
+                    html += `<div class="schedule-slot" style="animation-delay: ${delay}s"></div>`;
                 }
             });
 
