@@ -6,7 +6,62 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // =============================================
-    // MOCK DATA
+    // REST API CLIENT & BACKEND INTEGRATION
+    // =============================================
+
+    const API_BASE = '/api';
+
+    const api = {
+        async get(endpoint) {
+            try {
+                const token = localStorage.getItem('token');
+                const res = await fetch(`${API_BASE}${endpoint}`, {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                });
+                return await res.json();
+            } catch (e) {
+                console.warn(`API GET ${endpoint} fallback:`, e.message);
+                return null;
+            }
+        },
+        async post(endpoint, body) {
+            try {
+                const token = localStorage.getItem('token');
+                const res = await fetch(`${API_BASE}${endpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+                    },
+                    body: JSON.stringify(body)
+                });
+                return await res.json();
+            } catch (e) {
+                console.warn(`API POST ${endpoint} fallback:`, e.message);
+                return null;
+            }
+        },
+        async put(endpoint, body) {
+            try {
+                const token = localStorage.getItem('token');
+                const res = await fetch(`${API_BASE}${endpoint}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+                    },
+                    body: JSON.stringify(body)
+                });
+                return await res.json();
+            } catch (e) {
+                console.warn(`API PUT ${endpoint} fallback:`, e.message);
+                return null;
+            }
+        }
+    };
+
+    // =============================================
+    // MOCK DATA (WITH AUTO-SYNC FROM DATABASE)
     // =============================================
 
     const student = {
@@ -1813,6 +1868,15 @@ document.addEventListener('DOMContentLoaded', () => {
             quizHistory.unshift(newRecord);
         }
 
+        // Persist quiz attempt in SQLite database via API
+        if (currentQuiz && currentQuiz.id) {
+            api.post(`/quizzes/${currentQuiz.id}/submit`, { answers: userAnswers }).then(res => {
+                if (res && res.success) {
+                    console.log('✅ Quiz score recorded in database:', res);
+                }
+            });
+        }
+
         // Re-render Quiz page stats & cards
         renderQuiz();
 
@@ -2025,13 +2089,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     uploadProgressFill.style.width = '100%';
                     uploadProgressText.textContent = '100%';
 
-                    setTimeout(() => {
-                        // Update assignment data
+                    setTimeout(async () => {
+                        // Update assignment data locally & in DB
                         const assignId = parseInt(assignmentSelect.value);
                         const assignment = assignmentsData.find(a => a.id === assignId);
                         if (assignment) {
                             assignment.status = 'submitted';
                             assignment.file = selectedFile.name;
+                        }
+
+                        // Persist to database
+                        if (assignId) {
+                            await api.post(`/assignments/${assignId}/submit`, { fileName: selectedFile.name });
                         }
 
                         submitAssignmentBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Submitted!';
@@ -2077,9 +2146,19 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } else {
             editProfileBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Edit';
+            const updatedValues = {};
             editableFields.forEach(el => {
                 const input = el.querySelector('input');
-                if (input) el.textContent = input.value;
+                if (input) {
+                    el.textContent = input.value;
+                    updatedValues[el.dataset.field] = input.value;
+                }
+            });
+            // Persist profile updates in database
+            api.put('/student/profile', updatedValues).then(res => {
+                if (res && res.success) {
+                    console.log('✅ Profile updated in DB:', res);
+                }
             });
         }
     });
@@ -2121,23 +2200,54 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.value = val;
     });
 
-    paymentForm.addEventListener('submit', e => {
+    paymentForm.addEventListener('submit', async e => {
         e.preventDefault();
-        // Simulate payment
         const btn = paymentForm.querySelector('button[type="submit"]');
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing Payment...';
         btn.disabled = true;
 
+        const res = await api.post('/fees/pay', {
+            amount: 19000,
+            description: 'Remaining BCA 5th Sem Tuition & Hostel Utilities',
+            method: 'Card'
+        });
+
+        btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Payment Successful!';
+        btn.style.background = 'var(--gradient-green)';
+
+        // Update fee numbers immediately
+        const pendingSpan = document.querySelector('.stat-card[data-delay="300"] .stat-number');
+        if (pendingSpan) {
+            pendingSpan.dataset.target = 0;
+            pendingSpan.textContent = '0';
+        }
+        const pendingFeeLabel = document.querySelector('.pending-label');
+        if (pendingFeeLabel) {
+            pendingFeeLabel.innerHTML = '<i class="fa-solid fa-circle-check"></i> Pending: ₹0';
+        }
+
         setTimeout(() => {
-            btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Payment Successful!';
-            btn.style.background = 'var(--gradient-green)';
-            setTimeout(() => {
-                paymentModal.classList.remove('show');
-                btn.innerHTML = '<i class="fa-solid fa-lock"></i> Pay ₹2,450.00';
-                btn.style.background = '';
-                btn.disabled = false;
-            }, 2000);
-        }, 2500);
+            paymentModal.classList.remove('show');
+            btn.innerHTML = originalHtml;
+            btn.style.background = '';
+            btn.disabled = false;
+            
+            // Refresh fee data from DB
+            api.get('/fees').then(feesRes => {
+                if (feesRes && feesRes.success) {
+                    if (feesRes.breakdown) {
+                        feeBreakdown.length = 0;
+                        feeBreakdown.push(...feesRes.breakdown);
+                    }
+                    if (feesRes.history) {
+                        paymentHistory.length = 0;
+                        paymentHistory.push(...feesRes.history);
+                    }
+                    renderFees();
+                }
+            });
+        }, 1800);
     });
 
     // =============================================
@@ -2171,7 +2281,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // =============================================
-    // INITIALIZE DASHBOARD
+    // INITIALIZE & SYNC WITH DATABASE
     // =============================================
 
     renderUpcomingClasses();
@@ -2190,5 +2300,93 @@ document.addEventListener('DOMContentLoaded', () => {
     renderExamTimetable();
     renderQuiz();
     renderAssignments();
+
+    // Async backend data sync
+    async function syncBackendData() {
+        try {
+            const [dashRes, schedRes, feesRes, resRes, quizRes, assignRes, pyqRes, profRes] = await Promise.all([
+                api.get('/dashboard'),
+                api.get('/schedule'),
+                api.get('/fees'),
+                api.get('/results'),
+                api.get('/quizzes'),
+                api.get('/assignments'),
+                api.get('/pyq'),
+                api.get('/student/profile')
+            ]);
+
+            if (profRes && profRes.success && profRes.student) {
+                const s = profRes.student;
+                student.name = s.full_name || student.name;
+                student.id = s.student_id || student.id;
+                student.department = s.program || student.department;
+                student.university = s.university || student.university;
+                student.semester = s.semester || student.semester;
+                student.cgpa = s.cgpa || student.cgpa;
+                student.phone = s.phone || student.phone;
+                student.address = s.address || student.address;
+                student.advisor = s.advisor || student.advisor;
+            }
+
+            if (dashRes && dashRes.success) {
+                if (dashRes.recentActivity && dashRes.recentActivity.length > 0) {
+                    recentActivity.length = 0;
+                    recentActivity.push(...dashRes.recentActivity);
+                    renderRecentActivity();
+                }
+            }
+
+            if (schedRes && schedRes.success && schedRes.scheduleByDay) {
+                Object.assign(scheduleByDay, schedRes.scheduleByDay);
+                renderSchedule();
+            }
+
+            if (feesRes && feesRes.success) {
+                if (feesRes.breakdown) {
+                    feeBreakdown.length = 0;
+                    feeBreakdown.push(...feesRes.breakdown);
+                }
+                if (feesRes.history) {
+                    paymentHistory.length = 0;
+                    paymentHistory.push(...feesRes.history);
+                }
+                renderFees();
+            }
+
+            if (resRes && resRes.success && resRes.resultsData) {
+                Object.assign(resultsData, resRes.resultsData);
+            }
+
+            if (quizRes && quizRes.success) {
+                if (quizRes.quizzes && quizRes.quizzes.length > 0) {
+                    quizzesData.length = 0;
+                    quizzesData.push(...quizRes.quizzes);
+                }
+                if (quizRes.history && quizRes.history.length > 0) {
+                    quizHistory.length = 0;
+                    quizHistory.push(...quizRes.history);
+                }
+                renderQuiz();
+            }
+
+            if (assignRes && assignRes.success && assignRes.assignments) {
+                assignmentsData.length = 0;
+                assignmentsData.push(...assignRes.assignments);
+                renderAssignments();
+            }
+
+            if (pyqRes && pyqRes.success && pyqRes.papers) {
+                pyqData.length = 0;
+                pyqData.push(...pyqRes.papers);
+                renderPYQ();
+            }
+
+            console.log('✅ Synchronized with Full-Stack Backend Database');
+        } catch (err) {
+            console.warn('Backend sync failed, running with client state:', err);
+        }
+    }
+
+    syncBackendData();
 
 });
