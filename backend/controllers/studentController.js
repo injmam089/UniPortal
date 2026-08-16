@@ -1,6 +1,36 @@
 const db = require('../config/db');
 const bcrypt = require('bcryptjs');
 
+function calculateCompletion(student, user) {
+    const hasIdentity = Boolean(student.full_name && student.dob && student.gender && student.blood_group);
+    const hasAcademic = Boolean(student.program && student.semester);
+    const hasResidence = Boolean(student.address && student.permanent_address && student.permanent_address.trim().length > 0);
+    const hasEmergency = Boolean(
+        student.emergency_name && 
+        student.emergency_phone && 
+        student.emergency_phone.trim().length >= 8 &&
+        !student.emergency_phone.includes('000000') // Placeholder check
+    );
+
+    const checklist = [
+        { id: 'identity', tab: 'ep-personal', field: 'epBloodGroup', label: 'Identity Verified', done: hasIdentity, hint: 'Verify DOB and Blood Group' },
+        { id: 'academic', tab: 'ep-academic', field: 'epFullName', label: 'Academic Enrollment', done: hasAcademic, hint: 'Official enrollment record' },
+        { id: 'residence', tab: 'ep-contact', field: 'epPermanentAddress', label: 'Campus & Permanent Residence', done: hasResidence, hint: 'Add permanent home address' },
+        { id: 'emergency', tab: 'ep-emergency', field: 'epEmergencyPhone', label: 'Emergency Contact Verified', done: hasEmergency, hint: 'Add verified emergency phone' }
+    ];
+
+    const completedCount = checklist.filter(c => c.done).length;
+    const percentage = Math.round((completedCount / checklist.length) * 100);
+
+    return {
+        percentage,
+        isFullyComplete: percentage === 100,
+        checklist,
+        firstPendingTab: checklist.find(c => !c.done)?.tab || 'ep-personal',
+        firstPendingField: checklist.find(c => !c.done)?.field || 'epFullName'
+    };
+}
+
 exports.getProfile = (req, res) => {
     const studentId = req.user?.studentId || 1;
     const student = db.queryOne('SELECT * FROM students WHERE id = ?', [studentId]) || db.queryOne('SELECT * FROM students LIMIT 1');
@@ -20,21 +50,8 @@ exports.getProfile = (req, res) => {
     // Fetch recent activity audit
     const activities = db.queryAll('SELECT * FROM activity_logs WHERE user_id = ? ORDER BY id DESC LIMIT 6', [student.user_id]);
 
-    // Compute profile completion percentage
-    const completionFields = [
-        student.full_name,
-        user?.email,
-        student.phone,
-        student.dob,
-        student.gender,
-        student.address,
-        student.permanent_address,
-        student.emergency_name,
-        student.emergency_phone,
-        student.blood_group
-    ];
-    const filledCount = completionFields.filter(f => Boolean(f && f.toString().trim().length > 0)).length;
-    const completionPercentage = Math.round((filledCount / completionFields.length) * 100);
+    // Compute profile completion breakdown
+    const completion = calculateCompletion(student, user);
 
     // Calculate academic stats
     const totalCredits = semesterGpa.reduce((acc, curr) => acc + (curr.credits_earned || 0), 0);
@@ -68,11 +85,7 @@ exports.getProfile = (req, res) => {
         },
         documents,
         activities,
-        completion: {
-            percentage: completionPercentage,
-            verifiedItems: ['Student Identity', 'Academic Enrollment', 'Hostel Residence', 'University Email'],
-            pendingItems: ['Physical Document Verification', 'Emergency Contact Verification']
-        },
+        completion,
         security: {
             lastLogin: 'August 16, 2026 • 12:45 PM',
             twoFactor: 'Enabled (University SSO)',
@@ -139,17 +152,20 @@ exports.updateProfile = (req, res) => {
     );
 
     const updated = db.queryOne('SELECT * FROM students WHERE id = ?', [studentId]);
+    const user = db.queryOne('SELECT id, email, username FROM users WHERE id = ?', [updated.user_id]);
+    const completion = calculateCompletion(updated, user);
 
     // Log activity
     db.run(
         `INSERT INTO activity_logs (user_id, text, time_text, color) VALUES (?, ?, 'Just now', '#38bdf8')`,
-        [updated.user_id, 'Updated personal contact and emergency details in University SIS']
+        [updated.user_id, `Updated profile details (${completion.percentage}% completed)`]
     );
 
     res.json({
         success: true,
         message: 'Profile records successfully updated in University Database',
-        student: updated
+        student: updated,
+        completion
     });
 };
 

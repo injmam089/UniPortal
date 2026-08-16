@@ -949,14 +949,14 @@
                             <div class="completion-bar">
                                 <div class="completion-fill" id="completionFill" style="width: 85%;"></div>
                             </div>
-                            <div class="completion-items">
-                                <span class="c-item done"><i class="fa-solid fa-circle-check"></i> Identity Verified</span>
-                                <span class="c-item done"><i class="fa-solid fa-circle-check"></i> Academic Enrollment</span>
-                                <span class="c-item done"><i class="fa-solid fa-circle-check"></i> Campus Residence</span>
-                                <span class="c-item pending"><i class="fa-regular fa-circle"></i> Emergency Contact Verified</span>
+                            <div class="completion-items" id="completionChecklist">
+                                <div class="c-item done" data-tab="ep-personal" data-field="epBloodGroup"><i class="fa-solid fa-circle-check"></i> <span>Identity Verified</span></div>
+                                <div class="c-item done" data-tab="ep-academic" data-field="epFullName"><i class="fa-solid fa-circle-check"></i> <span>Academic Enrollment</span></div>
+                                <div class="c-item done" data-tab="ep-contact" data-field="epPermanentAddress"><i class="fa-solid fa-circle-check"></i> <span>Campus Residence</span></div>
+                                <div class="c-item pending" data-tab="ep-emergency" data-field="epEmergencyPhone"><i class="fa-regular fa-circle"></i> <span>Emergency Contact Verified</span></div>
                             </div>
                             <button class="btn btn-secondary btn-sm btn-block" id="completeProfileBtn">
-                                <i class="fa-solid fa-circle-arrow-up"></i> Update Missing Information
+                                <i class="fa-solid fa-circle-arrow-up"></i> <span id="completeProfileBtnText">Update Missing Information</span>
                             </button>
                         </div>
 

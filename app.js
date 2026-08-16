@@ -2185,9 +2185,79 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. Profile Completion
         const completionPercent = document.getElementById('completionPercent');
         const completionFill = document.getElementById('completionFill');
-        const pct = completion.percentage || 85;
+        const completeBtn = document.getElementById('completeProfileBtn');
+        const completeBtnText = document.getElementById('completeProfileBtnText');
+        const checklistContainer = document.getElementById('completionChecklist');
+
+        // Criteria checks
+        const hasIdentity = Boolean(s.full_name && s.dob && s.gender && s.blood_group);
+        const hasAcademic = Boolean(s.program || s.department);
+        const hasResidence = Boolean(s.address && s.permanent_address && s.permanent_address.trim().length > 0);
+        const hasEmergency = Boolean(
+            s.emergency_name && 
+            s.emergency_phone && 
+            s.emergency_phone.trim().length >= 8 &&
+            !s.emergency_phone.includes('000000')
+        );
+
+        const defaultChecklist = [
+            { id: 'identity', tab: 'ep-personal', field: 'epBloodGroup', label: 'Identity Verified', done: hasIdentity, hint: 'Provide Blood Group & DOB' },
+            { id: 'academic', tab: 'ep-academic', field: 'epFullName', label: 'Academic Enrollment', done: hasAcademic, hint: 'Official enrollment dossier' },
+            { id: 'residence', tab: 'ep-contact', field: 'epPermanentAddress', label: 'Campus & Permanent Residence', done: hasResidence, hint: 'Provide Permanent Home Address' },
+            { id: 'emergency', tab: 'ep-emergency', field: 'epEmergencyPhone', label: 'Emergency Contact Verified', done: hasEmergency, hint: 'Provide Valid Emergency Phone' }
+        ];
+
+        const checklist = (profileData?.completion?.checklist && profileData.completion.checklist.length > 0)
+            ? profileData.completion.checklist
+            : defaultChecklist;
+
+        const completedCount = checklist.filter(c => c.done).length;
+        const pct = (profileData?.completion?.percentage !== undefined)
+            ? profileData.completion.percentage
+            : Math.round((completedCount / checklist.length) * 100);
+
         if (completionPercent) completionPercent.textContent = `${pct}%`;
-        if (completionFill) completionFill.style.width = `${pct}%`;
+        if (completionFill) {
+            completionFill.style.width = `${pct}%`;
+            if (pct === 100) {
+                completionFill.style.background = 'linear-gradient(90deg, #10b981, #34d399)';
+                completionFill.style.boxShadow = '0 0 14px rgba(16, 185, 129, 0.7)';
+            } else {
+                completionFill.style.background = 'var(--gradient-primary)';
+                completionFill.style.boxShadow = '0 0 12px rgba(56, 189, 248, 0.6)';
+            }
+        }
+
+        if (completeBtn) {
+            if (pct === 100) {
+                completeBtn.className = 'btn btn-secondary btn-sm btn-block';
+                completeBtn.innerHTML = '<i class="fa-solid fa-circle-check" style="color: #34d399;"></i> <span>Profile 100% Verified (Edit)</span>';
+            } else {
+                completeBtn.className = 'btn btn-primary btn-sm btn-block';
+                completeBtn.innerHTML = '<i class="fa-solid fa-circle-arrow-up"></i> <span>Update Missing Information</span>';
+            }
+        }
+
+        if (checklistContainer) {
+            checklistContainer.innerHTML = checklist.map(item => `
+                <div class="c-item ${item.done ? 'done' : 'pending'}" data-tab="${item.tab}" data-field="${item.field || ''}" title="${item.done ? 'Verified' : 'Click to fill: ' + (item.hint || '')}">
+                    <div class="c-item-left">
+                        <i class="${item.done ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle'}"></i>
+                        <span>${item.label}</span>
+                    </div>
+                    ${item.done ? '' : '<span class="c-tag-missing">Fill Now</span>'}
+                </div>
+            `).join('');
+
+            // Attach interactive click on each checklist row to navigate to missing input
+            checklistContainer.querySelectorAll('.c-item').forEach(itemEl => {
+                itemEl.addEventListener('click', () => {
+                    const tab = itemEl.dataset.tab;
+                    const field = itemEl.dataset.field;
+                    openEditModal(tab, field);
+                });
+            });
+        }
 
         // 3. Quick Stats
         const quickCgpa = document.getElementById('quickCgpa');
@@ -2222,14 +2292,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (profMotherName) profMotherName.textContent = s.mother_name || s.motherName || 'Mrs. Jamila Khatoon';
         if (profDob) profDob.textContent = s.dob || 'March 09, 2004';
         if (profGender) profGender.textContent = s.gender || 'Male';
-        if (profBloodGroup) profBloodGroup.textContent = s.blood_group || 'O+';
+        if (profBloodGroup) profBloodGroup.textContent = s.blood_group || s.bloodGroup || 'O+';
         if (profEmail) profEmail.textContent = s.email || 'injmamah@student.iul.ac.in';
         if (profPhone) profPhone.textContent = s.phone || '+91 7052959935';
         if (profAddress) profAddress.textContent = s.address || 'J.N Boys Hostel, Room 05, Integral University, Lucknow, UP 226026';
-        if (profPermanentAddress) profPermanentAddress.textContent = s.permanent_address || 'Village/Town, Dist. Basti, Uttar Pradesh, India 272002';
-        if (profEmergencyName) profEmergencyName.textContent = s.emergency_name || 'Mr. Ahsanullah Ansari';
-        if (profEmergencyRelation) profEmergencyRelation.textContent = s.emergency_relation || 'Father / Guardian';
-        if (profEmergencyPhone) profEmergencyPhone.textContent = s.emergency_phone || '+91 9450000000';
+        if (profPermanentAddress) profPermanentAddress.textContent = s.permanent_address || s.permanentAddress || 'Village/Town, Dist. Basti, Uttar Pradesh, India 272002';
+        if (profEmergencyName) profEmergencyName.textContent = s.emergency_name || s.emergencyName || 'Mr. Ahsanullah Ansari';
+        if (profEmergencyRelation) profEmergencyRelation.textContent = s.emergency_relation || s.emergencyRelation || 'Father / Guardian';
+        if (profEmergencyPhone) profEmergencyPhone.textContent = s.emergency_phone || s.emergencyPhone || '+91 9450000000';
 
         // 5. Official Academic Dossier
         const profProgram = document.getElementById('profProgram');
@@ -2391,7 +2461,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const epCancelBtn = document.getElementById('epCancelBtn');
     const editProfileForm = document.getElementById('editProfileForm');
 
-    function openEditModal() {
+    function switchEditModalTab(tabName) {
+        const epTabs = document.querySelectorAll('.ep-tab');
+        epTabs.forEach(t => t.classList.remove('active'));
+        const activeTabBtn = document.querySelector(`.ep-tab[data-tab="${tabName}"]`);
+        if (activeTabBtn) activeTabBtn.classList.add('active');
+
+        document.querySelectorAll('.ep-tab-content').forEach(c => c.classList.remove('active'));
+        const activeContent = document.getElementById(`tab-${tabName}`);
+        if (activeContent) activeContent.classList.add('active');
+    }
+
+    function openEditModal(targetTab = null, targetField = null) {
         if (!editProfileModal) return;
         // Populate inputs with current student values
         const epFullName = document.getElementById('epFullName');
@@ -2409,22 +2490,45 @@ document.addEventListener('DOMContentLoaded', () => {
         const epEmergencyRelation = document.getElementById('epEmergencyRelation');
         const epEmergencyPhone = document.getElementById('epEmergencyPhone');
 
-        if (epFullName) epFullName.value = student.name;
+        if (epFullName) epFullName.value = student.name || 'Injmam Ansari';
         if (epPhone) epPhone.value = student.phone || '+91 7052959935';
         if (epEmail) epEmail.value = student.email || 'injmamah@student.iul.ac.in';
         if (epDob) epDob.value = student.dob || 'March 09, 2004';
         if (epGender) epGender.value = student.gender || 'Male';
-        if (epBloodGroup) epBloodGroup.value = student.bloodGroup || 'O+';
+        if (epBloodGroup) epBloodGroup.value = student.bloodGroup || student.blood_group || 'O+';
         if (epAddress) epAddress.value = student.address || 'J.N Boys Hostel, Room 05, Integral University, Lucknow, UP 226026';
-        if (epPermanentAddress) epPermanentAddress.value = student.permanentAddress || 'Village/Town, Dist. Basti, Uttar Pradesh, India 272002';
+        if (epPermanentAddress) epPermanentAddress.value = student.permanentAddress || student.permanent_address || 'Village/Town, Dist. Basti, Uttar Pradesh, India 272002';
         if (epCity) epCity.value = student.city || 'Lucknow';
         if (epState) epState.value = student.state || 'Uttar Pradesh';
         if (epPincode) epPincode.value = student.pincode || '226026';
-        if (epEmergencyName) epEmergencyName.value = student.emergencyName || 'Mr. Ahsanullah Ansari';
-        if (epEmergencyRelation) epEmergencyRelation.value = student.emergencyRelation || 'Father / Guardian';
-        if (epEmergencyPhone) epEmergencyPhone.value = student.emergencyPhone || '+91 9450000000';
+        if (epEmergencyName) epEmergencyName.value = student.emergencyName || student.emergency_name || 'Mr. Ahsanullah Ansari';
+        if (epEmergencyRelation) epEmergencyRelation.value = student.emergencyRelation || student.emergency_relation || 'Father / Guardian';
+        if (epEmergencyPhone) epEmergencyPhone.value = student.emergencyPhone || student.emergency_phone || '+91 9450000000';
 
+        // Select tab: if not specified, default to emergency or contact if incomplete
+        let defaultTab = targetTab;
+        if (!defaultTab) {
+            if (!student.bloodGroup && !student.blood_group) defaultTab = 'ep-personal';
+            else if (!student.permanentAddress && !student.permanent_address) defaultTab = 'ep-contact';
+            else if (!student.emergencyPhone || (student.emergencyPhone && student.emergencyPhone.includes('000000'))) defaultTab = 'ep-emergency';
+            else defaultTab = 'ep-emergency';
+        }
+
+        switchEditModalTab(defaultTab);
         editProfileModal.classList.add('show');
+
+        // Focus & highlight target field if provided
+        if (targetField) {
+            setTimeout(() => {
+                const inputEl = document.getElementById(targetField);
+                if (inputEl) {
+                    inputEl.focus();
+                    inputEl.classList.remove('field-highlight-pulse');
+                    void inputEl.offsetWidth; // trigger reflow
+                    inputEl.classList.add('field-highlight-pulse');
+                }
+            }, 200);
+        }
     }
 
     const editProfileMainBtn = document.getElementById('editProfileMainBtn');
@@ -2432,10 +2536,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const completeProfileBtn = document.getElementById('completeProfileBtn');
     const changeAvatarBtn = document.getElementById('changeAvatarBtn');
 
-    if (editProfileMainBtn) editProfileMainBtn.addEventListener('click', openEditModal);
-    if (editPersonalInfoBtn) editPersonalInfoBtn.addEventListener('click', openEditModal);
-    if (completeProfileBtn) completeProfileBtn.addEventListener('click', openEditModal);
-    if (changeAvatarBtn) changeAvatarBtn.addEventListener('click', openEditModal);
+    if (editProfileMainBtn) editProfileMainBtn.addEventListener('click', () => openEditModal('ep-personal'));
+    if (editPersonalInfoBtn) editPersonalInfoBtn.addEventListener('click', () => openEditModal('ep-personal'));
+    if (completeProfileBtn) {
+        completeProfileBtn.addEventListener('click', () => {
+            // Find first pending item
+            const firstPendingEl = document.querySelector('#completionChecklist .c-item.pending');
+            if (firstPendingEl) {
+                openEditModal(firstPendingEl.dataset.tab, firstPendingEl.dataset.field);
+            } else {
+                openEditModal('ep-emergency', 'epEmergencyPhone');
+            }
+        });
+    }
+    if (changeAvatarBtn) changeAvatarBtn.addEventListener('click', () => openEditModal('ep-personal'));
 
     if (editProfileModalClose) {
         editProfileModalClose.addEventListener('click', () => editProfileModal.classList.remove('show'));
@@ -2453,14 +2567,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const epTabs = document.querySelectorAll('.ep-tab');
     epTabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            epTabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            const target = tab.dataset.tab;
-            document.querySelectorAll('.ep-tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            const activeContent = document.getElementById(`tab-${target}`);
-            if (activeContent) activeContent.classList.add('active');
+            switchEditModalTab(tab.dataset.tab);
         });
     });
 
@@ -2515,8 +2622,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.innerHTML = originalHtml;
                 btn.style.background = '';
                 btn.disabled = false;
-                renderProfilePage();
-            }, 1200);
+                renderProfilePage(res);
+            }, 1000);
         });
     }
 
