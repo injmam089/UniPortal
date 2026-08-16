@@ -18,20 +18,51 @@ CREATE TABLE IF NOT EXISTS students (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER UNIQUE,
     student_id TEXT UNIQUE NOT NULL,
+    enrollment_no TEXT DEFAULT 'IU-2024-BCA-0089',
     full_name TEXT NOT NULL,
+    father_name TEXT DEFAULT 'Mr. Ahsanullah Ansari',
+    mother_name TEXT DEFAULT 'Mrs. Jamila Khatoon',
     program TEXT NOT NULL,
+    department TEXT DEFAULT 'Department of Computer Application',
+    faculty TEXT DEFAULT 'Faculty of Computer Applications',
     university TEXT NOT NULL,
     semester TEXT NOT NULL,
+    section TEXT DEFAULT 'Section A',
+    academic_session TEXT DEFAULT '2024–2027 (Current: 2026–27)',
+    academic_status TEXT DEFAULT 'Active Student • Regular',
     enrollment_year TEXT NOT NULL,
     cgpa REAL NOT NULL DEFAULT 0.00,
     phone TEXT,
     dob TEXT,
     gender TEXT,
+    blood_group TEXT DEFAULT 'O+',
     address TEXT,
+    permanent_address TEXT DEFAULT 'Village/Town, Dist. Basti, Uttar Pradesh, India 272002',
+    city TEXT DEFAULT 'Lucknow',
+    state TEXT DEFAULT 'Uttar Pradesh',
+    pincode TEXT DEFAULT '226026',
+    emergency_name TEXT DEFAULT 'Mr. Ahsanullah Ansari',
+    emergency_relation TEXT DEFAULT 'Father / Guardian',
+    emergency_phone TEXT DEFAULT '+91 9450000000',
     advisor TEXT,
     group_id TEXT DEFAULT 'Group 1',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- 2b. Official Student Documents & University Records
+CREATE TABLE IF NOT EXISTS student_documents (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    student_id INTEGER NOT NULL,
+    doc_name TEXT NOT NULL,
+    doc_type TEXT NOT NULL,
+    file_format TEXT NOT NULL DEFAULT 'PDF',
+    issue_date TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'Verified',
+    file_size TEXT NOT NULL DEFAULT '1.2 MB',
+    download_url TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
 );
 
 -- 3. Courses catalog

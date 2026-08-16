@@ -2130,42 +2130,508 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // =============================================
-    // PROFILE - Edit Mode
-    // =============================================
+    // =========================================================================
+    // UNIVERSITY STUDENT INFORMATION SYSTEM (SIS) - PROFILE MODULE
+    // =========================================================================
 
-    const editProfileBtn = document.getElementById('editProfileBtn');
-    let editMode = false;
+    const semesterSgpaData = [
+        { sem: 1, sgpa: 8.20, credits: 20, maxSgpa: 10 },
+        { sem: 2, sgpa: 7.90, credits: 20, maxSgpa: 10 },
+        { sem: 3, sgpa: 8.30, credits: 20, maxSgpa: 10 },
+        { sem: 4, sgpa: 8.10, credits: 20, maxSgpa: 10 },
+        { sem: 5, sgpa: 8.25, credits: 20, maxSgpa: 10, isProjected: true }
+    ];
 
-    editProfileBtn.addEventListener('click', () => {
-        editMode = !editMode;
-        const editableFields = document.querySelectorAll('#profileInfo .info-value[data-field]');
+    const studentDocuments = [
+        { id: 1, name: 'Student Identity Card (BCA Final Year)', type: 'ID Card', format: 'PDF', date: '2024-08-16', status: 'Active & Verified', size: '1.4 MB' },
+        { name: 'Official Admission & Enrollment Dossier', type: 'Enrollment Slip', format: 'PDF', date: '2024-08-10', status: 'Verified', size: '2.1 MB' },
+        { name: 'Semester 4 Official Grade Sheet & Marksheet', type: 'Marksheet', format: 'PDF', date: '2026-06-28', status: 'Official Record', size: '850 KB' },
+        { name: 'Semester 3 Official Grade Sheet & Marksheet', type: 'Marksheet', format: 'PDF', date: '2025-12-20', status: 'Official Record', size: '820 KB' },
+        { name: '5th Semester Tuition & Hostel Fee Receipt', type: 'Fee Receipt', format: 'PDF', date: '2026-08-01', status: 'Paid & Verified', size: '420 KB' },
+        { name: 'Bonafide Student Certificate (Integral University)', type: 'Certificate', format: 'PDF', date: '2026-07-15', status: 'Active Document', size: '650 KB' }
+    ];
 
-        if (editMode) {
-            editProfileBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save';
-            editableFields.forEach(el => {
-                const val = el.textContent;
-                const field = el.dataset.field;
-                el.innerHTML = `<input type="text" value="${val}" data-field="${field}">`;
-            });
-        } else {
-            editProfileBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Edit';
-            const updatedValues = {};
-            editableFields.forEach(el => {
-                const input = el.querySelector('input');
-                if (input) {
-                    el.textContent = input.value;
-                    updatedValues[el.dataset.field] = input.value;
-                }
-            });
-            // Persist profile updates in database
-            api.put('/student/profile', updatedValues).then(res => {
-                if (res && res.success) {
-                    console.log('✅ Profile updated in DB:', res);
-                }
+    function renderProfilePage(profileData = null) {
+        const s = profileData?.student || student;
+        const academic = profileData?.academic || {};
+        const completion = profileData?.completion || { percentage: 85 };
+
+        // 1. Header & Hero Area
+        const heroName = document.getElementById('heroStudentName');
+        const heroProgram = document.getElementById('heroProgram');
+        const heroSemester = document.getElementById('heroSemester');
+        const heroId = document.getElementById('heroStudentId');
+        const heroEnrollment = document.getElementById('heroEnrollment');
+        const heroStatus = document.getElementById('heroStatus');
+        const heroSection = document.getElementById('heroSection');
+        const heroGroup = document.getElementById('heroGroup');
+        const avatarEl = document.getElementById('profileAvatar');
+
+        if (heroName) heroName.textContent = s.full_name || s.name || 'Injmam Ansari';
+        if (heroProgram) heroProgram.textContent = s.program || s.department || 'Bachelor of Computer Application (BCA)';
+        if (heroSemester) heroSemester.textContent = s.semester || '5th Semester';
+        if (heroId) heroId.textContent = s.student_id || s.id || 'STU-2400103912';
+        if (heroEnrollment) heroEnrollment.textContent = s.enrollment_no || 'IU-2024-BCA-0089';
+        if (heroStatus) heroStatus.textContent = s.academic_status || 'Active Student • Regular';
+        if (heroSection) heroSection.textContent = s.section || 'Section A';
+        if (heroGroup) heroGroup.textContent = s.group_id || 'Lab Group 1';
+
+        if (avatarEl) {
+            const nameParts = (s.full_name || s.name || 'Injmam Ansari').trim().split(' ');
+            const initials = nameParts.length >= 2 ? (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase() : 'IA';
+            avatarEl.textContent = initials;
+        }
+
+        // 2. Profile Completion
+        const completionPercent = document.getElementById('completionPercent');
+        const completionFill = document.getElementById('completionFill');
+        const pct = completion.percentage || 85;
+        if (completionPercent) completionPercent.textContent = `${pct}%`;
+        if (completionFill) completionFill.style.width = `${pct}%`;
+
+        // 3. Quick Stats
+        const quickCgpa = document.getElementById('quickCgpa');
+        const quickAttendance = document.getElementById('quickAttendance');
+        const quickCourses = document.getElementById('quickCourses');
+        const quickCredits = document.getElementById('quickCredits');
+        const quickStanding = document.getElementById('quickStanding');
+
+        if (quickCgpa) quickCgpa.textContent = (s.cgpa || 8.15).toFixed(2);
+        if (quickAttendance) quickAttendance.textContent = '87%';
+        if (quickCourses) quickCourses.textContent = `${courses.length} Courses`;
+        if (quickCredits) quickCredits.textContent = '100 / 144';
+        if (quickStanding) quickStanding.textContent = (s.cgpa || 8.15) >= 8.0 ? 'Distinction' : 'First Class';
+
+        // 4. Personal Information
+        const profFullName = document.getElementById('profFullName');
+        const profFatherName = document.getElementById('profFatherName');
+        const profMotherName = document.getElementById('profMotherName');
+        const profDob = document.getElementById('profDob');
+        const profGender = document.getElementById('profGender');
+        const profBloodGroup = document.getElementById('profBloodGroup');
+        const profEmail = document.getElementById('profEmail');
+        const profPhone = document.getElementById('profPhone');
+        const profAddress = document.getElementById('profAddress');
+        const profPermanentAddress = document.getElementById('profPermanentAddress');
+        const profEmergencyName = document.getElementById('profEmergencyName');
+        const profEmergencyRelation = document.getElementById('profEmergencyRelation');
+        const profEmergencyPhone = document.getElementById('profEmergencyPhone');
+
+        if (profFullName) profFullName.textContent = s.full_name || s.name || 'Injmam Ansari';
+        if (profFatherName) profFatherName.textContent = s.father_name || s.fatherName || 'Mr. Ahsanullah Ansari';
+        if (profMotherName) profMotherName.textContent = s.mother_name || s.motherName || 'Mrs. Jamila Khatoon';
+        if (profDob) profDob.textContent = s.dob || 'March 09, 2004';
+        if (profGender) profGender.textContent = s.gender || 'Male';
+        if (profBloodGroup) profBloodGroup.textContent = s.blood_group || 'O+';
+        if (profEmail) profEmail.textContent = s.email || 'injmamah@student.iul.ac.in';
+        if (profPhone) profPhone.textContent = s.phone || '+91 7052959935';
+        if (profAddress) profAddress.textContent = s.address || 'J.N Boys Hostel, Room 05, Integral University, Lucknow, UP 226026';
+        if (profPermanentAddress) profPermanentAddress.textContent = s.permanent_address || 'Village/Town, Dist. Basti, Uttar Pradesh, India 272002';
+        if (profEmergencyName) profEmergencyName.textContent = s.emergency_name || 'Mr. Ahsanullah Ansari';
+        if (profEmergencyRelation) profEmergencyRelation.textContent = s.emergency_relation || 'Father / Guardian';
+        if (profEmergencyPhone) profEmergencyPhone.textContent = s.emergency_phone || '+91 9450000000';
+
+        // 5. Official Academic Dossier
+        const profProgram = document.getElementById('profProgram');
+        const profDepartment = document.getElementById('profDepartment');
+        const profFaculty = document.getElementById('profFaculty');
+        const profStudentId = document.getElementById('profStudentId');
+        const profEnrollmentNo = document.getElementById('profEnrollmentNo');
+        const profSemester = document.getElementById('profSemester');
+        const profSectionGroup = document.getElementById('profSectionGroup');
+        const profSession = document.getElementById('profSession');
+        const profAcademicStatus = document.getElementById('profAcademicStatus');
+        const profCgpa = document.getElementById('profCgpa');
+        const profAdvisor = document.getElementById('profAdvisor');
+        const chartCgpaVal = document.getElementById('chartCgpaVal');
+
+        if (profProgram) profProgram.textContent = s.program || s.department || 'Bachelor of Computer Application (BCA)';
+        if (profDepartment) profDepartment.textContent = s.department_name || 'Department of Computer Application';
+        if (profFaculty) profFaculty.textContent = s.faculty || 'Faculty of Computer Applications';
+        if (profStudentId) profStudentId.textContent = s.student_id || s.id || 'STU-2400103912';
+        if (profEnrollmentNo) profEnrollmentNo.textContent = s.enrollment_no || 'IU-2024-BCA-0089';
+        if (profSemester) profSemester.textContent = `${s.semester || '5th Semester'} (Final Year)`;
+        if (profSectionGroup) profSectionGroup.textContent = `${s.section || 'Section A'} • ${s.group_id || 'Lab Group 1'}`;
+        if (profSession) profSession.textContent = s.academic_session || '2024–2027 (Current: 2026–27)';
+        if (profAcademicStatus) profAcademicStatus.textContent = s.academic_status || 'Active Student • Regular';
+        if (profCgpa) profCgpa.textContent = `${(s.cgpa || 8.15).toFixed(2)} / 10.00`;
+        if (chartCgpaVal) chartCgpaVal.textContent = (s.cgpa || 8.15).toFixed(2);
+        if (profAdvisor) profAdvisor.innerHTML = `<i class="fa-solid fa-user-tie" style="color: var(--accent-1); margin-right: 6px;"></i>${s.advisor || 'Dr. Arshiya Dilshad'} (Dept. of Computer Application)`;
+
+        // 6. SGPA Progression Cards
+        const sgpaGrid = document.getElementById('sgpaProgressionGrid');
+        if (sgpaGrid) {
+            const list = (profileData?.academic?.semesterGpa && profileData.academic.semesterGpa.length > 0)
+                ? profileData.academic.semesterGpa
+                : semesterSgpaData;
+
+            sgpaGrid.innerHTML = list.map(item => {
+                const isCurrent = item.semester === 5 || item.sem === 5;
+                const semNum = item.semester || item.sem;
+                const sgpaVal = (item.sgpa || 0).toFixed(2);
+                const barWidth = Math.min(100, Math.round((item.sgpa / 10) * 100));
+                return `
+                    <div class="sgpa-sem-card ${isCurrent ? 'current-sem' : ''}">
+                        <div class="sgpa-sem-name">Semester ${semNum} ${isCurrent ? '• Active' : ''}</div>
+                        <div class="sgpa-sem-val" style="color: ${isCurrent ? 'var(--accent-1)' : 'var(--text-primary)'};">${sgpaVal}</div>
+                        <div class="sgpa-sem-credits">${item.credits_earned || item.credits || 20} Credits</div>
+                        <div class="sgpa-sem-bar-wrap">
+                            <div class="sgpa-sem-bar-fill" style="width: ${barWidth}%;"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 7. Enrolled Courses Summary Table
+        const courseTbody = document.getElementById('profileCourseTableBody');
+        if (courseTbody) {
+            courseTbody.innerHTML = courses.map(c => {
+                const isPractical = c.type === 'Practical' || c.type === 'Lab';
+                const typeBadgeClass = isPractical ? 'practical' : 'theory';
+                const matchedAtt = attendanceData.find(a => c.name.toLowerCase().includes(a.subject.toLowerCase().substring(0, 5))) || { percent: 88 };
+                return `
+                    <tr>
+                        <td><span class="course-code-badge">${c.code}</span></td>
+                        <td><strong style="color: var(--text-primary);">${c.name}</strong></td>
+                        <td><span class="course-type-pill ${typeBadgeClass}">${c.type}</span></td>
+                        <td><span style="font-weight: 700;">${c.credits}</span> Credits</td>
+                        <td><span style="color: var(--text-secondary);"><i class="fa-solid fa-user-tie" style="margin-right: 6px; color: var(--accent-1);"></i>${c.prof}</span></td>
+                        <td>
+                            <span style="font-weight: 700; color: ${matchedAtt.percent >= 75 ? '#34d399' : '#fbbf24'};">
+                                ${matchedAtt.percent}%
+                            </span>
+                        </td>
+                        <td><span class="badge badge-success"><i class="fa-solid fa-circle-check"></i> Registered</span></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // 8. Profile Attendance Grid
+        const profileAttGrid = document.getElementById('profileAttendanceGrid');
+        if (profileAttGrid) {
+            profileAttGrid.innerHTML = attendanceData.map(att => {
+                const color = att.percent >= 85 ? '#34d399' : (att.percent >= 75 ? '#38bdf8' : '#fbbf24');
+                return `
+                    <div class="patt-card">
+                        <div class="patt-header">
+                            <span class="patt-title">${att.subject}</span>
+                            <span class="patt-percent" style="color: ${color};">${att.percent}%</span>
+                        </div>
+                        <div class="patt-bar-wrap">
+                            <div class="patt-bar-fill" style="width: ${att.percent}%; background: ${color};"></div>
+                        </div>
+                        <div class="patt-meta">
+                            <span><i class="fa-regular fa-calendar-check"></i> ${att.present} of ${att.total} Classes</span>
+                            <span style="color: ${color}; font-weight: 600;">${att.percent >= 75 ? 'Good Standing' : 'Warning'}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 9. Documents Grid
+        const docGrid = document.getElementById('profileDocumentsGrid');
+        if (docGrid) {
+            const docs = (profileData?.documents && profileData.documents.length > 0) ? profileData.documents : studentDocuments;
+            docGrid.innerHTML = docs.map(doc => `
+                <div class="doc-card">
+                    <div class="doc-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                    <div class="doc-info">
+                        <div class="doc-name">${doc.doc_name || doc.name}</div>
+                        <div class="doc-meta">${doc.doc_type || doc.type} • ${doc.issue_date || doc.date} • ${doc.file_size || doc.size}</div>
+                    </div>
+                    <div class="doc-actions">
+                        <button class="btn btn-secondary btn-sm doc-view-btn" data-name="${doc.doc_name || doc.name}" data-type="${doc.doc_type || doc.type}" data-date="${doc.issue_date || doc.date}" title="View Document">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                        <button class="btn btn-primary btn-sm doc-dl-btn" data-name="${doc.doc_name || doc.name}" title="Download Official PDF">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Attach listeners to document buttons
+            docGrid.querySelectorAll('.doc-view-btn, .doc-dl-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const docModal = document.getElementById('documentModal');
+                    const previewName = document.getElementById('docPreviewName');
+                    const previewMeta = document.getElementById('docPreviewMeta');
+                    if (previewName) previewName.textContent = btn.dataset.name;
+                    if (previewMeta) previewMeta.textContent = `Integral University Record • ${btn.dataset.type || 'Official Record'} • Verified`;
+                    if (docModal) docModal.classList.add('show');
+                });
             });
         }
+
+        // 10. Recent Activity Timeline
+        const timelineEl = document.getElementById('profileTimeline');
+        if (timelineEl) {
+            const acts = (profileData?.activities && profileData.activities.length > 0) ? profileData.activities : recentActivity;
+            timelineEl.innerHTML = acts.slice(0, 5).map(act => `
+                <div class="ptimeline-item">
+                    <div class="ptimeline-dot" style="background: ${act.color || '#38bdf8'};"></div>
+                    <div>
+                        <div class="ptimeline-text">${act.text}</div>
+                        <div class="ptimeline-time">${act.time_text || act.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    }
+
+    // =============================================
+    // MODAL HANDLERS: EDIT PROFILE, PASSWORD, DOCS
+    // =============================================
+
+    const editProfileModal = document.getElementById('editProfileModal');
+    const editProfileModalClose = document.getElementById('editProfileModalClose');
+    const epCancelBtn = document.getElementById('epCancelBtn');
+    const editProfileForm = document.getElementById('editProfileForm');
+
+    function openEditModal() {
+        if (!editProfileModal) return;
+        // Populate inputs with current student values
+        const epFullName = document.getElementById('epFullName');
+        const epPhone = document.getElementById('epPhone');
+        const epEmail = document.getElementById('epEmail');
+        const epDob = document.getElementById('epDob');
+        const epGender = document.getElementById('epGender');
+        const epBloodGroup = document.getElementById('epBloodGroup');
+        const epAddress = document.getElementById('epAddress');
+        const epPermanentAddress = document.getElementById('epPermanentAddress');
+        const epCity = document.getElementById('epCity');
+        const epState = document.getElementById('epState');
+        const epPincode = document.getElementById('epPincode');
+        const epEmergencyName = document.getElementById('epEmergencyName');
+        const epEmergencyRelation = document.getElementById('epEmergencyRelation');
+        const epEmergencyPhone = document.getElementById('epEmergencyPhone');
+
+        if (epFullName) epFullName.value = student.name;
+        if (epPhone) epPhone.value = student.phone || '+91 7052959935';
+        if (epEmail) epEmail.value = student.email || 'injmamah@student.iul.ac.in';
+        if (epDob) epDob.value = student.dob || 'March 09, 2004';
+        if (epGender) epGender.value = student.gender || 'Male';
+        if (epBloodGroup) epBloodGroup.value = student.bloodGroup || 'O+';
+        if (epAddress) epAddress.value = student.address || 'J.N Boys Hostel, Room 05, Integral University, Lucknow, UP 226026';
+        if (epPermanentAddress) epPermanentAddress.value = student.permanentAddress || 'Village/Town, Dist. Basti, Uttar Pradesh, India 272002';
+        if (epCity) epCity.value = student.city || 'Lucknow';
+        if (epState) epState.value = student.state || 'Uttar Pradesh';
+        if (epPincode) epPincode.value = student.pincode || '226026';
+        if (epEmergencyName) epEmergencyName.value = student.emergencyName || 'Mr. Ahsanullah Ansari';
+        if (epEmergencyRelation) epEmergencyRelation.value = student.emergencyRelation || 'Father / Guardian';
+        if (epEmergencyPhone) epEmergencyPhone.value = student.emergencyPhone || '+91 9450000000';
+
+        editProfileModal.classList.add('show');
+    }
+
+    const editProfileMainBtn = document.getElementById('editProfileMainBtn');
+    const editPersonalInfoBtn = document.getElementById('editPersonalInfoBtn');
+    const completeProfileBtn = document.getElementById('completeProfileBtn');
+    const changeAvatarBtn = document.getElementById('changeAvatarBtn');
+
+    if (editProfileMainBtn) editProfileMainBtn.addEventListener('click', openEditModal);
+    if (editPersonalInfoBtn) editPersonalInfoBtn.addEventListener('click', openEditModal);
+    if (completeProfileBtn) completeProfileBtn.addEventListener('click', openEditModal);
+    if (changeAvatarBtn) changeAvatarBtn.addEventListener('click', openEditModal);
+
+    if (editProfileModalClose) {
+        editProfileModalClose.addEventListener('click', () => editProfileModal.classList.remove('show'));
+    }
+    if (epCancelBtn) {
+        epCancelBtn.addEventListener('click', () => editProfileModal.classList.remove('show'));
+    }
+    if (editProfileModal) {
+        editProfileModal.addEventListener('click', e => {
+            if (e.target === editProfileModal) editProfileModal.classList.remove('show');
+        });
+    }
+
+    // Tab switching inside Edit Profile Modal
+    const epTabs = document.querySelectorAll('.ep-tab');
+    epTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            epTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            const target = tab.dataset.tab;
+            document.querySelectorAll('.ep-tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            const activeContent = document.getElementById(`tab-${target}`);
+            if (activeContent) activeContent.classList.add('active');
+        });
     });
+
+    // Save Profile Form Submit
+    if (editProfileForm) {
+        editProfileForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            const btn = document.getElementById('epSaveBtn');
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving to Database...';
+            btn.disabled = true;
+
+            const updatedData = {
+                phone: document.getElementById('epPhone')?.value,
+                dob: document.getElementById('epDob')?.value,
+                gender: document.getElementById('epGender')?.value,
+                blood_group: document.getElementById('epBloodGroup')?.value,
+                address: document.getElementById('epAddress')?.value,
+                permanent_address: document.getElementById('epPermanentAddress')?.value,
+                city: document.getElementById('epCity')?.value,
+                state: document.getElementById('epState')?.value,
+                pincode: document.getElementById('epPincode')?.value,
+                emergency_name: document.getElementById('epEmergencyName')?.value,
+                emergency_relation: document.getElementById('epEmergencyRelation')?.value,
+                emergency_phone: document.getElementById('epEmergencyPhone')?.value
+            };
+
+            // Update client student state
+            Object.assign(student, {
+                phone: updatedData.phone,
+                dob: updatedData.dob,
+                gender: updatedData.gender,
+                bloodGroup: updatedData.blood_group,
+                address: updatedData.address,
+                permanentAddress: updatedData.permanent_address,
+                city: updatedData.city,
+                state: updatedData.state,
+                pincode: updatedData.pincode,
+                emergencyName: updatedData.emergency_name,
+                emergencyRelation: updatedData.emergency_relation,
+                emergencyPhone: updatedData.emergency_phone
+            });
+
+            // Send to backend REST API
+            const res = await api.put('/student/profile', updatedData);
+
+            btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Changes Saved!';
+            btn.style.background = 'var(--gradient-green)';
+
+            setTimeout(() => {
+                editProfileModal.classList.remove('show');
+                btn.innerHTML = originalHtml;
+                btn.style.background = '';
+                btn.disabled = false;
+                renderProfilePage();
+            }, 1200);
+        });
+    }
+
+    // Change Password Modal
+    const openChangePassBtn = document.getElementById('openChangePassBtn');
+    const changePasswordModal = document.getElementById('changePasswordModal');
+    const changePasswordModalClose = document.getElementById('changePasswordModalClose');
+    const changePasswordForm = document.getElementById('changePasswordForm');
+
+    if (openChangePassBtn && changePasswordModal) {
+        openChangePassBtn.addEventListener('click', () => changePasswordModal.classList.add('show'));
+    }
+    if (changePasswordModalClose && changePasswordModal) {
+        changePasswordModalClose.addEventListener('click', () => changePasswordModal.classList.remove('show'));
+    }
+    if (changePasswordModal) {
+        changePasswordModal.addEventListener('click', e => {
+            if (e.target === changePasswordModal) changePasswordModal.classList.remove('show');
+        });
+    }
+
+    if (changePasswordForm) {
+        changePasswordForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            const curr = document.getElementById('currentPassword').value;
+            const next = document.getElementById('newPassword').value;
+            const conf = document.getElementById('confirmNewPassword').value;
+
+            if (next !== conf) {
+                alert('New passwords do not match. Please re-check.');
+                return;
+            }
+
+            const btn = document.getElementById('savePasswordBtn');
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating Security Credentials...';
+            btn.disabled = true;
+
+            const res = await api.post('/student/change-password', {
+                currentPassword: curr,
+                newPassword: next
+            });
+
+            if (res && res.success) {
+                btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Password Changed!';
+                btn.style.background = 'var(--gradient-green)';
+                setTimeout(() => {
+                    changePasswordModal.classList.remove('show');
+                    changePasswordForm.reset();
+                    btn.innerHTML = originalHtml;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 1400);
+            } else {
+                alert(res?.message || 'Failed to change password.');
+                btn.innerHTML = originalHtml;
+                btn.disabled = false;
+            }
+        });
+    }
+
+    // Document Modal Close & Download simulation
+    const documentModal = document.getElementById('documentModal');
+    const documentModalClose = document.getElementById('documentModalClose');
+    const docModalCloseBtn = document.getElementById('docModalCloseBtn');
+    const docDownloadBtn = document.getElementById('docDownloadBtn');
+
+    if (documentModalClose && documentModal) {
+        documentModalClose.addEventListener('click', () => documentModal.classList.remove('show'));
+    }
+    if (docModalCloseBtn && documentModal) {
+        docModalCloseBtn.addEventListener('click', () => documentModal.classList.remove('show'));
+    }
+    if (documentModal) {
+        documentModal.addEventListener('click', e => {
+            if (e.target === documentModal) documentModal.classList.remove('show');
+        });
+    }
+    if (docDownloadBtn) {
+        docDownloadBtn.addEventListener('click', () => {
+            const docTitle = document.getElementById('docPreviewName')?.textContent || 'Document';
+            docDownloadBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Generating Official PDF...';
+            setTimeout(() => {
+                docDownloadBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Downloaded!';
+                setTimeout(() => {
+                    docDownloadBtn.innerHTML = '<i class="fa-solid fa-download"></i> Download Official PDF';
+                    documentModal.classList.remove('show');
+                }, 1000);
+            }, 1200);
+        });
+    }
+
+    // Print Dossier
+    const printProfileBtn = document.getElementById('printProfileBtn');
+    if (printProfileBtn) {
+        printProfileBtn.addEventListener('click', () => window.print());
+    }
+
+    // Request Certificate button
+    const requestDocBtn = document.getElementById('requestDocBtn');
+    if (requestDocBtn) {
+        requestDocBtn.addEventListener('click', () => {
+            alert('Official Certificate Request submitted to Integral University Examination Controller! Reference ID: CERT-' + Math.floor(100000 + Math.random() * 900000));
+        });
+    }
+
+    // Logout from all sessions
+    const logoutAllSessionsBtn = document.getElementById('logoutAllSessionsBtn');
+    if (logoutAllSessionsBtn) {
+        logoutAllSessionsBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to invalidate all other active browser sessions?')) {
+                alert('All other remote device sessions have been invalidated.');
+            }
+        });
+    }
 
     // =============================================
     // PAYMENT MODAL
@@ -2295,6 +2761,7 @@ document.addEventListener('DOMContentLoaded', () => {
     animateStatCards();
 
     // Pre-render pages that need data
+    renderProfilePage();
     renderAttendancePage();
     renderSchedule();
     renderClasses();
@@ -2330,6 +2797,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 student.phone = s.phone || student.phone;
                 student.address = s.address || student.address;
                 student.advisor = s.advisor || student.advisor;
+                student.enrollmentNo = s.enrollment_no || student.enrollmentNo;
+                student.section = s.section || student.section;
+                student.bloodGroup = s.blood_group || student.bloodGroup;
+                student.permanentAddress = s.permanent_address || student.permanentAddress;
+                student.city = s.city || student.city;
+                student.state = s.state || student.state;
+                student.pincode = s.pincode || student.pincode;
+                student.emergencyName = s.emergency_name || student.emergencyName;
+                student.emergencyRelation = s.emergency_relation || student.emergencyRelation;
+                student.emergencyPhone = s.emergency_phone || student.emergencyPhone;
+                renderProfilePage(profRes);
             }
 
             if (dashRes && dashRes.success) {

@@ -64,7 +64,7 @@ async function runTests() {
         token = res.body.token;
     });
 
-    // 3. Student Profile
+    // 3. Student Profile SIS
     await test('GET /api/student/profile', async () => {
         const res = await makeRequest('/api/student/profile', 'GET', null, token);
         if (res.status !== 200 || res.body.student.student_id !== 'STU-2400103912') {
@@ -72,19 +72,44 @@ async function runTests() {
         }
     });
 
-    // 4. Schedule
+    // 4. Update Profile
+    await test('PUT /api/student/profile (Personal & Emergency Details)', async () => {
+        const res = await makeRequest('/api/student/profile', 'PUT', {
+            phone: '+91 7052959935',
+            blood_group: 'O+',
+            emergency_name: 'Mr. Ahsanullah Ansari',
+            emergency_phone: '+91 9450000000'
+        }, token);
+        if (res.status !== 200 || !res.body.success) {
+            throw new Error(`Profile update failed: ${JSON.stringify(res.body)}`);
+        }
+    });
+
+    // 5. Official Documents
+    await test('GET /api/student/documents', async () => {
+        const res = await makeRequest('/api/student/documents', 'GET', null, token);
+        if (res.status !== 200 || !res.body.documents) throw new Error('Documents endpoint error');
+    });
+
+    // 6. Academic Records
+    await test('GET /api/student/academic', async () => {
+        const res = await makeRequest('/api/student/academic', 'GET', null, token);
+        if (res.status !== 200 || !res.body.courses) throw new Error('Academic record error');
+    });
+
+    // 7. Schedule
     await test('GET /api/schedule', async () => {
         const res = await makeRequest('/api/schedule');
         if (res.status !== 200 || !res.body.scheduleByDay.Mon) throw new Error('Schedule missing Mon');
     });
 
-    // 5. Results
+    // 8. Results
     await test('GET /api/results/5', async () => {
         const res = await makeRequest('/api/results/5');
         if (res.status !== 200 || res.body.subjects.length === 0) throw new Error('Results empty');
     });
 
-    // 6. Fees Overview
+    // 9. Fees Overview
     await test('GET /api/fees', async () => {
         const res = await makeRequest('/api/fees');
         if (res.status !== 200 || typeof res.body.summary.total !== 'number' || typeof res.body.summary.pending !== 'number') {
@@ -92,25 +117,25 @@ async function runTests() {
         }
     });
 
-    // 7. Quizzes
+    // 10. Quizzes
     await test('GET /api/quizzes', async () => {
         const res = await makeRequest('/api/quizzes');
         if (res.status !== 200 || res.body.quizzes.length === 0) throw new Error('No quizzes');
     });
 
-    // 8. Assignments
+    // 11. Assignments
     await test('GET /api/assignments', async () => {
         const res = await makeRequest('/api/assignments');
         if (res.status !== 200 || res.body.assignments.length === 0) throw new Error('No assignments');
     });
 
-    // 9. PYQ
+    // 12. PYQ
     await test('GET /api/pyq', async () => {
         const res = await makeRequest('/api/pyq');
         if (res.status !== 200 || res.body.papers.length === 0) throw new Error('No PYQ papers');
     });
 
-    // 10. Dashboard
+    // 13. Dashboard
     await test('GET /api/dashboard', async () => {
         const res = await makeRequest('/api/dashboard');
         if (res.status !== 200 || !res.body.stats) throw new Error('Dashboard stats missing');
