@@ -2296,10 +2296,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (profEmail) profEmail.textContent = s.email || 'injmamah@student.iul.ac.in';
         if (profPhone) profPhone.textContent = s.phone || '+91 7052959935';
         if (profAddress) profAddress.textContent = s.address || 'J.N Boys Hostel, Room 05, Integral University, Lucknow, UP 226026';
-        if (profPermanentAddress) profPermanentAddress.textContent = s.permanent_address || s.permanentAddress || 'Village/Town, Dist. Basti, Uttar Pradesh, India 272002';
+        if (profPermanentAddress) profPermanentAddress.textContent = s.permanent_address || s.permanentAddress || 'Village/Town, Dist. Ballia, Uttar Pradesh, India 277304';
         if (profEmergencyName) profEmergencyName.textContent = s.emergency_name || s.emergencyName || 'Mr. Ahsanullah Ansari';
         if (profEmergencyRelation) profEmergencyRelation.textContent = s.emergency_relation || s.emergencyRelation || 'Father / Guardian';
-        if (profEmergencyPhone) profEmergencyPhone.textContent = s.emergency_phone || s.emergencyPhone || '+91 9450000000';
+        if (profEmergencyPhone) profEmergencyPhone.textContent = s.emergency_phone || s.emergencyPhone || '+91 9838331207';
 
         // 5. Official Academic Dossier
         const profProgram = document.getElementById('profProgram');
@@ -2497,13 +2497,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (epGender) epGender.value = student.gender || 'Male';
         if (epBloodGroup) epBloodGroup.value = student.bloodGroup || student.blood_group || 'O+';
         if (epAddress) epAddress.value = student.address || 'J.N Boys Hostel, Room 05, Integral University, Lucknow, UP 226026';
-        if (epPermanentAddress) epPermanentAddress.value = student.permanentAddress || student.permanent_address || 'Village/Town, Dist. Basti, Uttar Pradesh, India 272002';
+        if (epPermanentAddress) epPermanentAddress.value = student.permanentAddress || student.permanent_address || 'Village/Town, Dist. Ballia, Uttar Pradesh, India 277304';
         if (epCity) epCity.value = student.city || 'Lucknow';
         if (epState) epState.value = student.state || 'Uttar Pradesh';
         if (epPincode) epPincode.value = student.pincode || '226026';
         if (epEmergencyName) epEmergencyName.value = student.emergencyName || student.emergency_name || 'Mr. Ahsanullah Ansari';
         if (epEmergencyRelation) epEmergencyRelation.value = student.emergencyRelation || student.emergency_relation || 'Father / Guardian';
-        if (epEmergencyPhone) epEmergencyPhone.value = student.emergencyPhone || student.emergency_phone || '+91 9450000000';
+        if (epEmergencyPhone) epEmergencyPhone.value = student.emergencyPhone || student.emergency_phone || '+91 9838331207';
 
         // Select tab: if not specified, default to emergency or contact if incomplete
         let defaultTab = targetTab;

@@ -78,7 +78,7 @@ async function runTests() {
             phone: '+91 7052959935',
             blood_group: 'O+',
             emergency_name: 'Mr. Ahsanullah Ansari',
-            emergency_phone: '+91 9450000000'
+            emergency_phone: '+91 9838331207'
         }, token);
         if (res.status !== 200 || !res.body.success) {
             throw new Error(`Profile update failed: ${JSON.stringify(res.body)}`);

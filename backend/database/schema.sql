@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS students (
     pincode TEXT DEFAULT '226026',
     emergency_name TEXT DEFAULT 'Mr. Ahsanullah Ansari',
     emergency_relation TEXT DEFAULT 'Father / Guardian',
-    emergency_phone TEXT DEFAULT '+91 9450000000',
+    emergency_phone TEXT DEFAULT '+91 9838331207',
     advisor TEXT,
     group_id TEXT DEFAULT 'Group 1',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
