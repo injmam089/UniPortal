@@ -2978,4 +2978,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     syncBackendData();
 
+    // =============================================
+    // DARK / LIGHT THEME TOGGLE
+    // =============================================
+
+    const themeToggleBtn = document.getElementById('themeToggle');
+
+    function applyTheme(theme) {
+        const isLight = theme === 'light';
+
+        // Toggle the CSS class
+        document.body.classList.toggle('light-theme', isLight);
+
+        // Update the button icon
+        if (themeToggleBtn) {
+            const icon = themeToggleBtn.querySelector('i');
+            if (icon) {
+                icon.className = isLight ? 'fa-solid fa-sun' : 'fa-regular fa-moon';
+            }
+            themeToggleBtn.title = isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode';
+        }
+
+        // Update particle colors if canvas exists
+        if (window.__updateParticleTheme) {
+            window.__updateParticleTheme(isLight);
+        }
+
+        // Update splash screen background (if still visible)
+        const splash = document.getElementById('splashScreen');
+        if (splash) {
+            splash.style.background = isLight ? '#f1f5f9' : '';
+        }
+
+        // Save preference
+        localStorage.setItem('uniportal-theme', theme);
+    }
+
+    // Load saved theme on startup
+    const savedTheme = localStorage.getItem('uniportal-theme') || 'dark';
+    applyTheme(savedTheme);
+
+    // Toggle on click
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const isCurrentlyLight = document.body.classList.contains('light-theme');
+            applyTheme(isCurrentlyLight ? 'dark' : 'light');
+        });
+    }
+
 });

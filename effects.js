@@ -96,15 +96,23 @@
             }
 
             draw(alpha) {
+                const lightness = isLightTheme ? '40%' : '68%';
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `hsla(${this.hue}, 85%, 68%, ${alpha})`;
-                ctx.shadowColor = `hsla(${this.hue}, 85%, 68%, 0.4)`;
+                ctx.fillStyle = `hsla(${this.hue}, 85%, ${lightness}, ${alpha})`;
+                ctx.shadowColor = `hsla(${this.hue}, 85%, ${lightness}, 0.4)`;
                 ctx.shadowBlur = 6;
                 ctx.fill();
                 ctx.shadowBlur = 0;
             }
         }
+
+        // Theme awareness for particles
+        let isLightTheme = document.body.classList.contains('light-theme');
+
+        window.__updateParticleTheme = function(light) {
+            isLightTheme = light;
+        };
 
         const particleCount = Math.min(Math.floor((window.innerWidth * window.innerHeight) / 14000), 75);
         for (let i = 0; i < particleCount; i++) {
@@ -121,10 +129,13 @@
 
                     if (dist < maxDist) {
                         const alpha = (1 - dist / maxDist) * 0.16;
+                        const lineColor = isLightTheme
+                            ? `rgba(2, 132, 199, ${alpha})`
+                            : `rgba(56, 189, 248, ${alpha})`;
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
+                        ctx.strokeStyle = lineColor;
                         ctx.lineWidth = 0.6;
                         ctx.stroke();
                     }

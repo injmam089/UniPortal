@@ -341,3 +341,96 @@
 @media (max-width: 768px) {
     .orb { display: none; }
 }
+
+
+/* ===== LIGHT THEME OVERRIDES FOR EFFECTS ===== */
+
+/* Smooth body transition for theme switch */
+body {
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* Splash screen in light mode */
+body.light-theme .splash-screen {
+    background: #f1f5f9;
+}
+
+body.light-theme .splash-screen .splash-text {
+    color: #0f172a;
+}
+
+body.light-theme .splash-loader {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+/* Scroll progress — slightly more opaque in light */
+body.light-theme .scroll-progress {
+    box-shadow: 0 0 8px rgba(2, 132, 199, 0.3);
+}
+
+/* Orbs — lighter and more subtle on white bg */
+body.light-theme .orb-1 {
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.6), transparent 70%);
+    opacity: 0.06;
+}
+body.light-theme .orb-2 {
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.5), transparent 70%);
+    opacity: 0.05;
+}
+body.light-theme .orb-3 {
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.5), transparent 70%);
+    opacity: 0.05;
+}
+
+/* Card shimmer brighter on light bg */
+body.light-theme .card::after {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 0, 0, 0.02),
+        transparent
+    );
+}
+
+/* Stat card gradient border — darken for contrast */
+body.light-theme .stat-card::after {
+    background: linear-gradient(135deg, #0284c7, #6366f1, #06b6d4, #8b5cf6);
+    background-size: 300% 300%;
+}
+
+/* Avatar status dot border fix */
+body.light-theme .header-avatar::after,
+body.light-theme .user-avatar::after {
+    border-color: var(--bg-header);
+}
+
+/* Tooltip in light mode */
+body.light-theme [data-tooltip]::after {
+    background: rgba(15, 23, 42, 0.92);
+    color: #f8fafc;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Scrollbar in light mode */
+body.light-theme ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+body.light-theme ::-webkit-scrollbar-thumb {
+    background: rgba(2, 132, 199, 0.25);
+}
+
+body.light-theme ::-webkit-scrollbar-thumb:hover {
+    background: rgba(2, 132, 199, 0.4);
+}
+
+/* Theme toggle button — sun icon warm glow */
+body.light-theme .theme-toggle {
+    color: #f59e0b;
+    border-color: rgba(245, 158, 11, 0.25);
+}
+
+body.light-theme .theme-toggle:hover {
+    background: rgba(245, 158, 11, 0.08);
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
+}
